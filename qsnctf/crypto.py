@@ -1,5 +1,6 @@
 import json
 
+
 def caesar_encrypt(text, shift):
     # 凯撒加密 （重新写的）
     ciphertext = ''
@@ -14,7 +15,7 @@ def caesar_encrypt(text, shift):
 
 
 def caesar_decrypt(text, shift):
-    return caesar_encrypt(text,-shift)
+    return caesar_encrypt(text, -shift)
 
 
 def caesar_decrypt_cracking(ciphertext):

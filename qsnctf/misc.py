@@ -15,8 +15,7 @@ def Chinese_socialism_encode(string):
     package_path = os.path.abspath(os.path.dirname(__file__))
     file_path = os.path.join(package_path, 'plugin', 'js', 'cvencode.js')
     content = execjs.compile(js_from_file(file_path))
-    result = content.call('encode', string)
-    return str(result)
+    return str(content.call('encode', string))
 
 
 def Chinese_socialism_decode(string):
@@ -24,8 +23,7 @@ def Chinese_socialism_decode(string):
     package_path = os.path.abspath(os.path.dirname(__file__))
     file_path = os.path.join(package_path, 'plugin', 'js', 'cvencode.js')
     content = execjs.compile(js_from_file(file_path))
-    result = content.call('decode', string)
-    return str(result)
+    return str(content.call('decode', string))
 
 
 def string_reverse(string):
@@ -43,18 +41,9 @@ def url_decode(string):
     return urllib.parse.unquote(string)
 
 
-def xor_decrypt(list):
-    # 按位异或
-    # 由于位异或算法在逆向题中不一定是怎么样的运算，只放个典型
+def xor_decrypt(lt_data,lt_root):
+    # 异或 lt_root直接传列表过来，这样也可以字符串之间互相异或
     decrypted = ""
     for i in range(len(list)):
-        decrypted += chr(list[i] ^ i)
-    return decrypted
-
-
-def xor_decrypt_1(list):
-    # 按位异或 +1
-    decrypted = ""
-    for i in range(len(list)):
-        decrypted += chr(list[i] ^ i + 1)
+        decrypted += chr(lt_data[i] ^ lt_root[i])
     return decrypted
