@@ -1,4 +1,4 @@
 from .main import *
-import base
-import hash
-import uuid
+import qsnctf.base
+import qsnctf.hash
+import qsnctf.uuid
