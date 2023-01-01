@@ -39,6 +39,7 @@ def caesar_decrypt_cracking(ciphertext):
         results[str(i)] = plaintext
     return json.dumps(results)
 
+
 def caesar_encrypt_cracking(ciphertext):
     # 凯撒解密爆破，返回值为列表
     results = {
