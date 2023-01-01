@@ -36,7 +36,7 @@ PACKAGE CONTENTS
     crypto
     hash
     main
-    others
+    misc
     uuid
 
 FILE
@@ -89,7 +89,7 @@ FUNCTIONS
 | 凯撒加密解密 |
 | ------------ |
 
-### others
+### misc
 
 | 核心价值观加密解密 |
 | ------------------ |
