@@ -1,3 +1,4 @@
+MANIFEST.in
 README.md
 setup.py
 qsnctf/__init__.py
@@ -11,3 +12,4 @@ qsnctf.egg-info/SOURCES.txt
 qsnctf.egg-info/dependency_links.txt
 qsnctf.egg-info/requires.txt
 qsnctf.egg-info/top_level.txt
+qsnctf/plugin/js/cvencode.js

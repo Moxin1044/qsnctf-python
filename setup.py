@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 import io
 
 with io.open('README.md', encoding='utf-8') as f:
@@ -8,7 +8,8 @@ setup(
     name='qsnctf',
     version='0.0.4',
     install_requires=['PyExecJS'],
-    packages=['qsnctf'],
+    packages=find_packages(),
+    include_package_data=True,
     package_data={'qsnctf': ['plugin/*']},
     url='https://github.com/Moxin1044/qsnctf-python',
     license='MIT License',
