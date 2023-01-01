@@ -8,6 +8,10 @@ import base62
 # python3base92: https://github.com/Moxin1044/Python3Base92
 
 
+def base100_encode(text):
+    pass
+
+
 def base92_encode(data):
     return python3base92.b92encode(data)
 
