@@ -8,12 +8,14 @@ import execjs  # PyExecJS
 
 
 def js_from_file(file_name):
+    # 没啥用，我就是简单的读个文件
     with open(file_name, 'r', encoding='UTF-8') as file:
         result = file.read()
         return result
 
 
 def Chinese_socialism_encode(data):
+    # 社会主义核心价值观编码
     package_path = os.path.abspath(os.path.dirname(__file__))
     file_path = os.path.join(package_path, 'plugin', 'js', 'cvencode.js')
     content = execjs.compile(js_from_file(file_path))
@@ -21,7 +23,9 @@ def Chinese_socialism_encode(data):
     result = str(result)
     return result
 
+
 def Chinese_socialism_decode(data):
+    # 社会主义核心价值观解码
     package_path = os.path.abspath(os.path.dirname(__file__))
     file_path = os.path.join(package_path, 'plugin', 'js', 'cvencode.js')
     content = execjs.compile(js_from_file(file_path))
@@ -29,3 +33,7 @@ def Chinese_socialism_decode(data):
     result = str(result)
     return result
 
+
+def string_reverse(string):
+    # 字符串逆向
+    return string[::-1]
