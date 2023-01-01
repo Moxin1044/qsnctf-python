@@ -3,6 +3,7 @@
 # 末心
 import base64
 import python3base92
+# python3base92: https://github.com/Moxin1044/Python3Base92
 
 
 def base92_encode(data):
