@@ -12,5 +12,7 @@ print(a)
 b = qsnctf.base.base62_decode("base62")
 print(b)
 
-a = qsnctf.base.base100_encode("base10_encode")
+a = qsnctf.base.base100_encode("base100_encode")
+print(a)
+a = qsnctf.base.base100_decode("👙👘👪👜🐨🐧🐧👖👜👥👚👦👛👜")
 print(a)
