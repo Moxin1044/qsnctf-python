@@ -117,7 +117,7 @@ def base32_encode(text):
     return code
 
 
-def base36encode(number):
+def base36_encode(number):
     # 定义编码字符集
     charset = "0123456789abcdefghijklmnopqrstuvwxyz"
     # 初始化编码后的字符串
@@ -132,6 +132,18 @@ def base36encode(number):
     if encoded == "":
         encoded = "0"
     return encoded
+
+
+def base36_decode(encoded):
+    # 定义编码字符集
+    charset = "0123456789abcdefghijklmnopqrstuvwxyz"
+    # 初始化解码后的数字
+    number = 0
+    # 遍历编码字符串，解码每一位
+    for i, ch in enumerate(encoded[::-1]):
+        # 计算当前位的数字值
+        number += charset.index(ch) * (36 ** i)
+    return number
 
 
 def base32_decode(text):

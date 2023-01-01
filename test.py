@@ -7,5 +7,5 @@ print(a)
 print(caesar_decrypt_cracking(b))
 
 
-a = rot13('qsnctf')
+a = base36_encode(123456)
 print(a)
