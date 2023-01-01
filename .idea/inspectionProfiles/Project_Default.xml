@@ -1,0 +1,120 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="DuplicatedCode" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
+    <inspection_tool class="Eslint" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="HttpUrlsUsage" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredUrls">
+        <list>
+          <option value="http://localhost" />
+          <option value="http://127.0.0.1" />
+          <option value="http://0.0.0.0" />
+          <option value="http://www.w3.org/" />
+          <option value="http://json-schema.org/draft" />
+          <option value="http://java.sun.com/" />
+          <option value="http://xmlns.jcp.org/" />
+          <option value="http://javafx.com/javafx/" />
+          <option value="http://javafx.com/fxml" />
+          <option value="http://maven.apache.org/xsd/" />
+          <option value="http://maven.apache.org/POM/" />
+          <option value="http://www.springframework.org/schema/" />
+          <option value="http://www.springframework.org/tags" />
+          <option value="http://www.springframework.org/security/tags" />
+          <option value="http://www.thymeleaf.org" />
+          <option value="http://www.jboss.org/j2ee/schema/" />
+          <option value="http://www.jboss.com/xml/ns/" />
+          <option value="http://www.ibm.com/webservices/xsd" />
+          <option value="http://activemq.apache.org/schema/" />
+          <option value="http://schema.cloudfoundry.org/spring/" />
+          <option value="http://schemas.xmlsoap.org/" />
+          <option value="http://cxf.apache.org/schemas/" />
+          <option value="http://primefaces.org/ui" />
+          <option value="http://tiles.apache.org/" />
+          <option value="http://" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="59">
+            <item index="0" class="java.lang.String" itemvalue="greenlet" />
+            <item index="1" class="java.lang.String" itemvalue="python-dateutil" />
+            <item index="2" class="java.lang.String" itemvalue="python-dotenv" />
+            <item index="3" class="java.lang.String" itemvalue="marshmallow" />
+            <item index="4" class="java.lang.String" itemvalue="pycparser" />
+            <item index="5" class="java.lang.String" itemvalue="markupsafe" />
+            <item index="6" class="java.lang.String" itemvalue="redis" />
+            <item index="7" class="java.lang.String" itemvalue="python-geoacumen-city" />
+            <item index="8" class="java.lang.String" itemvalue="certifi" />
+            <item index="9" class="java.lang.String" itemvalue="docutils" />
+            <item index="10" class="java.lang.String" itemvalue="gevent" />
+            <item index="11" class="java.lang.String" itemvalue="jsonschema" />
+            <item index="12" class="java.lang.String" itemvalue="passlib" />
+            <item index="13" class="java.lang.String" itemvalue="pydantic" />
+            <item index="14" class="java.lang.String" itemvalue="werkzeug" />
+            <item index="15" class="java.lang.String" itemvalue="cmarkgfm" />
+            <item index="16" class="java.lang.String" itemvalue="sqlalchemy-utils" />
+            <item index="17" class="java.lang.String" itemvalue="aniso8601" />
+            <item index="18" class="java.lang.String" itemvalue="typing-extensions" />
+            <item index="19" class="java.lang.String" itemvalue="gunicorn" />
+            <item index="20" class="java.lang.String" itemvalue="click" />
+            <item index="21" class="java.lang.String" itemvalue="sqlalchemy" />
+            <item index="22" class="java.lang.String" itemvalue="attrs" />
+            <item index="23" class="java.lang.String" itemvalue="bcrypt" />
+            <item index="24" class="java.lang.String" itemvalue="jinja2" />
+            <item index="25" class="java.lang.String" itemvalue="boto3" />
+            <item index="26" class="java.lang.String" itemvalue="flask-script" />
+            <item index="27" class="java.lang.String" itemvalue="wtforms" />
+            <item index="28" class="java.lang.String" itemvalue="flask" />
+            <item index="29" class="java.lang.String" itemvalue="idna" />
+            <item index="30" class="java.lang.String" itemvalue="flask-migrate" />
+            <item index="31" class="java.lang.String" itemvalue="alembic" />
+            <item index="32" class="java.lang.String" itemvalue="zope-interface" />
+            <item index="33" class="java.lang.String" itemvalue="cffi" />
+            <item index="34" class="java.lang.String" itemvalue="flask-caching" />
+            <item index="35" class="java.lang.String" itemvalue="mako" />
+            <item index="36" class="java.lang.String" itemvalue="requests" />
+            <item index="37" class="java.lang.String" itemvalue="python-editor" />
+            <item index="38" class="java.lang.String" itemvalue="importlib-metadata" />
+            <item index="39" class="java.lang.String" itemvalue="pyrsistent" />
+            <item index="40" class="java.lang.String" itemvalue="pymysql" />
+            <item index="41" class="java.lang.String" itemvalue="zipp" />
+            <item index="42" class="java.lang.String" itemvalue="tenacity" />
+            <item index="43" class="java.lang.String" itemvalue="urllib3" />
+            <item index="44" class="java.lang.String" itemvalue="itsdangerous" />
+            <item index="45" class="java.lang.String" itemvalue="flask-restx" />
+            <item index="46" class="java.lang.String" itemvalue="marshmallow-sqlalchemy" />
+            <item index="47" class="java.lang.String" itemvalue="zope-event" />
+            <item index="48" class="java.lang.String" itemvalue="six" />
+            <item index="49" class="java.lang.String" itemvalue="botocore" />
+            <item index="50" class="java.lang.String" itemvalue="flask-sqlalchemy" />
+            <item index="51" class="java.lang.String" itemvalue="maxminddb" />
+            <item index="52" class="java.lang.String" itemvalue="pybluemonday" />
+            <item index="53" class="java.lang.String" itemvalue="chardet" />
+            <item index="54" class="java.lang.String" itemvalue="jmespath" />
+            <item index="55" class="java.lang.String" itemvalue="s3transfer" />
+            <item index="56" class="java.lang.String" itemvalue="flask-marshmallow" />
+            <item index="57" class="java.lang.String" itemvalue="pytz" />
+            <item index="58" class="java.lang.String" itemvalue="dataset" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="N802" />
+          <option value="N801" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="dict.*" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

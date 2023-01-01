@@ -1,0 +1,14 @@
+Metadata-Version: 2.1
+Name: qsnctf
+Version: 0.0.2
+Summary: 青少年CTF训练平台提供的Python软件包
+Home-page: https://github.com/Moxin1044/qsnctf-python
+Author: Moxin
+Author-email: 1044631097@qq.com
+License: MIT License
+Description-Content-Type: text/markdown
+
+# QSNCTF
+qsnctf是青少年CTF训练平台进行编写的一个Python包程序，意图在Python中为大家快速使用一些CTF常用功能开发的开源包。这里有很多CTF常用功能，如Base编码、hash加密，甚至少见的社会主义核心价值观编码都在其中。
+
+文档等待更新中，敬请期待。
