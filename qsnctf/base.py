@@ -6,6 +6,8 @@ import python3base92
 import struct
 import base62
 import pybase100
+
+
 # python3base92: https://github.com/Moxin1044/Python3Base92
 
 
@@ -115,6 +117,23 @@ def base32_encode(text):
     return code
 
 
+def base36encode(number):
+    # 定义编码字符集
+    charset = "0123456789abcdefghijklmnopqrstuvwxyz"
+    # 初始化编码后的字符串
+    encoded = ""
+    # 当数字大于 0 时循环
+    while number > 0:
+        # 取模计算当前位编码字符
+        encoded = charset[number % 36] + encoded
+        # 除以 36 计算下一位
+        number //= 36
+    # 如果编码后的字符串为空，则补 0
+    if encoded == "":
+        encoded = "0"
+    return encoded
+
+
 def base32_decode(text):
     code = (base64.b32decode(text.encode('utf-8')))
     return code.decode('utf-8')
@@ -138,5 +157,3 @@ def base85_encode(text):
 def base85_decode(text):
     code = (base64.b85decode(text.encode('utf-8')))
     return code.decode('utf-8')
-
-
