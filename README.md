@@ -45,7 +45,7 @@ FILE
 
 然后使用help(qsnctf.PACKAGE CONTENTS)来查看具体的使用方法
 
-#### 例
+#### 示例
 
 查看`base`的使用方法
 
@@ -122,6 +122,7 @@ print(b)
 6ZyA6KaB5Yqg5a+G55qE
 需要加密的
 ```
+
 ## 环境
 
 ##### 开发环境
