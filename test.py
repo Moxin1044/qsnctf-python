@@ -1,13 +1,7 @@
 import qsnctf
-import os
+# import json
 
 
-
-
-
-encoded_string = qsnctf.crypto.bacon_encrypt('Hello, World!')
-print(encoded_string)
-# Output: AABBBAABAAABABBABABBABBBABABBAABBBABAAABABABBAAABB
-decoded_string = qsnctf.crypto.bacon_decrypt(encoded_string)
-print(decoded_string)
-# Output: HELLOWORLD
+# a = qsnctf.crypto.caesar_decrypt_cracking("oqlard")
+# jsona = json.loads(a)
+# print(jsona['1'])
