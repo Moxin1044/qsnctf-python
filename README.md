@@ -11,7 +11,7 @@ qsnctf是青少年CTF训练平台进行编写的一个Python包程序，意图�
 python setup.py install
 ```
 
-或者也可以直接使用pip来进行安装
+或者也可以直接使用pip来进行安装（由于本Py包仍在开发，所以pip可能不是最新版）
 
 ```bash
 pip install qsnctf
