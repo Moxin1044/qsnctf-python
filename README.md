@@ -116,4 +116,10 @@ print(a)
 b=qsnctf.base.base64_decode("6ZyA6KaB5Yqg5a+G55qE")
 print(b)
 ```
+`返回信息`
+
+```
+6ZyA6KaB5Yqg5a+G55qE
+需要加密的
+```
 文档持续更新。
