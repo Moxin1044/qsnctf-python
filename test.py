@@ -6,5 +6,7 @@ import qsnctf
 # jsona = json.loads(a)
 # print(jsona['1'])
 
-a = qsnctf.crypto.rot18("qsnctf1234")
+a = qsnctf.base91_encode("qsnctf")
 print(a)
+b = qsnctf.base91_decode("#2U==[WC")
+print(b)
