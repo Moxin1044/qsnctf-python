@@ -2,5 +2,5 @@ import qsnctf
 import os
 
 
-a = qsnctf.crypto.caesar_encrypt("qsnctf",15)
+a = qsnctf.base.base92_decode("ItHYSr3x")
 print(a)

@@ -2,15 +2,15 @@
 # 2023年1月1日
 # 末心
 import base64
+import python3base92
 
 
+def base92_encode(data):
+    return python3base92.b92encode(data)
 
-# def base92_encode(data):
-#     return base92.b92encode(data)
-#
-#
-# def base92_decode(data):
-#     return base92.b92decode(data)
+
+def base92_decode(data):
+    return python3base92.b92decode(data)
 
 
 def base64_encode(text):

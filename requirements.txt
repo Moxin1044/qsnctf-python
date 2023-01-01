@@ -1,2 +1,2 @@
 PyExecJS
-base92
+python3base92
