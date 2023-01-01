@@ -6,7 +6,7 @@ with io.open('README.md', encoding='utf-8') as f:
 
 setup(
     name='qsnctf',
-    version='0.0.5',
+    version='0.0.6',
     install_requires=['PyExecJS', 'python3base92', 'pybase62'],
     packages=find_packages(),
     include_package_data=True,
