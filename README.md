@@ -81,7 +81,7 @@ FUNCTIONS
 
 ### Base
 
-| base16 | base32 | base64 | base62 | base85 |
+| base16 | base32 | base62 | base64 | base85 |
 | :------------: | :------------: | :------------: | :------------: | :------------: |
 | base91 | base92 | base100 |  |  |
 ### crypto
