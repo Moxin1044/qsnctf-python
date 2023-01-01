@@ -7,6 +7,7 @@ with io.open('README.md', encoding='utf-8') as f:
 setup(
     name='qsnctf',
     version='0.0.2',
+    install_requires=[''],
     packages=['qsnctf'],
     url='https://github.com/Moxin1044/qsnctf-python',
     license='MIT License',
