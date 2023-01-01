@@ -2,5 +2,5 @@ import qsnctf
 import os
 
 
-a = qsnctf.hash.shake_128("123","456")
+a = qsnctf.base.base92_encode("qsnctf")
 print(a)

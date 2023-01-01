@@ -2,9 +2,9 @@ def caesar_encrypt(text, shift):
     # 凯撒加密 （重新写的）
     ciphertext = ''
     for p in text:
-        if 'a' <= p <= 'z':
+        if p.islower():
             ciphertext += chr(ord('a') + (ord(p) - ord('a') + shift) % 26)
-        elif 'A' <= p <= 'Z':
+        elif p.isupper():
             ciphertext += chr(ord('A') + (ord(p) - ord('Z') + shift) % 26)
         else:
             ciphertext += p
@@ -15,9 +15,9 @@ def caesar_decrypt(text, shift):
     # 凯撒解密 （一样，重新写的）
     ciphertext = ''
     for p in text:
-        if 'a' <= p <= 'z':
+        if p.islower():
             ciphertext += chr(ord('a') + (ord(p) - ord('a') - shift) % 26)
-        elif 'A' <= p <= 'Z':
+        elif p.isupper():
             ciphertext += chr(ord('A') + (ord(p) - ord('Z') - shift) % 26)
         else:
             ciphertext += p
