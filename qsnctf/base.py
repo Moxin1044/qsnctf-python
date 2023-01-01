@@ -2,7 +2,7 @@
 # 2023年1月1日
 # 末心
 import base64
-import base92
+
 
 
 # def base92_encode(data):
