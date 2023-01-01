@@ -48,7 +48,7 @@ def caesar_encrypt_cracking(ciphertext):
         '24': '', '25': ''
     }
     for i in range(1, 26):
-        plaintext = caesar_encrypt(ciphertext,i)
+        plaintext = caesar_encrypt(ciphertext, i)
         results[str(i)] = plaintext
     return json.dumps(results)
 
@@ -86,7 +86,7 @@ def bacon_decrypt(string):
              'BBAAA': 'Y', 'BBAAB': 'Z'}
     decoded_string = ''
     for i in range(0, len(string), 5):
-        chunk = string[i:i+5]
+        chunk = string[i:i + 5]
         if chunk in bacon:
             decoded_string += bacon[chunk]
     return decoded_string
