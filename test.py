@@ -1,18 +1,7 @@
-import qsnctf
-# import json
-
-
-# a = qsnctf.crypto.caesar_decrypt_cracking("oqlard")
-# jsona = json.loads(a)
-# print(jsona['1'])
-import qsnctf
-
-a = qsnctf.base.base62_encode(34441886726)
+from qsnctf import *
+a=caesar_encrypt("hello world",12)
 print(a)
-b = qsnctf.base.base62_decode("base62")
-print(b)
-
-a = qsnctf.base.base100_encode("base100_encode")
+b=a
+a=caesar_decrypt(a,12)
 print(a)
-a = qsnctf.base.base100_decode("👙👘👪👜🐨🐧🐧👖👜👥👚👦👛👜")
-print(a)
+print(caesar_decrypt_cracking(b))
