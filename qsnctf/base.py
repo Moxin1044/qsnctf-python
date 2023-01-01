@@ -7,6 +7,14 @@ import struct
 # python3base92: https://github.com/Moxin1044/Python3Base92
 
 
+def base92_encode(data):
+    return python3base92.b92encode(data)
+
+
+def base92_decode(data):
+    return python3base92.b92decode(data)
+
+
 def base91_encode(data):
     data = data.encode()
     base91_alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
@@ -59,7 +67,7 @@ def base91_decode(data):
         if not strletter in decode_table:
             continue
         c = decode_table[strletter]
-        if (v < 0):
+        if v < 0:
             v = c
         else:
             v += c * 91
@@ -76,14 +84,6 @@ def base91_decode(data):
         out += struct.pack('B', (b | v << n) & 255)
 
     return out.decode()
-
-
-def base92_encode(data):
-    return python3base92.b92encode(data)
-
-
-def base92_decode(data):
-    return python3base92.b92decode(data)
 
 
 def base64_encode(text):
