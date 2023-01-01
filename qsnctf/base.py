@@ -9,10 +9,6 @@ import pybase100
 # python3base92: https://github.com/Moxin1044/Python3Base92
 
 
-def base100_encode(text):
-    pass
-
-
 def base100_encode(text, encoding="utf-8"):
     return pybase100.encode(text, encoding)
 
