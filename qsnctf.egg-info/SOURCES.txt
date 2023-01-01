@@ -7,7 +7,7 @@ qsnctf/base.py
 qsnctf/crypto.py
 qsnctf/hash.py
 qsnctf/main.py
-qsnctf/others.py
+qsnctf/misc.py
 qsnctf/uuid.py
 qsnctf.egg-info/PKG-INFO
 qsnctf.egg-info/SOURCES.txt
