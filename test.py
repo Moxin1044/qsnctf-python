@@ -11,3 +11,6 @@ a = qsnctf.base.base62_encode(34441886726)
 print(a)
 b = qsnctf.base.base62_decode("base62")
 print(b)
+
+a = qsnctf.base.base100_encode("base10_encode")
+print(a)

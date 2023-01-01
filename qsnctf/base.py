@@ -5,12 +5,20 @@ import base64
 import python3base92
 import struct
 import base62
+import pybase100
 # python3base92: https://github.com/Moxin1044/Python3Base92
 
 
 def base100_encode(text):
     pass
 
+
+def base100_encode(text, encoding="utf-8"):
+    return pybase100.encode(text, encoding)
+
+
+def base100_decode(text, encoding="utf-8"):
+    return pybase100.decode(text, encoding)
 
 def base92_encode(data):
     return python3base92.b92encode(data)
