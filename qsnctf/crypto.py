@@ -90,3 +90,72 @@ def bacon_decrypt(string):
         if chunk in bacon:
             decoded_string += bacon[chunk]
     return decoded_string
+
+
+def rot13(text):
+    # ROT13 加密即解密
+    mapping = {
+        'A': 'N', 'B': 'O', 'C': 'P', 'D': 'Q', 'E': 'R',
+        'F': 'S', 'G': 'T', 'H': 'U', 'I': 'V', 'J': 'W',
+        'K': 'X', 'L': 'Y', 'M': 'Z', 'N': 'A', 'O': 'B',
+        'P': 'C', 'Q': 'D', 'R': 'E', 'S': 'F', 'T': 'G',
+        'U': 'H', 'V': 'I', 'W': 'J', 'X': 'K', 'Y': 'L',
+        'Z': 'M'
+    }
+
+    # 加/解密文本
+    encrypted_text = ''
+    for char in text:
+        if char.upper() in mapping:
+            if char.isupper():
+                encrypted_text += mapping[char]
+            else:
+                encrypted_text += mapping[char.upper()].lower()
+        else:
+            encrypted_text += char
+
+    return encrypted_text
+
+
+def rot5(text):
+    # ROT5 加密即解密
+    mapping = {
+        '0': '5', '1': '6', '2': '7', '3': '8', '4': '9',
+        '5': '0', '6': '1', '7': '2', '8': '3', '9': '4',
+    }
+
+    # 加/解密文本
+    encrypted_text = ''
+    for char in text:
+        if char in mapping:
+            encrypted_text += mapping[char]
+        else:
+            encrypted_text += char
+
+    return encrypted_text
+
+
+def rot18(text):
+    # ROT18 加密即解密
+    mapping = {
+        '0': '5', '1': '6', '2': '7', '3': '8', '4': '9',
+        '5': '0', '6': '1', '7': '2', '8': '3', '9': '4',
+        'A': 'N', 'B': 'O', 'C': 'P', 'D': 'Q', 'E': 'R',
+        'F': 'S', 'G': 'T', 'H': 'U', 'I': 'V', 'J': 'W',
+        'K': 'X', 'L': 'Y', 'M': 'Z', 'N': 'A', 'O': 'B',
+        'P': 'C', 'Q': 'D', 'R': 'E', 'S': 'F', 'T': 'G',
+        'U': 'H', 'V': 'I', 'W': 'J', 'X': 'K', 'Y': 'L',
+        'Z': 'M'
+    }
+    # 加/解密文本
+    encrypted_text = ''
+    for char in text:
+        if char.upper() in mapping:
+            if char.isupper():
+                encrypted_text += mapping[char]
+            else:
+                encrypted_text += mapping[char.upper()].lower()
+        else:
+            encrypted_text += char
+
+    return encrypted_text
