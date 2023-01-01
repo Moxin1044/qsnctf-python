@@ -1,5 +1,5 @@
 from qsnctf import *
-a=caesar_encrypt("hello world",12)
+a=caesar_encrypt("Hello world",12)
 print(a)
 b=a
 a=caesar_decrypt(a,12)
