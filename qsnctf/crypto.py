@@ -13,6 +13,7 @@ def caesar_encrypt(text, shift):
             ciphertext += p
     return ciphertext
 
+
 def caesar_decrypt(text, shift):
     # 凯撒解密 （一样，重新写的）
     ciphertext = ''
@@ -27,7 +28,7 @@ def caesar_decrypt(text, shift):
 
 
 def caesar_decrypt_cracking(ciphertext):
-    # 凯撒解密爆破，返回值为列表
+    # 凯撒解密爆破，返回值为json
     results = {
         '1': '', '2': '', '3': '', '4': '', '5': '', '6': '', '7': '', '8': '', '9': '', '10': '', '11': '', '12': '',
         '13': '', '14': '', '15': '', '16': '', '17': '', '18': '', '19': '', '20': '', '21': '', '22': '', '23': '',
@@ -40,7 +41,7 @@ def caesar_decrypt_cracking(ciphertext):
 
 
 def caesar_encrypt_cracking(ciphertext):
-    # 凯撒解密爆破，返回值为列表
+    # 凯撒加密爆破，返回值为json
     results = {
         '1': '', '2': '', '3': '', '4': '', '5': '', '6': '', '7': '', '8': '', '9': '', '10': '', '11': '', '12': '',
         '13': '', '14': '', '15': '', '16': '', '17': '', '18': '', '19': '', '20': '', '21': '', '22': '', '23': '',
