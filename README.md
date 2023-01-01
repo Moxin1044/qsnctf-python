@@ -122,4 +122,13 @@ print(b)
 6ZyA6KaB5Yqg5a+G55qE
 需要加密的
 ```
+## 环境
+
+##### 开发环境
+
+`Windows11 + Python3.10 + PyCharm 2022.2.3 (Professional Edition)`
+
+##### 使用环境
+
+支持 `python 3.x` 环境
 文档持续更新。
