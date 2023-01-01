@@ -7,5 +7,5 @@ print(a)
 print(caesar_decrypt_cracking(b))
 
 
-a = caesar_encrypt('qsnctf',8)
+a = rot13('qsnctf')
 print(a)

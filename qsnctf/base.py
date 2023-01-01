@@ -35,8 +35,7 @@ def base91_encode(data):
                        '%', '&', '(', ')', '*', '+', ',', '.', '/', ':', ';', '<', '=',
                        '>', '?', '@', '[', ']', '^', '_', '`', '{', '|', '}', '~', '"']
     decode_table = dict((v, k) for k, v in enumerate(base91_alphabet))
-    b = 0
-    n = 0
+    b, n = 0, 0
     out = ''
     for count in range(len(data)):
         byte = data[count:count + 1]
@@ -68,9 +67,7 @@ def base91_decode(data):
                        '%', '&', '(', ')', '*', '+', ',', '.', '/', ':', ';', '<', '=',
                        '>', '?', '@', '[', ']', '^', '_', '`', '{', '|', '}', '~', '"']
     decode_table = dict((v, k) for k, v in enumerate(base91_alphabet))
-    v = -1
-    b = 0
-    n = 0
+    v, b, n = -1, 0, 0
     out = bytearray()
     for strletter in data:
         if not strletter in decode_table:

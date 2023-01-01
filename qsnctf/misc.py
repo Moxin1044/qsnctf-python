@@ -44,6 +44,6 @@ def url_decode(string):
 def xor_decrypt(lt_data,lt_root):
     # 异或 lt_root直接传列表过来，这样也可以字符串之间互相异或
     decrypted = ""
-    for i in range(len(list)):
+    for i in range(len(lt_data)):
         decrypted += chr(lt_data[i] ^ lt_root[i])
     return decrypted

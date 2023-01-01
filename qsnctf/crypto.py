@@ -77,6 +77,7 @@ def bacon_decrypt(string):
 
 def rot13(text):
     # ROT13 加密即解密
+    # 还有一种写法是 凯撒，偏移量13
     mapping = {
         'A': 'N', 'B': 'O', 'C': 'P', 'D': 'Q', 'E': 'R',
         'F': 'S', 'G': 'T', 'H': 'U', 'I': 'V', 'J': 'W',
