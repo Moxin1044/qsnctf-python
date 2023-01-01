@@ -1,4 +1,4 @@
-# QSNCTF
+# 🤔QSNCTF
 qsnctf是青少年CTF训练平台进行编写的一个Python包程序，意图在Python中为大家快速使用一些CTF常用功能开发的开源包。这里有很多CTF常用功能，如Base编码、hash加密，甚至少见的社会主义核心价值观编码都在其中。
 
 ## 使用
@@ -180,3 +180,14 @@ qsnctf{M0X1n_Love_you!}
 支持 `python 3.x` 环境。
 
 文档持续更新。
+
+## ✨ Contributors
+
+感谢下面的所有人：
+
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/Moxin1044"><img src="https://avatars.githubusercontent.com/u/59173630?v=4" width="100px;" alt=""/><br /><sub><b>Moxin</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/wang256814742"><img src="https://avatars.githubusercontent.com/u/75202489?v=4" width="100px;" alt=""/><br /><sub><b>xinyi</b></sub></a><br /></td>
+  </tr>
+</table>
