@@ -35,8 +35,21 @@ def string_reverse(string):
 
 
 def url_encode(string):
+    # url编码
     return urllib.parse.quote(string)
 
 
 def url_decode(string):
+    # url解码
     return urllib.parse.unquote(string)
+
+
+def xor_decrypt(list):
+    # 按位异或
+    decrypted = ""
+    for i in range(len(list)):
+        decrypted += chr(list[i] ^ i)
+    return decrypted
+
+
+
