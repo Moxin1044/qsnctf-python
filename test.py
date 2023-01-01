@@ -1,5 +1,5 @@
 from qsnctf import *
 
 
-a = base36_encode(123456)
+a = base100_encode("qsnctf")
 print(a)

@@ -81,9 +81,9 @@ FUNCTIONS
 
 ### Base
 
-| base16 | base32 | base36 | base62 | base64 |
+| base16 | base32 | base36 | base58 | base62 |
 | :------------: | :------------: | :------------: | :------------: | :------------: |
-| base85 | base91 | base92 | base100 |  |
+| base64 | base85 | base91 | base92 | base100 |
 ### crypto
 
 | 凯撒密码 | 凯撒爆破 | 培根密码 | ROT5 | ROT13 |
