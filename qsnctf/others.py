@@ -8,8 +8,6 @@ import execjs  # PyExecJS
 # 需要将Python目录下>lib>subprocess.py的765行附近的encoding的默认None值修改为utf-8即可。
 
 
-
-
 def js_from_file(file_name):
     with open(file_name, 'r', encoding='UTF-8') as file:
         result = file.read()
