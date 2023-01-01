@@ -3,8 +3,7 @@ import json
 
 def caesar_encrypt(text, shift):
     # 凯撒加密 （重新写的）
-    shift = int(shift)
-    ciphertext = ''
+    ciphertext, shift = '', int(shift)
     for p in text:
         if p.islower():
             ciphertext += chr(97 + (ord(p) - 97 + shift) % 26)
