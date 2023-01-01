@@ -2,21 +2,29 @@ import json
 
 
 def caesar_encrypt(text, shift):
-    # 凯撒加密 （重新写的）
+    shift = int(shift)
     ciphertext = ''
     for p in text:
-        if p.islower():
-            ciphertext += chr(97 + (ord(p) - 97 + shift) % 26)
-        elif p.isupper():
-            ciphertext += chr(65 + (ord(p) - 90 + shift) % 26)
+        if 'a' <= p <= 'z':
+            ciphertext += chr(ord('a') + (ord(p) - ord('a') + shift) % 26)
+        elif 'A' <= p <= 'Z':
+            ciphertext += chr(ord('A') + (ord(p) - ord('Z') + shift) % 26)
         else:
             ciphertext += p
     return ciphertext
 
 
 def caesar_decrypt(text, shift):
-    return caesar_encrypt(text, -shift)
-
+    shift = int(shift)
+    ciphertext = ''
+    for p in text:
+        if 'a' <= p <= 'z':
+            ciphertext += chr(ord('a') + (ord(p) - ord('a') - shift) % 26)
+        elif 'A' <= p <= 'Z':
+            ciphertext += chr(ord('A') + (ord(p) - ord('Z') - shift) % 26)
+        else:
+            ciphertext += p
+    return ciphertext
 
 def caesar_decrypt_cracking(ciphertext):
     # 凯撒解密爆破，返回值为json
