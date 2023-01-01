@@ -56,5 +56,5 @@ def xor_decrypt_1(list):
     # 按位异或 +1
     decrypted = ""
     for i in range(len(list)):
-        decrypted += chr(list[i] ^ i+1)
+        decrypted += chr(list[i] ^ i + 1)
     return decrypted
