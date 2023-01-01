@@ -154,7 +154,7 @@ print(b)
 6ZyA6KaB5Yqg5a+G55qE
 需要加密的
 ```
-<font color=red>提示</font><：位异或传参是需要传入一个列表，下面是个例子
+- ![#f03c15]提示`#f03c15`：位异或传参是需要传入一个列表，下面是个例子
 
 ```python
 import qsnctf
