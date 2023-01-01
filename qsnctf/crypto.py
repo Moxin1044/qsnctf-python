@@ -1,4 +1,5 @@
 def caesar_encrypt(plaintext, shift):
+    # 凯撒加密
     # 感谢OpenAI的大恩大德
     # Create an empty string to store the encrypted message.
     shift = int(shift)
@@ -22,6 +23,7 @@ def caesar_encrypt(plaintext, shift):
 
 
 def caesar_decrypt(ciphertext, shift):
+    # 凯撒解密
     # Create an empty string to store the decrypted message.
     shift = int(shift)
     plaintext = ""
