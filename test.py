@@ -5,8 +5,9 @@ import qsnctf
 # a = qsnctf.crypto.caesar_decrypt_cracking("oqlard")
 # jsona = json.loads(a)
 # print(jsona['1'])
+import qsnctf
 
-a = qsnctf.base91_encode("qsnctf")
+a = qsnctf.base.base62_encode(34441886726)
 print(a)
-b = qsnctf.base91_decode("#2U==[WC")
+b = qsnctf.base.base62_decode("base62")
 print(b)

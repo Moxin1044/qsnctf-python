@@ -4,6 +4,7 @@
 import base64
 import python3base92
 import struct
+import base62
 # python3base92: https://github.com/Moxin1044/Python3Base92
 
 
@@ -94,6 +95,14 @@ def base64_encode(text):
 def base64_decode(text):
     code = (base64.b64decode(text.encode('utf-8')))
     return code.decode('utf-8')
+
+
+def base62_encode(text):
+    return base62.encode(text)
+
+
+def base62_decode(text):
+    return base62.decode(text)
 
 
 def base32_encode(text):

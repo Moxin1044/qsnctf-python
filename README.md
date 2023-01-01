@@ -81,9 +81,9 @@ FUNCTIONS
 
 ### Base
 
-| base16 | base32 | base64 | base85 | base91 |
+| base16 | base32 | base64 | base62 | base85 |
 | :------------: | :------------: | :------------: | :------------: | :------------: |
-| base92 |  |  |  |  |
+| base91 | base92 |  |  |  |
 ### crypto
 
 | 凯撒密码 | 凯撒爆破 | 培根密码 | ROT5 | ROT13 |
@@ -167,6 +167,17 @@ print(a)
 
 ```
 qsnctf{M0X1n_Love_you!}
+```
+
+#### Base62的encode值应该是整数！
+
+```python
+import qsnctf
+
+a = qsnctf.base.base62_encode(34441886726)
+print(a)
+b = qsnctf.base.base62_decode("base62")
+print(b)
 ```
 
 ## 环境
