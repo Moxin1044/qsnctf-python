@@ -1,45 +1,41 @@
-def caesar_encrypt(plaintext, shift):
-    # 凯撒加密
-    # 感谢OpenAI的大恩大德
-    # Create an empty string to store the encrypted message.
-    shift = int(shift)
-    ciphertext = ""
-    # Iterate over each character in the plaintext.
-    for char in plaintext:
-        # If the character is a letter, encrypt it using the Caesar cipher.
-        if char.isalpha():
-            # Shift the character by the specified shift value.
-            shifted_char = chr(ord(char) + shift)
-            # If the shifted character is not a letter, wrap it around.
-            if not shifted_char.isalpha():
-                shifted_char = chr(ord(shifted_char) - 26)
-            # Add the encrypted character to the ciphertext.
-            ciphertext += shifted_char
-        # If the character is not a letter, add it to the ciphertext without encrypting it.
+def caesar_encrypt(text, shift):
+    # 凯撒加密 （重新写的）
+    ciphertext = ''
+    for p in text:
+        if p.islower():
+            ciphertext += chr(ord('a') + (ord(p) - ord('a') + shift) % 26)
+        elif p.isupper():
+            ciphertext += chr(ord('A') + (ord(p) - ord('Z') + shift) % 26)
         else:
-            ciphertext += char
-    # Return the encrypted ciphertext.
+            ciphertext += p
     return ciphertext
 
 
-def caesar_decrypt(ciphertext, shift):
-    # 凯撒解密
-    # Create an empty string to store the decrypted message.
-    shift = int(shift)
-    plaintext = ""
-    # Iterate over each character in the ciphertext.
-    for char in ciphertext:
-        # If the character is a letter, decrypt it using the Caesar cipher.
-        if char.isalpha():
-            # Shift the character by the specified shift value.
-            shifted_char = chr(ord(char) - shift)
-            # If the shifted character is not a letter, wrap it around.
-            if not shifted_char.isalpha():
-                shifted_char = chr(ord(shifted_char) + 26)
-            # Add the decrypted character to the plaintext.
-            plaintext += shifted_char
-        # If the character is not a letter, add it to the plaintext without decrypting it.
+def caesar_decrypt(text, shift):
+    # 凯撒解密 （一样，重新写的）
+    ciphertext = ''
+    for p in text:
+        if p.islower():
+            ciphertext += chr(ord('a') + (ord(p) - ord('a') - shift) % 26)
+        elif p.isupper():
+            ciphertext += chr(ord('A') + (ord(p) - ord('Z') - shift) % 26)
         else:
-            plaintext += char
-    # Return the decrypted plaintext.
-    return plaintext
+            ciphertext += p
+    return ciphertext
+
+
+def caesar_decrypt_cracking(ciphertext):
+    # 凯撒解密爆破，返回值为列表
+    results = []
+    for i in range(1, 26):
+        plaintext = caesar_decrypt(ciphertext,i)
+        results.append("您的偏移量为{}，结果为{}".format(i, plaintext))
+    return results
+
+def caesar_encrypt_cracking(ciphertext):
+    # 凯撒解密爆破，返回值为列表
+    results = []
+    for i in range(1, 26):
+        plaintext = caesar_encrypt(ciphertext,i)
+        results.append("您的偏移量为{}，结果为{}".format(i, plaintext))
+    return results
