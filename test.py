@@ -1,6 +1,13 @@
 import qsnctf
 import os
 
-less = [0x71,0x72,0x6c,0x60,0x70,0x63,0x7d,0x4a,0x38,0x71,0x3b,0x65,0x53,0x41,0x61,0x79,0x75,0x4e,0x6b,0x7c,0x61,0x34,0x6b]
-a = qsnctf.misc.xor_decrypt_1(less)
-print(a)
+
+
+
+
+encoded_string = qsnctf.crypto.bacon_encrypt('Hello, World!')
+print(encoded_string)
+# Output: AABBBAABAAABABBABABBABBBABABBAABBBABAAABABABBAAABB
+decoded_string = qsnctf.crypto.bacon_decrypt(encoded_string)
+print(decoded_string)
+# Output: HELLOWORLD
