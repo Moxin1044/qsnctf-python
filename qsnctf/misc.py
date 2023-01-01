@@ -16,8 +16,7 @@ def Chinese_socialism_encode(string):
     file_path = os.path.join(package_path, 'plugin', 'js', 'cvencode.js')
     content = execjs.compile(js_from_file(file_path))
     result = content.call('encode', string)
-    result = str(result)
-    return result
+    return str(result)
 
 
 def Chinese_socialism_decode(string):
@@ -26,8 +25,7 @@ def Chinese_socialism_decode(string):
     file_path = os.path.join(package_path, 'plugin', 'js', 'cvencode.js')
     content = execjs.compile(js_from_file(file_path))
     result = content.call('decode', string)
-    result = str(result)
-    return result
+    return str(result)
 
 
 def string_reverse(string):
