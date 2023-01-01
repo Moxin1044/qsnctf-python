@@ -3,7 +3,7 @@
 # 末心
 import os
 import execjs  # PyExecJS
-from auxiliary import js_from_file
+from qsnctf.auxiliary import js_from_file
 # 社会主义核心价值观编码
 # 需要将Python目录下>lib>subprocess.py的765行附近的encoding的默认None值修改为utf-8即可。
 
