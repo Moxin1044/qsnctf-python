@@ -102,7 +102,6 @@ def rot13(text):
         'U': 'H', 'V': 'I', 'W': 'J', 'X': 'K', 'Y': 'L',
         'Z': 'M'
     }
-
     # 加/解密文本
     encrypted_text = ''
     for char in text:
@@ -123,7 +122,6 @@ def rot5(text):
         '0': '5', '1': '6', '2': '7', '3': '8', '4': '9',
         '5': '0', '6': '1', '7': '2', '8': '3', '9': '4',
     }
-
     # 加/解密文本
     encrypted_text = ''
     for char in text:
