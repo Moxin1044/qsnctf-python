@@ -10,7 +10,7 @@ import pybase100
 
 
 def base100_encode(text, encoding="utf-8"):
-    return pybase100.encode(text, encoding)
+    return pybase100.encode(text, encoding).decode()
 
 
 def base100_decode(text, encoding="utf-8"):
