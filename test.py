@@ -2,5 +2,5 @@ import qsnctf
 import os
 
 
-a = qsnctf.base.base92_decode("ItHYSr3x")
+a = qsnctf.misc.url_encode("hello=123")
 print(a)
