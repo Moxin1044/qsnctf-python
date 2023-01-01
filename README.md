@@ -1,4 +1,119 @@
 # QSNCTF
 qsnctf是青少年CTF训练平台进行编写的一个Python包程序，意图在Python中为大家快速使用一些CTF常用功能开发的开源包。这里有很多CTF常用功能，如Base编码、hash加密，甚至少见的社会主义核心价值观编码都在其中。
 
-文档等待更新中，敬请期待。
+## 使用
+
+首先将GitHub上的项目下载下来后可以文件中有一个`setup.py`
+
+打开终端然后输入
+
+```bash
+python setup.py install
+```
+
+或者也可以直接使用pip来进行安装
+
+```bash
+pip install qsnctf
+```
+
+安装成功会显示
+
+`Successfully installed PyExecJS-1.5.1 qsnctf-0.0.4`
+
+如果你想知道具体怎么使用可以导入这个包，然后使用`help(qsnctf)`查看库的用法
+
+```bash
+>>> import qsnctf
+>>> help(qsnctf)
+Help on package qsnctf:
+
+NAME
+    qsnctf
+
+PACKAGE CONTENTS
+    base
+    crypto
+    hash
+    main
+    others
+    uuid
+
+FILE
+    c:\users\xiniyi\appdata\local\programs\python\python39\lib\site-packages\qsnctf-0.0.4-py3.9.egg\qsnctf\__init__.py
+```
+
+然后使用help(qsnctf.PACKAGE CONTENTS)来查看具体的使用方法
+
+#### 例
+
+查看`base`的使用方法
+
+```bash
+>>> help(qsnctf.base)              
+Help on module qsnctf.base in qsnct
+                                   
+NAME                               
+    qsnctf.base                    
+                                   
+DESCRIPTION                        
+    # Base编码解码功能                   
+    # 2023年1月1日                    
+    # 末心                           
+                                   
+FUNCTIONS                          
+    base16_decode(text)            
+                                   
+    base16_encode(text)            
+                                   
+    base32_decode(text)            
+                                   
+    base32_encode(text)            
+                                   
+    base64_decode(text)            
+                                   
+    base64_encode(text)            
+                                   
+    base85_decode(text)
+>>>
+```
+
+## 具体使用
+
+#### 命令行使用
+
+第一步导入`qsnctf`库
+
+```python
+import qsnctf
+```
+
+例如需要使用`base64`加密
+
+```python
+qsnctf.base.base64_encode("需要加密的")
+```
+
+相同如果使用`base64`解密的话就是
+
+```python
+qsnctf.base.base64_decode("需要解密的")
+```
+
+其他的加密加密类似
+
+------
+
+#### 编译器使用
+
+这里还是使用base64来演示，其他的加密解密类似。
+
+```python
+import qsnctf
+
+a=qsnctf.base.base64_encode("需要加密的")
+print(a)
+b=qsnctf.base.base64_decode("6ZyA6KaB5Yqg5a+G55qE")
+print(b)
+```
+文档持续更新。
