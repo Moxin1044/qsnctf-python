@@ -6,9 +6,10 @@ with io.open('README.md', encoding='utf-8') as f:
 
 setup(
     name='qsnctf',
-    version='0.0.3',
+    version='0.0.4',
     install_requires=['PyExecJS'],
     packages=['qsnctf'],
+    package_data={'qsnctf': ['plugin/*']},
     url='https://github.com/Moxin1044/qsnctf-python',
     license='MIT License',
     long_description=long_description,

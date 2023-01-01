@@ -17,14 +17,14 @@ def js_from_file(file_name):
 
 def Chinese_socialism_encode(data):
     folder_path = os.path.abspath(os.path.dirname(__file__))
-    content = execjs.compile(js_from_file(folder_path+'\\plugin\\js\\cvencode.js'))
+    content = execjs.compile(js_from_file('./plugin/js/cvencode.js'))
     result = content.call('encode', data)
     result = str(result)
     return result
 
 def Chinese_socialism_decode(data):
     folder_path = os.path.abspath(os.path.dirname(__file__))
-    content = execjs.compile(js_from_file(folder_path+'\\plugin\\js\\cvencode.js'))
+    content = execjs.compile(js_from_file('./plugin/js/cvencode.js'))
     result = content.call('decode', data)
     result = str(result)
     return result
