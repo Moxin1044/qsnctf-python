@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: qsnctf
-Version: 0.0.5
+Version: 0.0.6
 Summary: 青少年CTF训练平台提供的Python软件包
 Home-page: https://github.com/Moxin1044/qsnctf-python
 Author: Moxin
@@ -8,7 +8,7 @@ Author-email: 1044631097@qq.com
 License: MIT License
 Description-Content-Type: text/markdown
 
-# QSNCTF
+# 🤔QSNCTF
 qsnctf是青少年CTF训练平台进行编写的一个Python包程序，意图在Python中为大家快速使用一些CTF常用功能开发的开源包。这里有很多CTF常用功能，如Base编码、hash加密，甚至少见的社会主义核心价值观编码都在其中。
 
 ## 使用
@@ -91,23 +91,33 @@ FUNCTIONS
 
 ### Base
 
-| base16加密解密 | base32加密解密 | base64加密解密 | base85解密 |
-| -------------- | -------------- | -------------- | -------------- |
-
+| base16 | base32 | base62 | base64 | base85 |
+| :------------: | :------------: | :------------: | :------------: | :------------: |
+| base91 | base92 | base100 |  |  |
 ### crypto
 
-| 凯撒加密解密 | 凯撒密码爆破 |
-| ------------ |--------|
+| 凯撒密码 | 凯撒爆破 | 培根密码 | ROT5 | ROT13 |
+| :------: | :------: | :------: | :--: | :---: |
+|  ROT18   |          |          |      |       |
+
+### hash
+
+| md5         | sha512   | sha384   | sha256   | sha224 |
+| :---------: | :------: | :------: | :------: | :---------: |
+| sha1 | shake256 | shake256 | HMAC-SHA256 | sha3-512 |
+| sha3-384 | sha3-256 | sha3-224 |  |  |
+
+
 
 ### misc
 
-| 核心价值观加密解密 | 文本逆向   |
-| ------------------ |--------|
+| 核心价值观加密解密 | 文本逆向 | url加密解密 | 位异或 |
+| :----------------: | :------: | :---------: | :----: |
 
 ### uuid
 
 | 获取uuid |
-| -------- |
+| :------: |
 
 
 ## 具体使用
@@ -154,6 +164,31 @@ print(b)
 6ZyA6KaB5Yqg5a+G55qE
 需要加密的
 ```
+#### 提示：位异或传参是需要传入一个列表，下面是个例子
+
+```python
+import qsnctf
+l=[0x71,0x72,0x6c,0x60,0x70,0x63,0x7d,0x4a,0x38,0x71,0x3b,0x65,0x53,0x41,0x61,0x79,0x75,0x4e,0x6b,0x7c,0x61,0x34,0x6b]
+a=qsnctf.misc.xor_decrypt(l)
+print(a)
+```
+
+返回结果
+
+```
+qsnctf{M0X1n_Love_you!}
+```
+
+#### Base62的encode值应该是整数！
+
+```python
+import qsnctf
+
+a = qsnctf.base.base62_encode(34441886726)
+print(a)
+b = qsnctf.base.base62_decode("base62")
+print(b)
+```
 
 ## 环境
 
@@ -166,3 +201,15 @@ print(b)
 支持 `python 3.x` 环境。
 
 文档持续更新。
+
+## ✨ Contributors
+
+感谢下面的所有人：
+
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/Moxin1044"><img src="https://avatars.githubusercontent.com/u/59173630?v=4" width="100px;" alt=""/><br /><sub><b>Moxin</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/wang256814742"><img src="https://avatars.githubusercontent.com/u/75202489?v=4" width="100px;" alt=""/><br /><sub><b>xinyi</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/yiye-yfs"><img src="https://avatars.githubusercontent.com/u/79006318?v=4" width="100px;" alt=""/><br /><sub><b>yiye-yfs</b></sub></a><br /></td>
+  </tr>
+</table>
