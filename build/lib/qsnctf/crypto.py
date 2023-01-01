@@ -3,53 +3,35 @@ import json
 
 def caesar_encrypt(text, shift):
     # 凯撒加密 （重新写的）
-    ciphertext = ''
+    ciphertext, shift = '', int(shift)
     for p in text:
         if p.islower():
-            ciphertext += chr((ord(p) + shift) % 26)
+            ciphertext += chr(97 + (ord(p) - 97 + shift) % 26)
         elif p.isupper():
-            ciphertext += chr(ord('A') + (ord(p) - ord('Z') + shift) % 26)
+            ciphertext += chr(65 + (ord(p) - 65 + shift) % 26)
         else:
             ciphertext += p
     return ciphertext
 
 
 def caesar_decrypt(text, shift):
-    # 凯撒解密 （一样，重新写的）
-    ciphertext = ''
-    for p in text:
-        if p.islower():
-            ciphertext += chr((ord(p) - shift) % 26)
-        elif p.isupper():
-            ciphertext += chr(ord('A') + (ord(p) - ord('Z') - shift) % 26)
-        else:
-            ciphertext += p
-    return ciphertext
+    shift = int(shift)
+    return caesar_encrypt(text, -shift)
 
 
 def caesar_decrypt_cracking(ciphertext):
     # 凯撒解密爆破，返回值为json
-    results = {
-        '1': '', '2': '', '3': '', '4': '', '5': '', '6': '', '7': '', '8': '', '9': '', '10': '', '11': '', '12': '',
-        '13': '', '14': '', '15': '', '16': '', '17': '', '18': '', '19': '', '20': '', '21': '', '22': '', '23': '',
-        '24': '', '25': ''
-    }
+    results = {}
     for i in range(1, 26):
-        plaintext = caesar_decrypt(ciphertext, i)
-        results[str(i)] = plaintext
+        results[str(i)] = caesar_decrypt(ciphertext, i)
     return json.dumps(results)
 
 
 def caesar_encrypt_cracking(ciphertext):
     # 凯撒加密爆破，返回值为json
-    results = {
-        '1': '', '2': '', '3': '', '4': '', '5': '', '6': '', '7': '', '8': '', '9': '', '10': '', '11': '', '12': '',
-        '13': '', '14': '', '15': '', '16': '', '17': '', '18': '', '19': '', '20': '', '21': '', '22': '', '23': '',
-        '24': '', '25': ''
-    }
+    results = {}
     for i in range(1, 26):
-        plaintext = caesar_encrypt(ciphertext, i)
-        results[str(i)] = plaintext
+        results[str(i)] = caesar_encrypt(ciphertext, i)
     return json.dumps(results)
 
 
@@ -94,6 +76,7 @@ def bacon_decrypt(string):
 
 def rot13(text):
     # ROT13 加密即解密
+    # 还有一种写法是 凯撒，偏移量13
     mapping = {
         'A': 'N', 'B': 'O', 'C': 'P', 'D': 'Q', 'E': 'R',
         'F': 'S', 'G': 'T', 'H': 'U', 'I': 'V', 'J': 'W',
