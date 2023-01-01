@@ -1,5 +1,5 @@
 from .main import *
-import qsnctf.base
-import qsnctf.hash
-import qsnctf.uuid
-import qsnctf.others
+from .base import *
+from .hash import *
+from .uuid import *
+from .others import *
