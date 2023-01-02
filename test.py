@@ -1,6 +1,4 @@
 from qsnctf import *
 
-a = rot18('qsnctf2022')
-print(a)
-b = rot18('dfapgs7577')
-print(b)
+a = md5('qsnctf2022')
+print(a) # cede1574f851cb8a1ffb3c1b885c4965

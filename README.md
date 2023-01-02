@@ -782,7 +782,28 @@ b = rot18('dfapgs7577')
 print(b) # qsnctf2022
 ```
 
-#### 
+### Hash
+
+#### MD5
+
+##### md5
+
+|  **函数名**  | **返回类型** |   **位置**   |    **说明**    |
+| :----------: | :----------: | :----------: | :------------: |
+|     md5      |    string    |  crypto.py   |      md5       |
+|  **参数名**  | **是否可空** | **传参类型** |    **说明**    |
+| input_string |    False     |    string    | 需要加密的内容 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+a = md5('qsnctf2022')
+print(a) # cede1574f851cb8a1ffb3c1b885c4965
+```
+
+### 
 
 ## 环境
 
