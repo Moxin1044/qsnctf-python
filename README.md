@@ -522,7 +522,7 @@ print(a) # 青少年CTF
 
 |        **函数名**        | **返回类型** |   **位置**   |        **说明**        |
 | :----------------------: | :----------: | :----------: | :--------------------: |
-| Chinese_socialism_encode |    string    |   base.py    | 社会主义核心价值观编码 |
+| Chinese_socialism_encode |    string    |   misc.py    | 社会主义核心价值观编码 |
 |        **参数名**        | **是否可空** | **传参类型** |        **说明**        |
 |          string          |    False     |    string    |     需要编码的内容     |
 
@@ -530,7 +530,7 @@ print(a) # 青少年CTF
 
 |        **函数名**        | **返回类型** |   **位置**   |        **说明**        |
 | :----------------------: | :----------: | :----------: | :--------------------: |
-| Chinese_socialism_decode |    string    |   base.py    | 社会主义核心价值观解码 |
+| Chinese_socialism_decode |    string    |   misc.py    | 社会主义核心价值观解码 |
 |        **参数名**        | **是否可空** | **传参类型** |        **说明**        |
 |          string          |    False     |    string    |     需要解码的内容     |
 
@@ -544,6 +544,84 @@ a = Chinese_socialism_encode('青少年CTF')
 print(a) # 友善爱国敬业敬业诚信和谐敬业文明友善爱国平等诚信民主富强敬业民主友善爱国平等友善平等敬业诚信民主自由自由和谐平等自由自由公正
 a = Chinese_socialism_decode('友善爱国敬业敬业诚信和谐敬业文明友善爱国平等诚信民主富强敬业民主友善爱国平等友善平等敬业诚信民主自由自由和谐平等自由自由公正')
 print(a) # 青少年CTF
+```
+
+### 字符串操作
+
+#### 逆向字符串
+
+##### string_reverse
+
+|   **函数名**   | **返回类型** |   **位置**   |           **说明**           |
+| :------------: | :----------: | :----------: | :--------------------------: |
+| string_reverse |    string    |   misc.py    | 逆向字符串，字符串倒序、翻转 |
+|   **参数名**   | **是否可空** | **传参类型** |           **说明**           |
+|     string     |    False     |    string    |        需要逆向的内容        |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = string_reverse('青少年CTF')
+print(a) # FTC年少青
+```
+
+### URL编码
+
+#### URL编码
+
+##### url_encode
+
+| **函数名** | **返回类型** |   **位置**   |    **说明**    |
+| :--------: | :----------: | :----------: | :------------: |
+| url_encode |    string    |   misc.py    |    URL编码     |
+| **参数名** | **是否可空** | **传参类型** |    **说明**    |
+|   string   |    False     |    string    | 需要编码的内容 |
+
+##### url_decode
+
+| **函数名** | **返回类型** |   **位置**   |    **说明**    |
+| :--------: | :----------: | :----------: | :------------: |
+| url_decode |    string    |   misc.py    |    URL解码     |
+| **参数名** | **是否可空** | **传参类型** |    **说明**    |
+|   string   |    False     |    string    | 需要解码的内容 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = url_encode('青少年CTF=中学生CTF')
+print(a) # %E9%9D%92%E5%B0%91%E5%B9%B4CTF%3D%E4%B8%AD%E5%AD%A6%E7%94%9FCTF
+a = url_decode('%E9%9D%92%E5%B0%91%E5%B9%B4CTF%3D%E4%B8%AD%E5%AD%A6%E7%94%9FCTF')
+print(a) # 青少年CTF=中学生CTF
+```
+
+### 异或
+
+#### 列表异或
+
+##### xor_list
+
+| **函数名** | **返回类型** |   **位置**   | **说明** |
+| :--------: | :----------: | :----------: | :------: |
+|  xor_list  |    string    |   misc.py    | URL编码  |
+| **参数名** | **是否可空** | **传参类型** | **说明** |
+|  lt_data   |    False     |     list     | 异或数据 |
+|  lt_root   |    False     |     list     |  异或根  |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+a = "abcde" # 因为string在Python中来说可以当做列表来截取，所以可以直接这样传
+b = "01234"
+c = xor_list(a, b)
+print(c) # QSQWQ
 ```
 
 ### 
