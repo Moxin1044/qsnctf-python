@@ -7,7 +7,7 @@ with io.open('README.md', encoding='utf-8') as f:
 setup(
     name='qsnctf',
     version='0.0.8',
-    install_requires=['PyExecJS', 'python3base92', 'pybase62', 'pybase100', 'base58'],
+    install_requires=['PyExecJS', 'python3base92', 'pybase62', 'pybase100', 'base58', 'requests'],
     packages=find_packages(),
     include_package_data=True,
     package_data={'qsnctf': ['plugin/*']},
