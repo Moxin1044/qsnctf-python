@@ -115,8 +115,8 @@ def base64_decode(text, encoding="utf-8", decoding="utf-8"):
     return code
 
 
-def base62_encode(text):
-    return base62.encode(text)
+def base62_encode(ints):
+    return base62.encode(ints)
 
 
 def base62_decode(text):

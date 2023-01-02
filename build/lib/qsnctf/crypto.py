@@ -140,3 +140,11 @@ def rot18(text):
             encrypted_text += char
 
     return encrypted_text
+
+
+# def vigenere_encrypt(text,key):
+#     return vigenere.encrypt(text, key, base64=False)
+#
+#
+# def vigenere_decrypt(text,key):
+#     return vigenere.decrypt(text, key)

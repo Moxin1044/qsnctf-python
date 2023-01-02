@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: qsnctf
-Version: 0.0.7
+Version: 0.0.8
 Summary: 青少年CTF训练平台提供的Python软件包
 Home-page: https://github.com/Moxin1044/qsnctf-python
 Author: Moxin
@@ -91,9 +91,9 @@ FUNCTIONS
 
 ### Base
 
-| base16 | base32 | base62 | base64 | base85 |
+| base16 | base32 | base36 | base58 | base62 |
 | :------------: | :------------: | :------------: | :------------: | :------------: |
-| base91 | base92 | base100 |  |  |
+| base64 | base85 | base91 | base92 | base100 |
 ### crypto
 
 | 凯撒密码 | 凯撒爆破 | 培根密码 | ROT5 | ROT13 |
@@ -189,6 +189,12 @@ print(a)
 b = qsnctf.base.base62_decode("base62")
 print(b)
 ```
+
+## 传参方法
+
+由于Base、各种加密的方法较多，传参方法也花样百出。这里给大家写出这个文档方便参考，下面是调用示例和传参参数的说明和注意事项。
+
+
 
 ## 环境
 

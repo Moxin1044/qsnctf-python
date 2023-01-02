@@ -1,3 +1,5 @@
 PyExecJS
 python3base92
 pybase62
+pybase100
+base58

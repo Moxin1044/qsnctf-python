@@ -6,15 +6,18 @@ import python3base92
 import struct
 import base62
 import pybase100
+import base58
+
+
 # python3base92: https://github.com/Moxin1044/Python3Base92
 
 
-def base100_encode(text, encoding="utf-8"):
-    return pybase100.encode(text, encoding).decode()
+def base100_encode(text, encoding="utf-8", decoding="utf-8"):
+    return pybase100.encode(text, encoding).decode(decoding)
 
 
-def base100_decode(text, encoding="utf-8"):
-    return pybase100.decode(text, encoding).decode()
+def base100_decode(text, encoding="utf-8", decoding="utf-8"):
+    return pybase100.decode(text, encoding).decodedecoding()
 
 
 def base92_encode(data):
@@ -92,51 +95,76 @@ def base91_decode(data):
     return out.decode()
 
 
-def base64_encode(text):
-    code = (base64.b64encode(text.encode('utf-8'))).decode('utf-8')
+def base85_encode(text, encoding="utf-8", decoding="utf-8"):
+    code = (base64.b85encode(text.encode(encoding))).decode(decoding)
     return code
 
 
-def base64_decode(text):
-    code = (base64.b64decode(text.encode('utf-8')))
-    return code.decode('utf-8')
+def base85_decode(text, encoding="utf-8", decoding="utf-8"):
+    code = (base64.b85decode(text.encode(encoding)))
+    return code.decode(decoding)
 
 
-def base62_encode(text):
-    return base62.encode(text)
+def base64_encode(text, encoding="utf-8", decoding="utf-8"):
+    code = (base64.b64encode(text.encode(encoding))).decode(decoding)
+    return code
+
+
+def base64_decode(text, encoding="utf-8", decoding="utf-8"):
+    code = (base64.b64decode(text.encode(encoding))).decode(decoding)
+    return code
+
+
+def base62_encode(ints):
+    return base62.encode(ints)
 
 
 def base62_decode(text):
     return base62.decode(text)
 
 
-def base32_encode(text):
-    code = (base64.b32encode(text.encode('utf-8'))).decode('utf-8')
+def base58_encode(text, encoding="utf-8", decoding="utf-8"):
+    return base58.b58encode(text.encode(encoding)).decode(decoding)
+
+
+def base58_decode(text, encoding="utf-8", decoding="utf-8"):
+    return base58.b58decode(text.encode(encoding)).decode(decoding)
+
+
+def base36_encode(number):
+    charset = "0123456789abcdefghijklmnopqrstuvwxyz"
+    encoded = ""
+    while number > 0:
+        encoded = charset[number % 36] + encoded
+        number //= 36
+    if encoded == "":
+        encoded = "0"
+    return encoded
+
+
+def base36_decode(encoded):
+    charset = "0123456789abcdefghijklmnopqrstuvwxyz"
+    number = 0
+    for i, ch in enumerate(encoded[::-1]):
+        number += charset.index(ch) * (36 ** i)
+    return number
+
+
+def base32_encode(text, encoding="utf-8", decoding="utf-8"):
+    code = (base64.b32encode(text.encode(encoding))).decode(decoding)
     return code
 
 
-def base32_decode(text):
-    code = (base64.b32decode(text.encode('utf-8')))
-    return code.decode('utf-8')
+def base32_decode(text, encoding="utf-8", decoding="utf-8"):
+    code = (base64.b32decode(text.encode(encoding)))
+    return code.decode(decoding)
 
 
-def base16_encode(text):
-    code = (base64.b16encode(text.encode('utf-8'))).decode('utf-8')
+def base16_encode(text, encoding="utf-8", decoding="utf-8"):
+    code = (base64.b16encode(text.encode(encoding))).decode(decoding)
     return code
 
 
-def base16_decode(text):
-    code = (base64.b16decode(text.encode('utf-8')))
-    return code.decode('utf-8')
-
-
-def base85_encode(text):
-    code = (base64.b85encode(text.encode('utf-8'))).decode('utf-8')
-    return code
-
-
-def base85_decode(text):
-    code = (base64.b85decode(text.encode('utf-8')))
-    return code.decode('utf-8')
-
-
+def base16_decode(text, encoding="utf-8", decoding="utf-8"):
+    code = (base64.b16decode(text.encode(encoding)))
+    return code.decode(decoding)

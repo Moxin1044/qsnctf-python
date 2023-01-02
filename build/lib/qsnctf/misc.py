@@ -41,9 +41,13 @@ def url_decode(string):
     return urllib.parse.unquote(string)
 
 
-def xor_decrypt(lt_data,lt_root):
+def xor_list(lt_data,lt_root):
     # 异或 lt_root直接传列表过来，这样也可以字符串之间互相异或
     decrypted = ""
-    for i in range(len(lt_data)):
-        decrypted += chr(lt_data[i] ^ lt_root[i])
+    for i in range(min(len(lt_data),len(lt_root))):
+        decrypted += chr(ord(lt_data[i] )^ ord(lt_root[i]))
     return decrypted
+
+
+
+
