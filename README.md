@@ -4,7 +4,7 @@
 
 [（本仓库）](https://github.com/Moxin1044/qsnctf-python)qsnctf是青少年CTF训练平台进行编写的一个Python包程序，意图在Python中为大家快速使用一些CTF常用功能开发的开源包。这里有很多CTF常用功能，如Base编码、hash加密，甚至少见的社会主义核心价值观编码、quipqiup等都在其中。
 
-#文档
+# 文档
     英文文档
 ## 安装
 
