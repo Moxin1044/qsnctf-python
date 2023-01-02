@@ -1,7 +1,7 @@
 from qsnctf import *
 
 
-a = base62_encode(123456)
+a = base100_encode('青少年CTF')
 print(a)
-a = base62_decode('W7E')
+a = base100_decode('📠💔💉📜💧💈📜💰💫🐺👋🐽')
 print(a)
