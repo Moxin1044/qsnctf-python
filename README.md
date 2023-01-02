@@ -8,7 +8,7 @@
 
 ## 文档
 
-其他语种：English
+其他语种：[English](https://github.com/Moxin1044/qsnctf-python/blob/master/docs/README_en.md)
 
 函数库：[Function.md](https://github.com/Moxin1044/qsnctf-python/blob/master/docs/Function.md)
 
@@ -208,7 +208,7 @@ print(b)
 
 ## 传参方法
 
-文档移动到：Function.md
+文档移动到：[Function.md](https://github.com/Moxin1044/qsnctf-python/blob/master/docs/Function.md)
 
 ## 环境
 
