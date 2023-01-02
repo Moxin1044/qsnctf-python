@@ -17,7 +17,7 @@ def base100_encode(text, encoding="utf-8", decoding="utf-8"):
 
 
 def base100_decode(text, encoding="utf-8", decoding="utf-8"):
-    return pybase100.decode(text, encoding).decodedecoding()
+    return pybase100.decode(text, encoding).decode(decoding)
 
 
 def base92_encode(data):
