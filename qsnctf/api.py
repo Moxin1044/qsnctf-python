@@ -32,12 +32,10 @@ class quipqiup:
     def quipqiup_return(self):
         url = f"{self.url}status"
         json = {"id": int(self.id)}
-        response = requests.post(url, headers=self.headers, json=json)
-        response_data = response.json()
+        response_data = requests.post(url, headers=self.headers, json=json).json()
         self.json = response_data  # json 直接返回requests的response json
-        r_list = response_data['solutions']
         return_list = []
-        for response_list in r_list:
+        for response_list in response_data['solutions']:
             return_list.append(response_list['plaintext'])
         self.list = return_list
         self.text = ','.join(return_list)
