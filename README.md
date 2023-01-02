@@ -114,7 +114,7 @@ FUNCTIONS
 | 获取uuid |
 | :------: |
 ### API
-|quipqiup |
+|quipqiup词频分析 |
 | :------: |
 # 具体使用
 
