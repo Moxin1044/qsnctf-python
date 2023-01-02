@@ -198,7 +198,7 @@ print(b)
 | :------------: | :----------: | :----------: | :---------------------------: |
 | base100_encode |    string    |   base.py    |     base100编码(支持中文)     |
 |   **参数名**   | **是否可空** | **传参类型** |           **说明**            |
-|      text      |    False     |    string    |     需要解码的Base100编码     |
+|      text      |    False     |    string    |        需要编码的内容         |
 |    encoding    |     True     |    string    | 解码文本时的编码，默认值utf-8 |
 |    decoding    |     True     |    string    | 输出文本时的编码，默认值utf-8 |
 
@@ -208,7 +208,7 @@ print(b)
 | :------------: | :----------: | :----------: | :---------------------------: |
 | base100_decode |    string    |   base.py    |          base100解码          |
 |   **参数名**   | **是否可空** | **传参类型** |           **说明**            |
-|      text      |    False     |    string    |     需要base100编码的文本     |
+|      text      |    False     |    string    |        需要解码的内容         |
 |    encoding    |     True     |    string    | 解码文本时的编码，默认值utf-8 |
 |    decoding    |     True     |    string    | 输出文本时的编码，默认值utf-8 |
 
@@ -232,15 +232,15 @@ print(a) # 青少年CTF
 | :-----------: | :----------: | :----------: | :--------------------------: |
 | base92_encode |    string    |   base.py    | base92编码（无法编码中文哦） |
 |  **参数名**   | **是否可空** | **传参类型** |           **说明**           |
-|     text      |    False     |    string    |     需要解码的base92编码     |
+|     text      |    False     |    string    |        需要编码的内容        |
 
 ##### base92_decode
 
-|  **函数名**   | **返回类型** |   **位置**   |       **说明**       |
-| :-----------: | :----------: | :----------: | :------------------: |
-| base92_decode |    string    |   base.py    |      base92解码      |
-|  **参数名**   | **是否可空** | **传参类型** |       **说明**       |
-|     text      |    False     |    string    | 需要base92编码的文本 |
+|  **函数名**   | **返回类型** |   **位置**   |    **说明**    |
+| :-----------: | :----------: | :----------: | :------------: |
+| base92_decode |    string    |   base.py    |   base92解码   |
+|  **参数名**   | **是否可空** | **传参类型** |    **说明**    |
+|     text      |    False     |    string    | 需要解码的内容 |
 
 ##### 使用示例
 
@@ -262,15 +262,15 @@ print(a) # qsnctf123QSN
 | :-----------: | :----------: | :----------: | :--------------------: |
 | base91_encode |    string    |   base.py    | base91编码（支持中文） |
 |  **参数名**   | **是否可空** | **传参类型** |        **说明**        |
-|     text      |    False     |    string    |  需要解码的base91编码  |
+|     text      |    False     |    string    |     需要编码的内容     |
 
 ##### base91_decode
 
-|  **函数名**   | **返回类型** |   **位置**   |       **说明**       |
-| :-----------: | :----------: | :----------: | :------------------: |
-| base91_decode |    string    |   base.py    |      base91解码      |
-|  **参数名**   | **是否可空** | **传参类型** |       **说明**       |
-|     text      |    False     |    string    | 需要base91编码的文本 |
+|  **函数名**   | **返回类型** |   **位置**   |    **说明**    |
+| :-----------: | :----------: | :----------: | :------------: |
+| base91_decode |    string    |   base.py    |   base91解码   |
+|  **参数名**   | **是否可空** | **传参类型** |    **说明**    |
+|     text      |    False     |    string    | 需要解码的内容 |
 
 ##### 使用示例
 
@@ -292,7 +292,7 @@ print(a) # 青少年CTF
 | :-----------: | :----------: | :----------: | :---------------------------: |
 | base85_encode |    string    |   base.py    |    base85编码（支持中文）     |
 |  **参数名**   | **是否可空** | **传参类型** |           **说明**            |
-|     text      |    False     |    string    |     需要解码的base85编码      |
+|     text      |    False     |    string    |        需要编码的内容         |
 |   encoding    |     True     |    string    | 解码文本时的编码，默认值utf-8 |
 |   decoding    |     True     |    string    | 输出文本时的编码，默认值utf-8 |
 
@@ -302,7 +302,7 @@ print(a) # 青少年CTF
 | :-----------: | :----------: | :----------: | :---------------------------: |
 | base85_decode |    string    |   base.py    |          base85解码           |
 |  **参数名**   | **是否可空** | **传参类型** |           **说明**            |
-|     text      |    False     |    string    |     需要base85编码的文本      |
+|     text      |    False     |    string    |        需要解码的内容         |
 |   encoding    |     True     |    string    | 解码文本时的编码，默认值utf-8 |
 |   decoding    |     True     |    string    | 输出文本时的编码，默认值utf-8 |
 
@@ -326,7 +326,7 @@ print(a) # 青少年CTF
 | :-----------: | :----------: | :----------: | :---------------------------: |
 | base64_encode |    string    |   base.py    |    base64编码（支持中文）     |
 |  **参数名**   | **是否可空** | **传参类型** |           **说明**            |
-|     text      |    False     |    string    |     需要解码的base64编码      |
+|     text      |    False     |    string    |        需要编码的内容         |
 |   encoding    |     True     |    string    | 解码文本时的编码，默认值utf-8 |
 |   decoding    |     True     |    string    | 输出文本时的编码，默认值utf-8 |
 
@@ -336,7 +336,7 @@ print(a) # 青少年CTF
 | :-----------: | :----------: | :----------: | :---------------------------: |
 | base64_decode |    string    |   base.py    |          base64解码           |
 |  **参数名**   | **是否可空** | **传参类型** |           **说明**            |
-|     text      |    False     |    string    |     需要base64编码的文本      |
+|     text      |    False     |    string    |        需要解码的内容         |
 |   encoding    |     True     |    string    | 解码文本时的编码，默认值utf-8 |
 |   decoding    |     True     |    string    | 输出文本时的编码，默认值utf-8 |
 
@@ -352,7 +352,201 @@ a = base64_decode('6Z2S5bCR5bm0Q1RG')
 print(a) # 青少年CTF
 ```
 
+#### Base62
 
+##### base62_encode
+
+|  **函数名**   | **返回类型** |   **位置**   |          **说明**          |
+| :-----------: | :----------: | :----------: | :------------------------: |
+| base62_encode |  **string**  |   base.py    | base62编码（只能是整数哦） |
+|  **参数名**   | **是否可空** | **传参类型** |          **说明**          |
+|     ints      |    False     |   **int**    |       需要编码的内容       |
+
+##### base62_decode
+
+|  **函数名**   | **返回类型** |   **位置**   |    **说明**    |
+| :-----------: | :----------: | :----------: | :------------: |
+| base62_decode |   **int**    |   base.py    |   base62解码   |
+|  **参数名**   | **是否可空** | **传参类型** |    **说明**    |
+|     text      |    False     |    string    | 需要解码的内容 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = base62_encode(123456)
+print(a) # W7E
+a = base62_decode('W7E')
+print(a) # 123456
+```
+
+#### Base58
+
+##### base58_encode
+
+|  **函数名**   | **返回类型** |   **位置**   |           **说明**            |
+| :-----------: | :----------: | :----------: | :---------------------------: |
+| base58_encode |    string    |   base.py    |    base58编码（支持中文）     |
+|  **参数名**   | **是否可空** | **传参类型** |           **说明**            |
+|     text      |    False     |    string    |        需要编码的内容         |
+|   encoding    |     True     |    string    | 解码文本时的编码，默认值utf-8 |
+|   decoding    |     True     |    string    | 输出文本时的编码，默认值utf-8 |
+
+##### base58_decode
+
+|  **函数名**   | **返回类型** |   **位置**   |           **说明**            |
+| :-----------: | :----------: | :----------: | :---------------------------: |
+| base58_decode |    string    |   base.py    |          base58解码           |
+|  **参数名**   | **是否可空** | **传参类型** |           **说明**            |
+|     text      |    False     |    string    |        需要解码的内容         |
+|   encoding    |     True     |    string    | 解码文本时的编码，默认值utf-8 |
+|   decoding    |     True     |    string    | 输出文本时的编码，默认值utf-8 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = base58_encode('青少年CTF')
+print(a) # 5QhHM9SSxYiJbYQMj
+a = base58_decode('5QhHM9SSxYiJbYQMj')
+print(a) # 青少年CTF
+```
+
+#### Base36
+
+##### base36_encode
+
+|  **函数名**   | **返回类型** |   **位置**   |          **说明**          |
+| :-----------: | :----------: | :----------: | :------------------------: |
+| base36_encode |  **string**  |   base.py    | base36编码（只能是整数哦） |
+|  **参数名**   | **是否可空** | **传参类型** |          **说明**          |
+|    encoded    |    False     |   **int**    |       需要编码的内容       |
+
+##### base36_decode
+
+|  **函数名**   | **返回类型** |   **位置**   |    **说明**    |
+| :-----------: | :----------: | :----------: | :------------: |
+| base36_decode |   **int**    |   base.py    |   base36解码   |
+|  **参数名**   | **是否可空** | **传参类型** |    **说明**    |
+|     text      |    False     |    string    | 需要解码的内容 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = base36_encode(123456)
+print(a) # 2n9c
+a = base36_decode('2n9c')
+print(a) # 123456
+```
+
+#### Base32
+
+##### base32_encode
+
+|  **函数名**   | **返回类型** |   **位置**   |           **说明**            |
+| :-----------: | :----------: | :----------: | :---------------------------: |
+| base32_encode |    string    |   base.py    |    base32编码（支持中文）     |
+|  **参数名**   | **是否可空** | **传参类型** |           **说明**            |
+|     text      |    False     |    string    |        需要编码的内容         |
+|   encoding    |     True     |    string    | 解码文本时的编码，默认值utf-8 |
+|   decoding    |     True     |    string    | 输出文本时的编码，默认值utf-8 |
+
+##### base32_decode
+
+|  **函数名**   | **返回类型** |   **位置**   |           **说明**            |
+| :-----------: | :----------: | :----------: | :---------------------------: |
+| base32_decode |    string    |   base.py    |          base32解码           |
+|  **参数名**   | **是否可空** | **传参类型** |           **说明**            |
+|     text      |    False     |    string    |        需要解码的内容         |
+|   encoding    |     True     |    string    | 解码文本时的编码，默认值utf-8 |
+|   decoding    |     True     |    string    | 输出文本时的编码，默认值utf-8 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = base32_encode('青少年CTF')
+print(a) # 5GOZFZNQSHS3TNCDKRDA====
+a = base32_decode('5GOZFZNQSHS3TNCDKRDA====')
+print(a) # 青少年CTF
+```
+
+#### Base16
+
+##### base16_encode
+
+|  **函数名**   | **返回类型** |   **位置**   |           **说明**            |
+| :-----------: | :----------: | :----------: | :---------------------------: |
+| base16_encode |    string    |   base.py    |    base16编码（支持中文）     |
+|  **参数名**   | **是否可空** | **传参类型** |           **说明**            |
+|     text      |    False     |    string    |        需要编码的内容         |
+|   encoding    |     True     |    string    | 解码文本时的编码，默认值utf-8 |
+|   decoding    |     True     |    string    | 输出文本时的编码，默认值utf-8 |
+
+##### base16_decode
+
+|  **函数名**   | **返回类型** |   **位置**   |           **说明**            |
+| :-----------: | :----------: | :----------: | :---------------------------: |
+| base16_decode |    string    |   base.py    |          base16解码           |
+|  **参数名**   | **是否可空** | **传参类型** |           **说明**            |
+|     text      |    False     |    string    |        需要解码的内容         |
+|   encoding    |     True     |    string    | 解码文本时的编码，默认值utf-8 |
+|   decoding    |     True     |    string    | 输出文本时的编码，默认值utf-8 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = base16_encode('青少年CTF')
+print(a) # E99D92E5B091E5B9B4435446
+a = base16_decode('E99D92E5B091E5B9B4435446')
+print(a) # 青少年CTF
+```
+
+### 社会主义核心价值观编码
+
+#### 核心价值观
+
+##### Chinese_socialism_encode
+
+|        **函数名**        | **返回类型** |   **位置**   |        **说明**        |
+| :----------------------: | :----------: | :----------: | :--------------------: |
+| Chinese_socialism_encode |    string    |   base.py    | 社会主义核心价值观编码 |
+|        **参数名**        | **是否可空** | **传参类型** |        **说明**        |
+|          string          |    False     |    string    |     需要编码的内容     |
+
+##### Chinese_socialism_decode
+
+|        **函数名**        | **返回类型** |   **位置**   |        **说明**        |
+| :----------------------: | :----------: | :----------: | :--------------------: |
+| Chinese_socialism_decode |    string    |   base.py    | 社会主义核心价值观解码 |
+|        **参数名**        | **是否可空** | **传参类型** |        **说明**        |
+|          string          |    False     |    string    |     需要解码的内容     |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = Chinese_socialism_encode('青少年CTF')
+print(a) # 友善爱国敬业敬业诚信和谐敬业文明友善爱国平等诚信民主富强敬业民主友善爱国平等友善平等敬业诚信民主自由自由和谐平等自由自由公正
+a = Chinese_socialism_decode('友善爱国敬业敬业诚信和谐敬业文明友善爱国平等诚信民主富强敬业民主友善爱国平等友善平等敬业诚信民主自由自由和谐平等自由自由公正')
+print(a) # 青少年CTF
+```
+
+### 
 
 ## 环境
 
