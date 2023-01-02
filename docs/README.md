@@ -31,8 +31,8 @@ pip install qsnctf
 `Successfully installed PyExecJS-1.5.1 qsnctf-0.0.4`
 
 也可以使用以下命令来更新此库
-```bash
 
+```bash
 pip install --upgrade qsnctf
 ```
 
@@ -98,9 +98,10 @@ FUNCTIONS
 
 ### BASE
 
-| base16 | base32 | base36 | base58 | base62 |
-| :------------: | :------------: | :------------: | :------------: | :------------: |
+| base16 | base32 | base36 | base58 | base62  |
+| :----: | :----: | :----: | :----: | :-----: |
 | base64 | base85 | base91 | base92 | base100 |
+
 ### CRYPTO
 
 | 凯撒密码 | 凯撒爆破 | 培根密码 | ROT5 | ROT13 |
@@ -109,10 +110,10 @@ FUNCTIONS
 
 ### MD5
 
-| md5         | sha1   | sha224   | sha256   | sha384 |
-| :---------: | :------: | :------: | :------: | :---------: |
-| sha512 | shake128 | shake256 | HMAC-SHA256 | sha3-224 |
-| sha3-256 | sha3-385 | sha3-512 |  |  |
+|   md5    |   sha1   |  sha224  |   sha256    |  sha384  |
+| :------: | :------: | :------: | :---------: | :------: |
+|  sha512  | shake128 | shake256 | HMAC-SHA256 | sha3-224 |
+| sha3-256 | sha3-385 | sha3-512 |             |          |
 
 
 
@@ -125,9 +126,12 @@ FUNCTIONS
 
 | 获取uuid |
 | :------: |
+
 ### API
-|quipqiup词频分析 |
-| :------: |
+
+| quipqiup词频分析 |
+| :--------------: |
+
 # 具体使用
 
 ## 命令行使用
@@ -166,12 +170,14 @@ print(a)
 b=qsnctf.base.base64_decode("6ZyA6KaB5Yqg5a+G55qE")
 print(b)
 ```
+
 `返回信息`
 
 ```
 6ZyA6KaB5Yqg5a+G55qE
 需要加密的
 ```
+
 **提示：位异或传参是需要传入一个列表，下面是个例子**
 
 ```python
@@ -204,11 +210,11 @@ print(b)
 
 ## 环境
 
-##### 开发环境
+### 开发环境
 
 `Windows11 + Python3.11 + PyCharm 2022.3.1 (Professional Edition)`
 
-##### 使用环境
+### 使用环境
 
 支持 `python 3.x` 环境。
 
@@ -225,3 +231,4 @@ print(b)
     <td align="center"><a href="https://github.com/yiye-yfs"><img src="https://avatars.githubusercontent.com/u/79006318?v=4" width="100px;" alt=""/><br /><sub><b>yiye-yfs</b></sub></a><br /></td>
   </tr>
 </table>
+
