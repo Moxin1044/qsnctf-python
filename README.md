@@ -188,6 +188,32 @@ print(b)
 
 由于Base、各种加密的方法较多，传参方法也花样百出。这里给大家写出这个文档方便参考，下面是调用示例和传参参数的说明和注意事项。
 
+### quipqiup
+
+#### class-quipqiup
+
+##### quipqiup
+
+| **函数名** |    **返回类型**    |   **位置**   |                  **说明**                   |
+| :--------: | :----------------: | :----------: | :-----------------------------------------: |
+|  quipqiup  | string、json、list |    api.py    |         quipqiup 词频分析（需联网）         |
+| **参数名** |    **是否可空**    | **传参类型** |                  **说明**                   |
+| ciphertext |       False        |    string    |                 分析的内容                  |
+|   clues    |        True        |    string    | 分析线索，默认为空，For example G=R QVW=THE |
+
+**说明：此功能需要连接网络，请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+a = quipqiup('test')
+print(a.text) # that,high,area,died***
+print(a.json) # {'id': 931788518, 'result': 0, 'result-message': 'success', 'time0': 1672662393.35963, 'last': 1, 'solutions': [{'logp': -1.58357763290405, 'plaintext': 'that', ***
+print(a.list) # ['that', 'high',***
+```
+
 ### Base家族
 
 #### Base100
@@ -790,7 +816,7 @@ print(b) # qsnctf2022
 
 |  **函数名**  | **返回类型** |   **位置**   |    **说明**    |
 | :----------: | :----------: | :----------: | :------------: |
-|     md5      |    string    |  crypto.py   |      md5       |
+|     md5      |    string    |   hash.py    |      md5       |
 |  **参数名**  | **是否可空** | **传参类型** |    **说明**    |
 | input_string |    False     |    string    | 需要加密的内容 |
 
@@ -809,7 +835,7 @@ print(a) # cede1574f851cb8a1ffb3c1b885c4965
 
 |  **函数名**  | **返回类型** |   **位置**   |    **说明**    |
 | :----------: | :----------: | :----------: | :------------: |
-|    sha1   |    string    |  crypto.py   |     sha1     |
+|     sha1     |    string    |   hash.py    |      sha1      |
 |  **参数名**  | **是否可空** | **传参类型** |    **说明**    |
 | input_string |    False     |    string    | 需要加密的内容 |
 
@@ -830,7 +856,7 @@ print(a) # 5a66dd2590a911dc670873e12934e6f14d1da7e7
 
 |  **函数名**  | **返回类型** |   **位置**   |    **说明**    |
 | :----------: | :----------: | :----------: | :------------: |
-|    sha224    |    string    |  crypto.py   |     sha224     |
+|    sha224    |    string    |   hash.py    |     sha224     |
 |  **参数名**  | **是否可空** | **传参类型** |    **说明**    |
 | input_string |    False     |    string    | 需要加密的内容 |
 
@@ -851,7 +877,7 @@ print(a) # 71e718c88621bfe602833420a817398aee52df7ef9c1904086c9ff8f
 
 |  **函数名**  | **返回类型** |   **位置**   |    **说明**    |
 | :----------: | :----------: | :----------: | :------------: |
-|    sha256    |    string    |  crypto.py   |     sha256     |
+|    sha256    |    string    |   hash.py    |     sha256     |
 |  **参数名**  | **是否可空** | **传参类型** |    **说明**    |
 | input_string |    False     |    string    | 需要加密的内容 |
 
@@ -870,7 +896,7 @@ print(a) # 7404bb484d7a4a1f26bf974dc1337d778162d32be0d54f2e571f4e942673b7d1
 
 |  **函数名**  | **返回类型** |   **位置**   |    **说明**    |
 | :----------: | :----------: | :----------: | :------------: |
-|    sha384    |    string    |  crypto.py   |     sha384     |
+|    sha384    |    string    |   hash.py    |     sha384     |
 |  **参数名**  | **是否可空** | **传参类型** |    **说明**    |
 | input_string |    False     |    string    | 需要加密的内容 |
 
@@ -889,7 +915,7 @@ print(a) # c692736bfeccbaa1e7f1fff9e351d67f042e5198ae8850401be46450b479f62d78e44
 
 |  **函数名**  | **返回类型** |   **位置**   |    **说明**    |
 | :----------: | :----------: | :----------: | :------------: |
-|    sha512    |    string    |  crypto.py   |     sha512     |
+|    sha512    |    string    |   hash.py    |     sha512     |
 |  **参数名**  | **是否可空** | **传参类型** |    **说明**    |
 | input_string |    False     |    string    | 需要加密的内容 |
 
@@ -907,7 +933,7 @@ print(a) # bfb5c9d6c5197696c251fad40932da2dfd3af627bf974b09a98c02b55301e58a8f6f0
 
 |  **函数名**  | **返回类型** |   **位置**   |    **说明**    |
 | :----------: | :----------: | :----------: | :------------: |
-|    shake_128    |    string    |  crypto.py   |     shake128     |
+|    shake_128    |    string    | hash.py |     shake128     |
 |  **参数名**  | **是否可空** | **传参类型** |    **说明**    |
 | input_string |    False     |    string    | 需要加密的内容 |
 | bits | False | int or string | 用于指定输出的散列值的长度。 |
@@ -927,7 +953,7 @@ print(a) # b134959f759d7fa1942c
 
 |  **函数名**  | **返回类型** |   **位置**   |    **说明**    |
 | :----------: | :----------: | :----------: | :------------: |
-|    shake_256   |    string    |  crypto.py   |     shake256     |
+|    shake_256   |    string    | hash.py |     shake256     |
 |  **参数名**  | **是否可空** | **传参类型** |    **说明**    |
 | input_string |    False     |    string    | 需要加密的内容 |
 | bits | False | int or string | 用于指定输出的散列值的长度。 |
@@ -947,7 +973,7 @@ print(a) # 94c31528e7a32076b1f4
 
 |  **函数名**  | **返回类型** |   **位置**   |    **说明**    |
 | :----------: | :----------: | :----------: | :------------: |
-|    HMAC_SHA256_HEX    |    string    |  crypto.py   |     hmac_sha256     |
+|    HMAC_SHA256_HEX    |    string    | hash.py |     hmac_sha256     |
 |  **参数名**  | **是否可空** | **传参类型** |    **说明**    |
 | secret |    False     |    string    | 需要加密的内容 |
 | data | False | int or string | 加密的密钥 |
@@ -967,7 +993,7 @@ print(a) # f7ce26af7e17adebd72d3cd9120fa4acd05c66aab676462026e916a53a71f564
 
 |  **函数名**  | **返回类型** |   **位置**   |    **说明**    |
 | :----------: | :----------: | :----------: | :------------: |
-|   sha3_224   |    string    |  crypto.py   |    sha3_224    |
+|   sha3_224   |    string    |   hash.py    |    sha3_224    |
 |  **参数名**  | **是否可空** | **传参类型** |    **说明**    |
 | input_string |    False     |    string    | 需要加密的内容 |
 
@@ -986,7 +1012,7 @@ print(a) # 2b7580cd6d4f6a8c3b96d4d08bcbf9e8ddf6d3c393cffb69dd7bc967
 
 |  **函数名**  | **返回类型** |   **位置**   |    **说明**    |
 | :----------: | :----------: | :----------: | :------------: |
-|   sha3_256   |    string    |  crypto.py   |    sha3_256    |
+|   sha3_256   |    string    |   hash.py    |    sha3_256    |
 |  **参数名**  | **是否可空** | **传参类型** |    **说明**    |
 | input_string |    False     |    string    | 需要加密的内容 |
 
@@ -1005,7 +1031,7 @@ print(a) # ec570495a42596f49037c6f72a93c3a5803a040146a53e7f030cd7c11c0b1c79
 
 |  **函数名**  | **返回类型** |   **位置**   |    **说明**    |
 | :----------: | :----------: | :----------: | :------------: |
-|   sha3_384   |    string    |  crypto.py   |    sha3_384    |
+|   sha3_384   |    string    |   hash.py    |    sha3_384    |
 |  **参数名**  | **是否可空** | **传参类型** |    **说明**    |
 | input_string |    False     |    string    | 需要加密的内容 |
 
@@ -1024,7 +1050,7 @@ print(a) # f3df64859a8e1b1912e1b237f1b54863fb6f11ca9bc117e019e69ceb4d7e1cacd75c8
 
 |  **函数名**  | **返回类型** |   **位置**   |    **说明**    |
 | :----------: | :----------: | :----------: | :------------: |
-|   sha3_512   |    string    |  crypto.py   |    sha3_512    |
+|   sha3_512   |    string    |   hash.py    |    sha3_512    |
 |  **参数名**  | **是否可空** | **传参类型** |    **说明**    |
 | input_string |    False     |    string    | 需要加密的内容 |
 
