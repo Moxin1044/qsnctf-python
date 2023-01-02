@@ -30,7 +30,7 @@ pip install qsnctf
 pip install --upgrade qsnctf
 ```
 
-如果你想知道具体怎么使用可以导入这个包，然后使用`help(qsnctf)`查看库的用法
+如果你想知道具体怎么使用可以导入这个包，可以使用`help(qsnctf)`查看库的用法
 
 ```bash
 >>> import qsnctf
@@ -640,7 +640,7 @@ print(a) # FTC年少青
 
 | **函数名** | **返回类型** |   **位置**   | **说明** |
 | :--------: | :----------: | :----------: | :------: |
-|  xor_list  |    string    |   misc.py    | URL编码  |
+|  xor_list  |    string    |   misc.py    | xor  |
 | **参数名** | **是否可空** | **传参类型** | **说明** |
 |  lt_data   |    False     |     list     | 异或数据 |
 |  lt_root   |    False     |     list     |  异或根  |
