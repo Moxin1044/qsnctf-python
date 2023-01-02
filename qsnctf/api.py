@@ -3,7 +3,6 @@ import requests
 
 
 class quipqiup:
-    # TODO：quipqiup 对接
     def __init__(self, ciphertext, clues=''):
         self.json = None
         self.text = None
@@ -13,6 +12,7 @@ class quipqiup:
         self.clues = clues
         self.url = 'https://www.quipqiup.com:443/'
         self.id = self.quipqiup_get_id()
+        self.quipqiup_return()
 
     def quipqiup_get_id(self):
         url = f"{self.url}solve"
@@ -37,6 +37,10 @@ class quipqiup:
         json = {"id": int(self.id)}
         response = requests.post(url, headers=headers, json=json)
         response_data = response.json()
-        print(response_data)
-        self.text = response_data
-        self.json = response_data
+        self.json = response_data  # json 直接返回requests的response json
+        r_list = response_data['solutions']
+        return_list = []
+        for response_list in r_list:
+            return_list.append(response_list['plaintext'])
+        self.list = return_list
+        self.text = ','.join(return_list)
