@@ -1,6 +1,6 @@
 # 🤔What is QSNCTF？
 
-青少年CTF训练平台是一个公益、免费、供给全国青少年学习、训练的CTF在线平台。
+[青少年CTF训练平台](https://www.qsnctf.com/)是一个公益、免费、供给全国青少年学习、训练的CTF在线平台。
 
 [（本仓库）](https://github.com/Moxin1044/qsnctf-python)qsnctf是青少年CTF训练平台进行编写的一个Python包程序，意图在Python中为大家快速使用一些CTF常用功能开发的开源包。这里有很多CTF常用功能，如Base编码、hash加密，甚至少见的社会主义核心价值观编码都在其中。
 
