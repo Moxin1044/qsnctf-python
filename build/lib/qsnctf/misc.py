@@ -6,6 +6,8 @@ import execjs  # PyExecJS
 from qsnctf.auxiliary import js_from_file
 import urllib.parse
 import re
+
+
 # 社会主义核心价值观编码
 # 需要将Python目录下>lib>subprocess.py的765行附近的encoding的默认None值修改为utf-8即可。
 
@@ -41,13 +43,9 @@ def url_decode(string):
     return urllib.parse.unquote(string)
 
 
-def xor_list(lt_data,lt_root):
+def xor_list(lt_data, lt_root):
     # 异或 lt_root直接传列表过来，这样也可以字符串之间互相异或
     decrypted = ""
-    for i in range(min(len(lt_data),len(lt_root))):
-        decrypted += chr(ord(lt_data[i] )^ ord(lt_root[i]))
+    for i in range(min(len(lt_data), len(lt_root))):
+        decrypted += chr(ord(lt_data[i]) ^ ord(lt_root[i]))
     return decrypted
-
-
-
-

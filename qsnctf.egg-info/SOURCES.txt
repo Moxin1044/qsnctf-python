@@ -2,6 +2,7 @@ MANIFEST.in
 README.md
 setup.py
 qsnctf/__init__.py
+qsnctf/api.py
 qsnctf/auxiliary.py
 qsnctf/base.py
 qsnctf/crypto.py
