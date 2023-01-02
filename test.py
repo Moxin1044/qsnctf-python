@@ -1,6 +1,7 @@
 from qsnctf import *
 
-a = ['a','b','c','d','e']
-b = "01234"
-c = xor_list(a, b)
-print(c)
+a = caesar_encrypt('qsnctf', 8)
+print(a)
+
+b = caesar_decrypt('yavkbn', 8)
+print(b)
