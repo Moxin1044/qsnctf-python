@@ -23,6 +23,7 @@ pip install qsnctf
 安装成功会显示
 
 `Successfully installed PyExecJS-1.5.1 qsnctf-0.0.4`
+
 也可以使用以下命令来更新此库
 ```bash
 
