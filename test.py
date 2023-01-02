@@ -1,4 +1,4 @@
 from qsnctf import *
 
-a = md5('qsnctf2022')
-print(a) # cede1574f851cb8a1ffb3c1b885c4965
+a = sha512('qsnctf2022')
+print(a) # bfb5c9d6c5197696c251fad40932da2dfd3af627bf974b09a98c02b55301e58a8f6f0518b74b05a19f7f9f90340a0b81d76e7cc37802406392ebf0f0073c5301

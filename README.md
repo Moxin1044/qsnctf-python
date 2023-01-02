@@ -803,6 +803,25 @@ a = md5('qsnctf2022')
 print(a) # cede1574f851cb8a1ffb3c1b885c4965
 ```
 
+#### SHA512
+
+##### sha512
+
+|  **函数名**  | **返回类型** |   **位置**   |    **说明**    |
+| :----------: | :----------: | :----------: | :------------: |
+|    sha512    |    string    |  crypto.py   |     sha512     |
+|  **参数名**  | **是否可空** | **传参类型** |    **说明**    |
+| input_string |    False     |    string    | 需要加密的内容 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+a = sha512('qsnctf2022')
+print(a) # bfb5c9d6c5197696c251fad40932da2dfd3af627bf974b09a98c02b55301e58a8f6f0518b74b05a19f7f9f90340a0b81d76e7cc37802406392ebf0f0073c5301
+```
+
 ### 
 
 ## 环境
