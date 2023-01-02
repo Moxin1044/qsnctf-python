@@ -828,7 +828,7 @@ print(a) # bfb5c9d6c5197696c251fad40932da2dfd3af627bf974b09a98c02b55301e58a8f6f0
 
 ##### 开发环境
 
-`Windows11 + Python3.10 + PyCharm 2022.2.3 (Professional Edition)`
+`Windows11 + Python3.11 + PyCharm 2022.3.1 (Professional Edition)`
 
 ##### 使用环境
 
