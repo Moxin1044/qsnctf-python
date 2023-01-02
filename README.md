@@ -803,6 +803,51 @@ a = md5('qsnctf2022')
 print(a) # cede1574f851cb8a1ffb3c1b885c4965
 ```
 
+#### SHA1
+
+##### sha1
+
+|  **函数名**  | **返回类型** |   **位置**   |    **说明**    |
+| :----------: | :----------: | :----------: | :------------: |
+|    sha1   |    string    |  crypto.py   |     sha1     |
+|  **参数名**  | **是否可空** | **传参类型** |    **说明**    |
+| input_string |    False     |    string    | 需要加密的内容 |
+
+##### 使用示例
+#### SHA224
+
+##### sha224
+
+|  **函数名**  | **返回类型** |   **位置**   |    **说明**    |
+| :----------: | :----------: | :----------: | :------------: |
+|    sha224    |    string    |  crypto.py   |     sha224     |
+|  **参数名**  | **是否可空** | **传参类型** |    **说明**    |
+| input_string |    False     |    string    | 需要加密的内容 |
+
+##### 使用示例
+#### SHA256
+
+##### sha256
+
+|  **函数名**  | **返回类型** |   **位置**   |    **说明**    |
+| :----------: | :----------: | :----------: | :------------: |
+|    sha256    |    string    |  crypto.py   |     sha256     |
+|  **参数名**  | **是否可空** | **传参类型** |    **说明**    |
+| input_string |    False     |    string    | 需要加密的内容 |
+
+##### 使用示例
+#### SHA384
+
+##### sha384
+
+|  **函数名**  | **返回类型** |   **位置**   |    **说明**    |
+| :----------: | :----------: | :----------: | :------------: |
+|    sha384    |    string    |  crypto.py   |     sha384     |
+|  **参数名**  | **是否可空** | **传参类型** |    **说明**    |
+| input_string |    False     |    string    | 需要加密的内容 |
+
+##### 使用示例
+
 #### SHA512
 
 ##### sha512
@@ -819,10 +864,157 @@ print(a) # cede1574f851cb8a1ffb3c1b885c4965
 from qsnctf import *
 
 a = sha512('qsnctf2022')
-print(a) # bfb5c9d6c5197696c251fad40932da2dfd3af627bf974b09a98c02b55301e58a8f6f0518b74b05a19f7f9f90340a0b81d76e7cc37802406392ebf0f0073c5301
+print(a) # bfb5c9d6c5197696c251fad40932da2dfd3af627bf974b09a98c02b55301e58a8f6f0518b74b05a19f7f9f90340a0b81d76e7cc37802406392ebf0f0073c5301 
+```
+#### SHAKE128
+
+##### shake128
+
+|  **函数名**  | **返回类型** |   **位置**   |    **说明**    |
+| :----------: | :----------: | :----------: | :------------: |
+|    shake_128    |    string    |  crypto.py   |     shake128     |
+|  **参数名**  | **是否可空** | **传参类型** |    **说明**    |
+| input_string |    False     |    string    | 需要加密的内容 |
+| bits | False | int or string | 用于指定输出的散列值的长度。 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+a = shake_128('qsnctf2022',"10")
+print(a) # b134959f759d7fa1942c
 ```
 
-### 
+
+
+#### SHAKE256
+
+##### shake256
+
+|  **函数名**  | **返回类型** |   **位置**   |    **说明**    |
+| :----------: | :----------: | :----------: | :------------: |
+|    shake_256   |    string    |  crypto.py   |     shake256     |
+|  **参数名**  | **是否可空** | **传参类型** |    **说明**    |
+| input_string |    False     |    string    | 需要加密的内容 |
+| bits | False | int or string | 用于指定输出的散列值的长度。 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+a = shake_256('qsnctf2022',"10")
+print(a) # 94c31528e7a32076b1f4
+```
+
+
+
+#### HMAC-SHA256
+
+##### hmac-sha256
+
+|  **函数名**  | **返回类型** |   **位置**   |    **说明**    |
+| :----------: | :----------: | :----------: | :------------: |
+|    HMAC_SHA256_HEX    |    string    |  crypto.py   |     hmac_sha256     |
+|  **参数名**  | **是否可空** | **传参类型** |    **说明**    |
+| secret |    False     |    string    | 需要加密的内容 |
+| data | False | int or string | 加密的密钥 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+a = HMAC_SHA256_HEX('qsnctf2022',123)
+print(a) # f7ce26af7e17adebd72d3cd9120fa4acd05c66aab676462026e916a53a71f564
+```
+
+
+
+#### SHA3_224
+
+##### sha3_224
+
+|  **函数名**  | **返回类型** |   **位置**   |    **说明**    |
+| :----------: | :----------: | :----------: | :------------: |
+|   sha3_224   |    string    |  crypto.py   |    sha3_224    |
+|  **参数名**  | **是否可空** | **传参类型** |    **说明**    |
+| input_string |    False     |    string    | 需要加密的内容 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+a = sha3_224('qsnctf2022')
+print(a) # 2b7580cd6d4f6a8c3b96d4d08bcbf9e8ddf6d3c393cffb69dd7bc967
+```
+
+
+
+#### SHA3_256
+
+##### sha3_256
+
+|  **函数名**  | **返回类型** |   **位置**   |    **说明**    |
+| :----------: | :----------: | :----------: | :------------: |
+|   sha3_256   |    string    |  crypto.py   |    sha3_256    |
+|  **参数名**  | **是否可空** | **传参类型** |    **说明**    |
+| input_string |    False     |    string    | 需要加密的内容 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+a = sha3_256('qsnctf2022')
+print(a) # ec570495a42596f49037c6f72a93c3a5803a040146a53e7f030cd7c11c0b1c79
+```
+
+
+
+#### SHA3_384
+
+##### sha3_384
+
+|  **函数名**  | **返回类型** |   **位置**   |    **说明**    |
+| :----------: | :----------: | :----------: | :------------: |
+|   sha3_384   |    string    |  crypto.py   |    sha3_384    |
+|  **参数名**  | **是否可空** | **传参类型** |    **说明**    |
+| input_string |    False     |    string    | 需要加密的内容 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+a = sha3_384('qsnctf2022')
+print(a) # f3df64859a8e1b1912e1b237f1b54863fb6f11ca9bc117e019e69ceb4d7e1cacd75c8d33b1e25967428d8a7b3cee23f5
+```
+
+
+
+#### SHA3_512
+
+##### sha3_512
+
+|  **函数名**  | **返回类型** |   **位置**   |    **说明**    |
+| :----------: | :----------: | :----------: | :------------: |
+|   sha3_512   |    string    |  crypto.py   |    sha3_512    |
+|  **参数名**  | **是否可空** | **传参类型** |    **说明**    |
+| input_string |    False     |    string    | 需要加密的内容 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+a = sha3_512('qsnctf2022')
+print(a) # 95e2d7d428f1b4d007be25dfd454131796f6fa2162662ec34fe8a9aa52f463f5021d5c32cfc422ea3055ed666afb1fc9edc86e65a3f57129ce2d7b2e7617e71e
+```
+
+ 
 
 ## 环境
 
