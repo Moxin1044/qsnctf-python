@@ -2,7 +2,7 @@
 
 [青少年CTF训练平台](https://www.qsnctf.com/)是一个公益、免费、供给全国青少年学习、训练的CTF在线平台。
 
-[（本仓库）](https://github.com/Moxin1044/qsnctf-python)qsnctf是青少年CTF训练平台进行编写的一个Python包程序，意图在Python中为大家快速使用一些CTF常用功能开发的开源包。这里有很多CTF常用功能，如Base编码、hash加密，甚至少见的社会主义核心价值观编码都在其中。
+[（本仓库）](https://github.com/Moxin1044/qsnctf-python)qsnctf是青少年CTF训练平台进行编写的一个Python包程序，意图在Python中为大家快速使用一些CTF常用功能开发的开源包。这里有很多CTF常用功能，如Base编码、hash加密，甚至少见的社会主义核心价值观编码、quipqiup等都在其中。
 
 ## 安装
 
@@ -814,6 +814,16 @@ print(a) # cede1574f851cb8a1ffb3c1b885c4965
 | input_string |    False     |    string    | 需要加密的内容 |
 
 ##### 使用示例
+
+```python
+from qsnctf import *
+
+a = sha1('qsnctf2022')
+print(a) # 5a66dd2590a911dc670873e12934e6f14d1da7e7
+```
+
+
+
 #### SHA224
 
 ##### sha224
@@ -825,6 +835,16 @@ print(a) # cede1574f851cb8a1ffb3c1b885c4965
 | input_string |    False     |    string    | 需要加密的内容 |
 
 ##### 使用示例
+
+```python
+from qsnctf import *
+
+a = sha224('qsnctf2022')
+print(a) # 71e718c88621bfe602833420a817398aee52df7ef9c1904086c9ff8f
+```
+
+
+
 #### SHA256
 
 ##### sha256
@@ -836,6 +856,14 @@ print(a) # cede1574f851cb8a1ffb3c1b885c4965
 | input_string |    False     |    string    | 需要加密的内容 |
 
 ##### 使用示例
+
+```python
+from qsnctf import *
+
+a = sha256('qsnctf2022')
+print(a) # 7404bb484d7a4a1f26bf974dc1337d778162d32be0d54f2e571f4e942673b7d1
+```
+
 #### SHA384
 
 ##### sha384
@@ -847,6 +875,13 @@ print(a) # cede1574f851cb8a1ffb3c1b885c4965
 | input_string |    False     |    string    | 需要加密的内容 |
 
 ##### 使用示例
+
+```python
+from qsnctf import *
+
+a = sha384('qsnctf2022')
+print(a) # c692736bfeccbaa1e7f1fff9e351d67f042e5198ae8850401be46450b479f62d78e44f46300b13f5419eb5bf1fa0c222
+```
 
 #### SHA512
 
@@ -886,8 +921,6 @@ a = shake_128('qsnctf2022',"10")
 print(a) # b134959f759d7fa1942c
 ```
 
-
-
 #### SHAKE256
 
 ##### shake256
@@ -907,8 +940,6 @@ from qsnctf import *
 a = shake_256('qsnctf2022',"10")
 print(a) # 94c31528e7a32076b1f4
 ```
-
-
 
 #### HMAC-SHA256
 
@@ -930,8 +961,6 @@ a = HMAC_SHA256_HEX('qsnctf2022',123)
 print(a) # f7ce26af7e17adebd72d3cd9120fa4acd05c66aab676462026e916a53a71f564
 ```
 
-
-
 #### SHA3_224
 
 ##### sha3_224
@@ -950,8 +979,6 @@ from qsnctf import *
 a = sha3_224('qsnctf2022')
 print(a) # 2b7580cd6d4f6a8c3b96d4d08bcbf9e8ddf6d3c393cffb69dd7bc967
 ```
-
-
 
 #### SHA3_256
 
@@ -972,8 +999,6 @@ a = sha3_256('qsnctf2022')
 print(a) # ec570495a42596f49037c6f72a93c3a5803a040146a53e7f030cd7c11c0b1c79
 ```
 
-
-
 #### SHA3_384
 
 ##### sha3_384
@@ -992,8 +1017,6 @@ from qsnctf import *
 a = sha3_384('qsnctf2022')
 print(a) # f3df64859a8e1b1912e1b237f1b54863fb6f11ca9bc117e019e69ceb4d7e1cacd75c8d33b1e25967428d8a7b3cee23f5
 ```
-
-
 
 #### SHA3_512
 
