@@ -97,10 +97,10 @@ FUNCTIONS
 
 ### hash
 
-| md5         | sha512   | sha384   | sha256   | sha224 |
+| md5         | sha1   | sha224   | sha256   | sha384 |
 | :---------: | :------: | :------: | :------: | :---------: |
-| sha1 | shake256 | shake256 | HMAC-SHA256 | sha3-512 |
-| sha3-384 | sha3-256 | sha3-224 |  |  |
+| sha512 | shake128 | shake256 | HMAC-SHA256 | sha3-224 |
+| sha3-256 | sha3-385 | sha3-512 |  |  |
 
 
 
