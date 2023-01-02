@@ -1,7 +1,7 @@
 from qsnctf import *
 
-a = caesar_encrypt('qsnctf', 8)
+a = caesar_encrypt_cracking('qsnctf')
 print(a)
 
-b = caesar_decrypt('yavkbn', 8)
+b = caesar_decrypt_cracking('yavkbn')
 print(b)

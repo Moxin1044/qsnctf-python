@@ -632,7 +632,7 @@ print(c) # QSQWQ
 
 |   **函数名**   | **返回类型** |   **位置**    |             **说明**              |
 | :------------: | :----------: | :-----------: | :-------------------------------: |
-| caesar_encrypt |    string    |    misc.py    |           凯撒密码加密            |
+| caesar_encrypt |    string    |   crypto.py   |           凯撒密码加密            |
 |   **参数名**   | **是否可空** | **传参类型**  |             **说明**              |
 |      text      |    False     |    string     |          需要编码的内容           |
 |     shift      |    False     | int or string | 偏移量，传入可为string，会转换int |
@@ -641,7 +641,7 @@ print(c) # QSQWQ
 
 |   **函数名**   | **返回类型** |   **位置**    |             **说明**              |
 | :------------: | :----------: | :-----------: | :-------------------------------: |
-| caesar_decrypt |    string    |    misc.py    |           凯撒密码解密            |
+| caesar_decrypt |    string    |   crypto.py   |           凯撒密码解密            |
 |   **参数名**   | **是否可空** | **传参类型**  |             **说明**              |
 |     string     |    False     |    string     |          需要解码的内容           |
 |     shift      |    False     | int or string | 偏移量，传入可为string，会转换int |
@@ -657,7 +657,40 @@ b = caesar_decrypt('yavkbn', 8)
 print(b) # qsnctf
 ```
 
-### 
+#### 凯撒密码爆破
+
+##### caesar_decrypt_cracking
+
+|       **函数名**        | **返回类型** |   **位置**   |     **说明**     |
+| :---------------------: | :----------: | :----------: | :--------------: |
+| caesar_decrypt_cracking |     json     |  crypto.py   | 凯撒密码解密爆破 |
+|       **参数名**        | **是否可空** | **传参类型** |     **说明**     |
+|          text           |    False     |    string    |  需要编码的内容  |
+
+##### caesar_encrypt_cracking
+
+|       **函数名**        | **返回类型** |   **位置**   |     **说明**     |
+| :---------------------: | :----------: | :----------: | :--------------: |
+| caesar_encrypt_cracking |     json     |  crypto.py   | 凯撒密码加密爆破 |
+|       **参数名**        | **是否可空** | **传参类型** |     **说明**     |
+|         string          |    False     |    string    |  需要解码的内容  |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+a = caesar_encrypt_cracking('qsnctf')
+print(a) # {"1": "rtodug", "2": "supevh", "3": "tvqfwi", "4": "uwrgxj", "5": "vxshyk", "6": "wytizl", "7": "xzujam", "8": "yavkbn", "9": "zbwlco", "10": "acxmdp", "11": "bdyneq", "12": "cezofr", "13": "dfapgs", "14": "egbqht", "15": "fhcriu", "16": "gidsjv", "17": "hjetkw", "18": "ikfulx", "19": "jlgvmy", "20": "kmhwnz", "21": "lnixoa", "22": "mojypb", "23": "npkzqc", "24": "oqlard", "25": "prmbse"}
+
+b = caesar_decrypt_cracking('yavkbn')
+print(b) # {"1": "xzujam", "2": "wytizl", "3": "vxshyk", "4": "uwrgxj", "5": "tvqfwi", "6": "supevh", "7": "rtodug", "8": "qsnctf", "9": "prmbse", "10": "oqlard", "11": "npkzqc", "12": "mojypb", "13": "lnixoa", "14": "kmhwnz", "15": "jlgvmy", "16": "ikfulx", "17": "hjetkw", "18": "gidsjv", "19": "fhcriu", "20": "egbqht", "21": "dfapgs", "22": "cezofr", "23": "bdyneq", "24": "acxmdp", "25": "zbwlco"}
+
+```
+
+**注意：加密爆破和解密爆破的最终返回均为json，两个集是完全不同的，加密爆破是考虑偏题题点写的，所以不要混为一谈。**
+
+
 
 ## 环境
 
