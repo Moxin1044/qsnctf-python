@@ -8,7 +8,7 @@
 
 其他语种：English
 
-函数库：Function.md
+函数库：[Function.md](https://github.com/Moxin1044/qsnctf-python/blob/master/docs/Function.md)
 
 ## 安装
 
