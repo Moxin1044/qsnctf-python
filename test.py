@@ -1,6 +1,6 @@
 from qsnctf import *
 
-a = bacon_encrypt('qsnctf')
+a = rot18('qsnctf2022')
 print(a)
-b = bacon_decrypt('BAAAABAABAABBABAAABABAABBAABAB')
+b = rot18('dfapgs7577')
 print(b)

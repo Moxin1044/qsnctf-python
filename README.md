@@ -702,11 +702,11 @@ print(b) # {"1": "xzujam", "2": "wytizl", "3": "vxshyk", "4": "uwrgxj", "5": "tv
 
 ##### bacon_decrypt
 
-|  **函数名**   | **返回类型** |   **位置**   |    **说明**    |
-| :-----------: | :----------: | :----------: | :------------: |
-| bacon_decrypt |    string    |  crypto.py   |  培根密码解密  |
-|  **参数名**   | **是否可空** | **传参类型** |    **说明**    |
-|    string     |    False     |    string    | 需要解密的内容 |
+|  **函数名**   | **返回类型** |   **位置**   |                  **说明**                  |
+| :-----------: | :----------: | :----------: | :----------------------------------------: |
+| bacon_decrypt |    string    |  crypto.py   |                培根密码解密                |
+|  **参数名**   | **是否可空** | **传参类型** |                  **说明**                  |
+|    string     |    False     |    string    | 需要解密的内容，如果出现小写一定要转为大写 |
 
 ##### 使用示例
 
@@ -717,6 +717,69 @@ a = bacon_encrypt('qsnctf')
 print(a) # BAAAABAABAABBABAAABABAABBAABAB
 b = bacon_decrypt('BAAAABAABAABBABAAABABAABBAABAB')
 print(b) # QSNCTF
+```
+
+#### ROT13
+
+##### rot13
+
+| **函数名** | **返回类型** |   **位置**   |       **说明**       |
+| :--------: | :----------: | :----------: | :------------------: |
+|   rot13    |    string    |  crypto.py   |        rot13         |
+| **参数名** | **是否可空** | **传参类型** |       **说明**       |
+|    text    |    False     |    string    | 需要加密或解密的内容 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+a = rot13('qsnctf')
+print(a) # dfapgs
+b = rot13('dfapgs')
+print(b) # qsnctf
+```
+
+#### ROT5
+
+##### rot5
+
+| **函数名** | **返回类型** |   **位置**   |       **说明**       |
+| :--------: | :----------: | :----------: | :------------------: |
+|    rot5    |    string    |  crypto.py   |         rot5         |
+| **参数名** | **是否可空** | **传参类型** |       **说明**       |
+|    text    |    False     |    string    | 需要加密或解密的内容 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+a = rot5('12345')
+print(a) # 6789021
+b = rot5('67890')
+print(b) # 12345
+```
+
+#### ROT18
+
+##### rot18
+
+| **函数名** | **返回类型** |   **位置**   |       **说明**       |
+| :--------: | :----------: | :----------: | :------------------: |
+|   rot18    |    string    |  crypto.py   |        rot18         |
+| **参数名** | **是否可空** | **传参类型** |       **说明**       |
+|    text    |    False     |    string    | 需要加密或解密的内容 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+a = rot18('qsnctf2022')
+print(a) # dfapgs7577
+b = rot18('dfapgs7577')
+print(b) # qsnctf2022
 ```
 
 #### 
