@@ -1,7 +1,10 @@
-# 🤔QSNCTF
-qsnctf是青少年CTF训练平台进行编写的一个Python包程序，意图在Python中为大家快速使用一些CTF常用功能开发的开源包。这里有很多CTF常用功能，如Base编码、hash加密，甚至少见的社会主义核心价值观编码都在其中。
+# 🤔What is QSNCTF？
 
-## 使用
+青少年CTF训练平台是一个公益、免费、供给全国青少年学习、训练的CTF在线平台。
+
+[（本仓库）](https://github.com/Moxin1044/qsnctf-python)qsnctf是青少年CTF训练平台进行编写的一个Python包程序，意图在Python中为大家快速使用一些CTF常用功能开发的开源包。这里有很多CTF常用功能，如Base编码、hash加密，甚至少见的社会主义核心价值观编码都在其中。
+
+## 安装
 
 首先将GitHub上的项目下载下来后可以文件中有一个`setup.py`
 
@@ -11,7 +14,7 @@ qsnctf是青少年CTF训练平台进行编写的一个Python包程序，意图�
 python setup.py install
 ```
 
-或者也可以直接使用pip来进行安装（由于本Py包仍在开发，所以pip可能不是最新版）
+或者也可以直接使用pip来进行安装**（由于本Python库仍在开发，所以pip可能不是最新版，如果您有较高的需求，可以直接clone本仓库进行安装）**
 
 ```bash
 pip install qsnctf
@@ -45,7 +48,7 @@ FILE
 
 然后使用help(qsnctf.PACKAGE CONTENTS)来查看具体的使用方法
 
-#### 示例
+## 演示
 
 查看`base`的使用方法
 
@@ -77,6 +80,8 @@ FUNCTIONS
     base85_decode(text)
 >>>
 ```
+
+
 # 功能列表
 
 ### Base
@@ -109,10 +114,9 @@ FUNCTIONS
 | 获取uuid |
 | :------: |
 
+# 具体使用
 
-## 具体使用
-
-#### 命令行使用
+## 命令行使用
 
 第一步导入`qsnctf`库
 
@@ -136,7 +140,7 @@ qsnctf.base.base64_decode("需要解密的")
 
 ------
 
-#### 编译器使用
+## 编译器使用
 
 这里还是使用base64来演示，其他的加密解密类似。
 
@@ -154,7 +158,7 @@ print(b)
 6ZyA6KaB5Yqg5a+G55qE
 需要加密的
 ```
-#### 提示：位异或传参是需要传入一个列表，下面是个例子
+**提示：位异或传参是需要传入一个列表，下面是个例子**
 
 ```python
 import qsnctf
@@ -169,7 +173,7 @@ print(a)
 qsnctf{M0X1n_Love_you!}
 ```
 
-#### Base62的encode值应该是整数！
+**Base62的encode值应该是整数！**
 
 ```python
 import qsnctf
@@ -184,7 +188,13 @@ print(b)
 
 由于Base、各种加密的方法较多，传参方法也花样百出。这里给大家写出这个文档方便参考，下面是调用示例和传参参数的说明和注意事项。
 
+### Base家族
 
+#### Base100
+
+#### Base92
+
+#### Base91
 
 ## 环境
 
