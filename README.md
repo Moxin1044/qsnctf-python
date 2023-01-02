@@ -634,7 +634,7 @@ print(c) # QSQWQ
 | :------------: | :----------: | :-----------: | :-------------------------------: |
 | caesar_encrypt |    string    |   crypto.py   |           凯撒密码加密            |
 |   **参数名**   | **是否可空** | **传参类型**  |             **说明**              |
-|      text      |    False     |    string     |          需要编码的内容           |
+|      text      |    False     |    string     |          需要加密的内容           |
 |     shift      |    False     | int or string | 偏移量，传入可为string，会转换int |
 
 ##### caesar_decrypt
@@ -643,7 +643,7 @@ print(c) # QSQWQ
 | :------------: | :----------: | :-----------: | :-------------------------------: |
 | caesar_decrypt |    string    |   crypto.py   |           凯撒密码解密            |
 |   **参数名**   | **是否可空** | **传参类型**  |             **说明**              |
-|     string     |    False     |    string     |          需要解码的内容           |
+|     string     |    False     |    string     |          需要解密的内容           |
 |     shift      |    False     | int or string | 偏移量，传入可为string，会转换int |
 
 ##### 使用示例
@@ -665,7 +665,7 @@ print(b) # qsnctf
 | :---------------------: | :----------: | :----------: | :--------------: |
 | caesar_decrypt_cracking |     json     |  crypto.py   | 凯撒密码解密爆破 |
 |       **参数名**        | **是否可空** | **传参类型** |     **说明**     |
-|          text           |    False     |    string    |  需要编码的内容  |
+|       ciphertext        |    False     |    string    |    需要的内容    |
 
 ##### caesar_encrypt_cracking
 
@@ -673,7 +673,7 @@ print(b) # qsnctf
 | :---------------------: | :----------: | :----------: | :--------------: |
 | caesar_encrypt_cracking |     json     |  crypto.py   | 凯撒密码加密爆破 |
 |       **参数名**        | **是否可空** | **传参类型** |     **说明**     |
-|         string          |    False     |    string    |  需要解码的内容  |
+|       ciphertext        |    False     |    string    |  需要加密的内容  |
 
 ##### 使用示例
 
@@ -690,7 +690,36 @@ print(b) # {"1": "xzujam", "2": "wytizl", "3": "vxshyk", "4": "uwrgxj", "5": "tv
 
 **注意：加密爆破和解密爆破的最终返回均为json，两个集是完全不同的，加密爆破是考虑偏题题点写的，所以不要混为一谈。**
 
+#### 培根密码
 
+##### bacon_encrypt
+
+|  **函数名**   | **返回类型** |   **位置**   |    **说明**    |
+| :-----------: | :----------: | :----------: | :------------: |
+| bacon_encrypt |    string    |  crypto.py   |  培根密码加密  |
+|  **参数名**   | **是否可空** | **传参类型** |    **说明**    |
+|    string     |    False     |    string    | 需要加密的内容 |
+
+##### bacon_decrypt
+
+|  **函数名**   | **返回类型** |   **位置**   |    **说明**    |
+| :-----------: | :----------: | :----------: | :------------: |
+| bacon_decrypt |    string    |  crypto.py   |  培根密码解密  |
+|  **参数名**   | **是否可空** | **传参类型** |    **说明**    |
+|    string     |    False     |    string    | 需要解密的内容 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+a = bacon_encrypt('qsnctf')
+print(a) # BAAAABAABAABBABAAABABAABBAABAB
+b = bacon_decrypt('BAAAABAABAABBABAAABABAABBAABAB')
+print(b) # QSNCTF
+```
+
+#### 
 
 ## 环境
 

@@ -1,7 +1,6 @@
 from qsnctf import *
 
-a = caesar_encrypt_cracking('qsnctf')
+a = bacon_encrypt('qsnctf')
 print(a)
-
-b = caesar_decrypt_cracking('yavkbn')
+b = bacon_decrypt('BAAAABAABAABBABAAABABAABBAABAB')
 print(b)
