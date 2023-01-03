@@ -33,6 +33,17 @@ def string_reverse(string):
     return string[::-1]
 
 
+def string_reverse_step2(s):
+    # 步长为2的逆向
+    # 输入abc123 得到ba1c32
+    # 主要应用场合为文件的Hex的转换
+    lst = [c for c in s]
+    result = ''
+    for i in range(0, len(lst), 2):
+        result += ''.join(lst[i:i+2][::-1])
+    return result
+
+
 def url_encode(string):
     # url编码
     return urllib.parse.quote(string)
@@ -49,3 +60,4 @@ def xor_list(lt_data, lt_root):
     for i in range(min(len(lt_data), len(lt_root))):
         decrypted += chr(ord(lt_data[i]) ^ ord(lt_root[i]))
     return decrypted
+
