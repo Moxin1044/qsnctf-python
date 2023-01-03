@@ -422,8 +422,6 @@ a = url_decode('%E9%9D%92%E5%B0%91%E5%B9%B4CTF%3D%E4%B8%AD%E5%AD%A6%E7%94%9FCTF'
 print(a) # 青少年CTF=中学生CTF
 ```
 
-### 
-
 ### 字符串操作
 
 #### 逆向字符串
@@ -444,6 +442,26 @@ from qsnctf import *
 
 a = string_reverse('青少年CTF')
 print(a) # FTC年少青
+```
+
+#### 逆向字符串（步长2）
+
+##### string_reverse_step2
+
+|      **函数名**      | **返回类型** |   **位置**   |      **说明**       |
+| :------------------: | :----------: | :----------: | :-----------------: |
+| string_reverse_step2 |    string    |   misc.py    | 步长为2的字符串逆向 |
+|      **参数名**      | **是否可空** | **传参类型** |      **说明**       |
+|        string        |    False     |    string    |   需要逆向的内容    |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = string_reverse_step2('abc123')
+print(a) # ba1c32
 ```
 
 #### 列表异或
