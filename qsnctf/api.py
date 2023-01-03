@@ -26,13 +26,13 @@ class quipqiup:
     def quipqiup_get_id(self):
         url = f"{self.url}solve"
         json = {"ciphertext": self.ciphertext, "clues": self.clues, "mode": "auto", "was_auto": True, "was_clue": False}
-        response = requests.post(url, headers=self.headers, json=json).json()
+        response = requests.post(url, headers=self.headers, json=json, verify=False).json()
         return response['id']
 
     def quipqiup_return(self):
         url = f"{self.url}status"
         json = {"id": int(self.id)}
-        response_data = requests.post(url, headers=self.headers, json=json).json()
+        response_data = requests.post(url, headers=self.headers, json=json, verify=False).json()
         self.json = response_data  # json 直接返回requests的response json
         return_list = []
         for response_list in response_data['solutions']:
