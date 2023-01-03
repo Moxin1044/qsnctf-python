@@ -19,20 +19,20 @@ class quipqiup:
             "Te": "trailers", "Connection": "close"}
         self.ciphertext = ciphertext
         self.clues = clues
-        self.url = 'https://www.quipqiup.com:443/'
+        self.url = 'http://www.quipqiup.com/'
         self.id = self.quipqiup_get_id()
         self.quipqiup_return()
 
     def quipqiup_get_id(self):
         url = f"{self.url}solve"
         json = {"ciphertext": self.ciphertext, "clues": self.clues, "mode": "auto", "was_auto": True, "was_clue": False}
-        response = requests.post(url, headers=self.headers, json=json, verify=False).json()
+        response = requests.post(url, headers=self.headers, json=json).json()
         return response['id']
 
     def quipqiup_return(self):
         url = f"{self.url}status"
         json = {"id": int(self.id)}
-        response_data = requests.post(url, headers=self.headers, json=json, verify=False).json()
+        response_data = requests.post(url, headers=self.headers, json=json).json()
         self.json = response_data  # json 直接返回requests的response json
         return_list = []
         for response_list in response_data['solutions']:
