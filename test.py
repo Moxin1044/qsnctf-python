@@ -1,4 +1,4 @@
 from qsnctf import *
 
 
-print(string_reverse_step('abcdef', 3))  # abcd1234
+print(string_reverse_step('abc123', 3))  # cba321

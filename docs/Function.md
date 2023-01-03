@@ -444,7 +444,25 @@ a = string_reverse('青少年CTF')
 print(a) # FTC年少青
 ```
 
-#### 逆向字符串（步长2）
+#### 逆向字符串（包含步长）
+
+##### string_reverse_step
+
+|      **函数名**      | **返回类型** |   **位置**   |      **说明**       |
+| :------------------: | :----------: | :----------: | :-----------------: |
+| string_reverse_step2 |    string    |   misc.py    | 步长为2的字符串逆向 |
+|      **参数名**      | **是否可空** | **传参类型** |      **说明**       |
+|        string        |    False     |    string    |   需要逆向的内容    |
+|         step         |    False     |     int      |  步长，一般是2以上  |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+print(string_reverse_step('abc123', 3))  # cba321
+```
 
 ##### string_reverse_step2
 
