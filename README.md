@@ -121,8 +121,8 @@ FUNCTIONS
 
 ### MISC
 
-| 核心价值观加密解密 | 文本逆向 | url加密解密 | 位异或 |
-| :----------------: | :------: | :---------: | :----: |
+| 核心价值观加密解密 | 文本逆向 | url加密解密 | 位异或 | 文本逆向（步长2） |
+| :----------------: | :------: | :---------: | :----: | ----------------- |
 
 ### UUID
 
@@ -233,4 +233,3 @@ print(b)
     <td align="center"><a href="https://github.com/yiye-yfs"><img src="https://avatars.githubusercontent.com/u/79006318?v=4" width="100px;" alt=""/><br /><sub><b>yiye-yfs</b></sub></a><br /></td>
   </tr>
 </table>
-
