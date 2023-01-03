@@ -29,18 +29,23 @@ def Chinese_socialism_decode(string):
 
 
 def string_reverse(string):
-    # 字符串逆向
-    return string[::-1]
-
-
-def string_reverse_step2(s):
     """
     步长为2的逆向
     主要应用场合为文件的Hex的转换
-    :param s: abc123
+    :param string: abc123
     :return: ba1c32
     """
-    lst = [c for c in s]
+    return string[::-1]
+
+
+def string_reverse_step2(string):
+    """
+    步长为2的逆向
+    主要应用场合为文件的Hex的转换
+    :param string: abc123
+    :return: ba1c32
+    """
+    lst = [c for c in string]
     result = ''
     for i in range(0, len(lst), 2):
         result += ''.join(lst[i:i+2][::-1])
