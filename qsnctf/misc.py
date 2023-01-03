@@ -30,10 +30,10 @@ def Chinese_socialism_decode(string):
 
 def string_reverse(string):
     """
-    步长为2的逆向
+    直接逆向
     主要应用场合为文件的Hex的转换
     :param string: abc123
-    :return: ba1c32
+    :return: 321cba
     """
     return string[::-1]
 
