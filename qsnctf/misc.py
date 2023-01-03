@@ -1,15 +1,18 @@
 # 杂项功能
 # 2023年1月1日
 # 末心
+# 社会主义核心价值观编码
+# 需要将Python目录下>lib>subprocess.py的765行附近的encoding的默认None值修改为utf-8即可。
 import os
 import execjs  # PyExecJS
 from qsnctf.auxiliary import js_from_file
 import urllib.parse
 import re
+import uuid
 
 
-# 社会主义核心价值观编码
-# 需要将Python目录下>lib>subprocess.py的765行附近的encoding的默认None值修改为utf-8即可。
+def get_uuid():
+    return str(uuid.uuid4())
 
 
 def Chinese_socialism_encode(string):

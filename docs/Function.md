@@ -504,6 +504,24 @@ c = xor_list(a, b)
 print(c) # QSQWQ
 ```
 
+#### UUID
+
+##### get_uuid()
+
+| **函数名** | **返回类型** |   **位置**   | **说明** |
+| :--------: | :----------: | :----------: | :------: |
+|  get_uuid  |    string    |   misc.py    | URL编码  |
+| **参数名** | **是否可空** | **传参类型** | **说明** |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+c = get_uuid()
+print(c) # d3a07212-a9dc-4129-937a-30fec20e604a
+```
+
 ## Crypto.py
 
 ### 密码学
