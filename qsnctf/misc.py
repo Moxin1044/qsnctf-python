@@ -34,9 +34,12 @@ def string_reverse(string):
 
 
 def string_reverse_step2(s):
-    # 步长为2的逆向
-    # 输入abc123 得到ba1c32
-    # 主要应用场合为文件的Hex的转换
+    """
+    步长为2的逆向
+    主要应用场合为文件的Hex的转换
+    :param s: abc123
+    :return: ba1c32
+    """
     lst = [c for c in s]
     result = ''
     for i in range(0, len(lst), 2):
