@@ -1,0 +1,13 @@
+/admin
+/admin.php
+/login.php
+/robots.txt
+/sitemap.txt
+/sitemap.xml
+/index.php.bak
+/www.tar.gz
+/www.tar
+/www.zip
+/wwwroot.tar.gz
+/wwwroot.tar
+/wwwroot.zip
