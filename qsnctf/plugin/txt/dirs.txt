@@ -203,3 +203,14 @@
 /yes/
 /install/
 /install.php
+/.htaccess
+/.htaccess-dev
+/.htaccess-local
+/.htaccess-marco
+/.htaccess.BAK
+/.htaccess.bak
+/.htaccess.txt
+/.htaccess/
+/.idea/
+/.log
+/.log.txt
