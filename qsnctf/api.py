@@ -1,5 +1,5 @@
 import requests
-
+import json
 
 # 这里的操作一般都是需要联网的，如果是线下赛请确认主办方允许联网使用
 
@@ -41,8 +41,56 @@ class quipqiup:
         self.text = ','.join(return_list)
 
 
-class feishu_webhook:
-    # TODO: 增加飞书Webhook通知 后续还需要增加钉钉、cq-gohttp等
-    def __init__(self, title, message, token):
-        # https://open.feishu.cn/open-apis/bot/v2/hook/xxxxxxxxxxxxxxxxx
+class FeishuWebhook:
+    # 遵循CamelCase命名
+    def __init__(self, title, message, token, send_type='text'):
+        """
+        :param title: send_title
+        :param message: send_message
+        :param token: feishu_token Get the content after/v2/hook/of the url
+        :param send_type: text or card
+        """
         self.url = f"https://open.feishu.cn/open-apis/bot/v2/hook/{token}"
+        self.title = title
+        self.message = message
+        self.headers = {
+            "Content-Type": "application/json",
+            "charset": "utf-8"
+        }
+        self.send_type = send_type
+
+    def send(self):
+        if self.send_type == 'text':
+            data = {
+                "msg_type": "text",
+                "content": {
+                    "text": f"{self.title}\n{self.message}"
+                }
+            }
+        elif self.send_type == 'card':
+            data = {
+                "msg_type": "interactive",
+                "card": {
+                    "config": {
+                        "wide_screen_mode": True,
+                        "enable_forward": True
+                    },
+                    "elements": [{
+                        "tag": "div",
+                        "text": {
+                            "content": self.message,
+                            "tag": "lark_md"
+                        }
+                    }],
+                    "header": {
+                        "title": {
+                            "content": self.title,
+                            "tag": "plain_text"
+                        }
+                    }
+                }
+            }
+        else:
+            raise ValueError("Invalid send_type")
+        data = json.dumps(data, ensure_ascii=True).encode("utf-8")
+        requests.post(self.url, data=data, headers=self.headers)
