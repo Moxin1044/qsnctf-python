@@ -113,13 +113,9 @@ FUNCTIONS
 
 ### MISC
 
-| Core values Encryption and decryption | Text reverses | URL encryption and decryption | Bit XOR |
-| :-----------------------------------: | :-----------: | :---------------------------: | :-----: |
-
-### UUID
-
-| Get the UUID |
-| :----------: |
+|   Core values Encryption and decryption   | Text reverses | URL encryption and decryption | Bit XOR | Text Reverse (Step 2) |
+| :--------------------: | :------: | :---------: | :----: | ----------------- |
+| Text Reverse (custom step size) | Get the UUID |             |        |                   |
 
 ### API
 
@@ -127,8 +123,8 @@ FUNCTIONS
 | :--------------: | ----------- |
 ### WEB
 
-| Directory scanning |
-| -------- |
+| Directory scanning | Website survival detection|
+| :--------------: | ----------- |
 
 
 
