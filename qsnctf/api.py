@@ -58,6 +58,7 @@ class FeishuWebhook:
             "charset": "utf-8"
         }
         self.send_type = send_type
+        self.send()
 
     def send(self):
         if self.send_type == 'text':
