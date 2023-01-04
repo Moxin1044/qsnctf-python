@@ -7,21 +7,20 @@ import requests
 from qsnctf.auxiliary import read_file_to_list, is_http_or_https_url, normalize_url
 
 
-# 模块内公有函数
-def url_get(url):
-    headers = {}
-    return requests.get(url, header=headers)
-
 class DirScan:
-    def __init__(self, url, threadline=100, sleep_time=0, dirlist=None, return_code=None):
+    def __init__(self, url, threadline=100, sleep_time=0, dirlist=None, return_code=None, echo=False, wait=True):
         """
         :param url: Sans URL
         :param threadline: Thread line
         :param sleep_time: sleep time
         :param dirlist: dirs list
         :param return_code: return code
+        :param echo: print scan result
+        :param wait: Whether to wait for the process to end
         """
         self.q = None
+        self.print_list = echo
+        self.wait = wait
         self.url = url
         self.threadline = threadline
         self.sleep_time = sleep_time
@@ -58,6 +57,8 @@ class DirScan:
             if response.status_code in self.return_code:
                 self.results.append(f"{self.url}{path}")
                 self.results_code.append(f"{self.url}{path} {response.status_code}")
+                if self.print_list:
+                    print(f"{self.url}{path} {response.status_code}")  # print response
             # 完成之后将任务标记为完成
             self.q.task_done()
 
@@ -69,4 +70,6 @@ class DirScan:
         for i in range(self.threadline):
             thread = threading.Thread(target=self.scan_dir)
             thread.start()
-        self.q.join()  # Wait for thread to finish
+        if self.wait:
+            self.q.join()  # Wait for thread to finish
+        # 如果不等待，也可以直接获取对象中的results、results_code属性

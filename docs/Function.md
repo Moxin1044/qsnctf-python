@@ -19,6 +19,8 @@
 | sleep_time  |     True     |     int      |                   每次扫描间隔时间 默认是0                   |
 |   dirlist   |     True     |     list     | DirScan的列表，格式['/www.zip','/index.php'] 默认扫描库路径下的/plugin/txt/dirs.txt中的内容 |
 | return_code |     True     |     list     | 返回结果的状态列表，格式[200, 301, 302, 401, 403, 500] ，格式也是默认值 |
+|    echo     |     True     |   Boolean    |              是否直接输出扫描结果 默认值为False              |
+|    wait     |     True     |   Boolean    |                是否等待线程结束 默认值为True                 |
 
 **说明：此功能需要连接网络，请注意比赛规则进行使用。**
 
@@ -31,6 +33,17 @@ dir = DirScan('https://bbs.qsnctf.com/', 10, 0.5)
 print(dir.results_code) # ['https://bbs.qsnctf.com/robots.txt 200', 'https://bbs.qsnctf.com/admin.php 200', 'https://bbs.qsnctf.com/sitemap.txt 200', 'https://bbs.qsnctf.com/sitemap.xml 200']
 # 下面的结果中只会存在返回的请求
 print(dir.results) # ['https://bbs.qsnctf.com/robots.txt', 'https://bbs.qsnctf.com/admin.php', 'https://bbs.qsnctf.com/sitemap.txt', 'https://bbs.qsnctf.com/sitemap.xml']
+
+DirScan('https://bbs.qsnctf.com/', 100, 0.1, echo=True) # 将会直接进行扫描并打印结果（这样在显示上更快，但是效率同上）
+"""
+https://bbs.qsnctf.com/admin.php 200
+https://bbs.qsnctf.com/robots.txt 200
+https://bbs.qsnctf.com/sitemap.txt 200
+https://bbs.qsnctf.com/home.php 200
+https://bbs.qsnctf.com/sitemap.xml 200
+https://bbs.qsnctf.com/index.php 200
+https://bbs.qsnctf.com/install/ 403
+"""
 ```
 
 ## API.py
