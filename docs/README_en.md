@@ -123,8 +123,14 @@ FUNCTIONS
 
 ### API
 
-| Quipqiup word frequency analysis |
-| :------------------------------: |
+| Quipqiup word frequency analysis | Feishu Webhook|
+| :--------------: | ----------- |
+### WEB
+
+| Directory scanning |
+| -------- |
+
+
 
 # Specific use
 
