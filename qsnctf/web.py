@@ -1,9 +1,11 @@
 # web操作
 import os
+import re
 import time
 import queue
 import threading
 import requests
+from bs4 import BeautifulSoup
 from qsnctf.auxiliary import read_file_to_list, is_http_or_https_url, normalize_url
 
 
@@ -95,8 +97,6 @@ class UrlScan:
         self.results = []
         self.results_code = []
         self.results_title = []
-        self.results_titles = []
-        self.check_url = ""
         if return_code is not None:
             self.return_code = return_code
         else:
@@ -114,8 +114,15 @@ class UrlScan:
             if response.status_code in self.return_code:
                 self.results.append(f"{url}")
                 self.results_code.append(f"{url} {response.status_code}")
-                if self.print_list:
-                    print(f"{url} {response.status_code}")  # print response
+                if response.status_code == 200:
+                    soup = BeautifulSoup(response.text, "html.parser")
+                    title = soup.find("title")
+                    title = re.search(r"<title>(.+?)</title>", str(title)).group(1)
+                    self.results_title.append(f"{url} {title}")
+                if self.print_list and response.status_code == 200:
+                    print(f"{url} {response.status_code} {title}")  # print response
+                elif self.print_list and response.status_code != 200:
+                    print(f"{url} {response.status_code}")
             # 完成之后将任务标记为完成
             self.q.task_done()
 

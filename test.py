@@ -1,3 +1,6 @@
 from qsnctf import *
 
-DirScan('https://bbs.qsnctf.com/', 100, 0.1, echo=True)
+
+scan = ['https://www.baidu.com/', 'https://www.qsnctf.com/admin']
+url = UrlScan(scan,echo=True)
+print(url.results_code)
