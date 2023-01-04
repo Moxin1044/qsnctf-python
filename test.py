@@ -1,4 +1,5 @@
 from qsnctf import *
 
-a = base100_decode("👟👫👫👧👪🐱🐦🐦👮👮👮🐥👙👘👠👛👬🐥👚👦👤🐦")
-print(a)
+a = DomainScan("qsnctf.com")
+print(a.results_title)
+print(a.results)
