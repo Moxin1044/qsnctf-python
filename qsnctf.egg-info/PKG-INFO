@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: qsnctf
-Version: 0.0.8.3
+Version: 0.0.8.4
 Summary: 青少年CTF训练平台提供的Python软件包
 Home-page: https://github.com/Moxin1044/qsnctf-python
 Author: Moxin
@@ -131,18 +131,18 @@ FUNCTIONS
 
 ### MISC
 
-| 核心价值观加密解密 | 文本逆向 | url加密解密 | 位异或 |
-| :----------------: | :------: | :---------: | :----: |
-
-### UUID
-
-| 获取uuid |
-| :------: |
+|   核心价值观加密解密   | 文本逆向 | url加密解密 | 位异或 | 文本逆向（步长2） |
+| :--------------------: | :------: | :---------: | :----: | ----------------- |
+| 文本逆向（自定义步长） | 获取uuid |             |        |                   |
 
 ### API
 
-| quipqiup词频分析 |
-| :--------------: |
+| quipqiup词频分析 | 飞书Webhook | 钉钉Talk |
+| :--------------: | ----------- | -------- |
+### WEB
+
+| 目录扫描 | 网站存活检测 | 取网站标题 |
+| -------- | ------------ | ---------- |
 
 # 具体使用
 
@@ -190,21 +190,6 @@ print(b)
 需要加密的
 ```
 
-**提示：位异或传参是需要传入一个列表，下面是个例子**
-
-```python
-import qsnctf
-l=[0x71,0x72,0x6c,0x60,0x70,0x63,0x7d,0x4a,0x38,0x71,0x3b,0x65,0x53,0x41,0x61,0x79,0x75,0x4e,0x6b,0x7c,0x61,0x34,0x6b]
-a=qsnctf.misc.xor_decrypt(l)
-print(a)
-```
-
-返回结果
-
-```
-qsnctf{M0X1n_Love_you!}
-```
-
 **Base62的encode值应该是整数！**
 
 ```python
@@ -243,4 +228,3 @@ print(b)
     <td align="center"><a href="https://github.com/yiye-yfs"><img src="https://avatars.githubusercontent.com/u/79006318?v=4" width="100px;" alt=""/><br /><sub><b>yiye-yfs</b></sub></a><br /></td>
   </tr>
 </table>
-

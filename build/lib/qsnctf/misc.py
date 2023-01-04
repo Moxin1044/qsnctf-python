@@ -1,15 +1,18 @@
-# 其他CTF能力
+# 杂项功能
 # 2023年1月1日
 # 末心
+# 社会主义核心价值观编码
+# 需要将Python目录下>lib>subprocess.py的765行附近的encoding的默认None值修改为utf-8即可。
 import os
 import execjs  # PyExecJS
 from qsnctf.auxiliary import js_from_file
 import urllib.parse
 import re
+import uuid
 
 
-# 社会主义核心价值观编码
-# 需要将Python目录下>lib>subprocess.py的765行附近的encoding的默认None值修改为utf-8即可。
+def get_uuid():
+    return str(uuid.uuid4())
 
 
 def Chinese_socialism_encode(string):
@@ -29,8 +32,38 @@ def Chinese_socialism_decode(string):
 
 
 def string_reverse(string):
-    # 字符串逆向
+    """
+    直接逆向
+    主要应用场合为文件的Hex的转换
+    :param string: abc123
+    :return: 321cba
+    """
     return string[::-1]
+
+
+def string_reverse_step(string, step):
+    """
+    步长为step的逆向(自定义步长)
+    主要应用场合为文件的Hex的转换
+    :param string: abc123
+    :param step: 步长
+    :return: ba1c32
+    """
+    lst = [c for c in string]
+    result = ''
+    for i in range(0, len(lst), step):
+        result += ''.join(lst[i:i+step][::-1])
+    return result
+
+
+def string_reverse_step2(string):
+    """
+    步长为2的逆向
+    主要应用场合为文件的Hex的转换
+    :param string: abc123
+    :return: ba1c32
+    """
+    string_reverse_step(string, 2)
 
 
 def url_encode(string):
@@ -49,3 +82,4 @@ def xor_list(lt_data, lt_root):
     for i in range(min(len(lt_data), len(lt_root))):
         decrypted += chr(ord(lt_data[i]) ^ ord(lt_root[i]))
     return decrypted
+

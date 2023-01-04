@@ -9,10 +9,11 @@ qsnctf/crypto.py
 qsnctf/hash.py
 qsnctf/main.py
 qsnctf/misc.py
-qsnctf/uuid.py
+qsnctf/web.py
 qsnctf.egg-info/PKG-INFO
 qsnctf.egg-info/SOURCES.txt
 qsnctf.egg-info/dependency_links.txt
 qsnctf.egg-info/requires.txt
 qsnctf.egg-info/top_level.txt
 qsnctf/plugin/js/cvencode.js
+qsnctf/plugin/txt/dirs.txt
