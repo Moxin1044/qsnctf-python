@@ -8,7 +8,7 @@ from qsnctf.auxiliary import read_file_to_list, is_http_or_https_url, normalize_
 
 
 class DirScan:
-    def __init__(self, url, threadline=100, sleep_time=0, dirlist=None, return_code=None, echo=False, wait=True):
+    def __init__(self, url, threadline=10, sleep_time=0, dirlist=None, return_code=None, echo=False, wait=True):
         """
         :param url: Sans URL
         :param threadline: Thread line
@@ -69,6 +69,62 @@ class DirScan:
             self.q.put(path)
         for i in range(self.threadline):
             thread = threading.Thread(target=self.scan_dir)
+            thread.start()
+        if self.wait:
+            self.q.join()  # Wait for thread to finish
+        # 如果不等待，也可以直接获取对象中的results、results_code属性
+
+
+class UrlScan:
+    # 网页存活扫描
+    def __init__(self, url_list, threadline=10, sleep_time=0, return_code=None, echo=False, wait=True):
+        """
+        :param url_list: Sans URL
+        :param threadline: Thread line
+        :param sleep_time: sleep time
+        :param return_code: return code
+        :param echo: print scan result
+        :param wait: Whether to wait for the process to end
+        """
+        self.q = None
+        self.print_list = echo
+        self.wait = wait
+        self.url_list = url_list
+        self.threadline = threadline
+        self.sleep_time = sleep_time
+        self.results = []
+        self.results_code = []
+        self.results_title = []
+        self.results_titles = []
+        self.check_url = ""
+        if return_code is not None:
+            self.return_code = return_code
+        else:
+            self.return_code = [200, 301, 302, 401, 403, 404, 500]  # 这里默认404是需要返回的，为了验证URL的状态
+        self.run()
+
+    def scan_url(self):
+        while not self.q.empty():
+            # 从队列中取出一个路径
+            url = self.q.get()
+            requests.packages.urllib3.disable_warnings()
+            response = requests.get(url, verify=False)
+            time.sleep(self.sleep_time)
+            # 将符合条件的扫描结果添加到results列表
+            if response.status_code in self.return_code:
+                self.results.append(f"{url}")
+                self.results_code.append(f"{url} {response.status_code}")
+                if self.print_list:
+                    print(f"{url} {response.status_code}")  # print response
+            # 完成之后将任务标记为完成
+            self.q.task_done()
+
+    def run(self):
+        self.q = queue.Queue()  # Create Queue
+        for path in self.url_list:
+            self.q.put(path)
+        for i in range(self.threadline):
+            thread = threading.Thread(target=self.scan_url)
             thread.start()
         if self.wait:
             self.q.join()  # Wait for thread to finish
