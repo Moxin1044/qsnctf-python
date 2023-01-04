@@ -9,6 +9,33 @@ from bs4 import BeautifulSoup
 from qsnctf.auxiliary import read_file_to_list, is_http_or_https_url, normalize_url
 
 
+def get_url_title(url):
+    """
+    :param url: get url
+    :return:  url title
+    """
+    browser = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0",
+        "Accept": "*/*", "Accept-Language": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
+        "Accept-Encoding": "gzip, deflate", "Content-Type": "application/x-www-form-urlencoded",
+        "Referer": f"{url}",
+        "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
+        "Te": "trailers", "Connection": "close"}
+    requests.packages.urllib3.disable_warnings()
+    response = requests.get(url, headers=browser, verify=False)
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.text, "html.parser")
+        title = soup.find("title")
+        title = re.search(r"<title>(.+?)</title>", str(title))
+        if title:
+            title = title.group(1)
+        else:
+            title = "No Title"
+    else:
+        title = "Request unreachable"
+    return title
+
+
 class DirScan:
     def __init__(self, url, threadline=10, sleep_time=0, dirlist=None, return_code=None, echo=False, wait=True):
         """
@@ -155,13 +182,3 @@ class UrlScan:
             self.q.join()  # Wait for thread to finish
         # 如果不等待，也可以直接获取对象中的results、results_code属性
 
-
-def get_url_title(url):
-    browser = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0",
-        "Accept": "*/*", "Accept-Language": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
-        "Accept-Encoding": "gzip, deflate", "Content-Type": "application/x-www-form-urlencoded",
-        "Referer": f"{url}",
-        "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
-        "Te": "trailers", "Connection": "close"}
-    response = requests.get(url, headers=browser, verify=False)

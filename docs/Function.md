@@ -83,6 +83,29 @@ https://www.qsnctf.com/ 200 青少年CTF训练平台 | 原中学生CTF平台 | �
 
 **说明：No Title是没有找到HTML网页中的Title标签**
 
+#### 取网站标题
+
+##### get_url_title
+
+|  **函数名**   | **返回类型** |   **位置**   |  **说明**  |
+| :-----------: | :----------: | :----------: | :--------: |
+| get_url_title |     text     |    web.py    | 取网站标题 |
+|  **参数名**   | **是否可空** | **传参类型** |  **说明**  |
+|      url      |    False     |    string    |  网站地址  |
+
+**说明：请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+a = get_url_title("https://www.baidu.com/")
+print(a) # 百度一下，你就知道
+```
+
+**说明：No Title是没有找到HTML网页中的Title标签**
+
 ## API.py
 
 ### quipqiup
