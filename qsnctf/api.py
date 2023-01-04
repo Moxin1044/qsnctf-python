@@ -1,6 +1,7 @@
 import requests
 import json
 
+
 # 这里的操作一般都是需要联网的，如果是线下赛请确认主办方允许联网使用
 
 
@@ -25,14 +26,14 @@ class quipqiup:
 
     def quipqiup_get_id(self):
         url = f"{self.url}solve"
-        json = {"ciphertext": self.ciphertext, "clues": self.clues, "mode": "auto", "was_auto": True, "was_clue": False}
-        response = requests.post(url, headers=self.headers, json=json).json()
+        data = {"ciphertext": self.ciphertext, "clues": self.clues, "mode": "auto", "was_auto": True, "was_clue": False}
+        response = requests.post(url, headers=self.headers, json=data).json()
         return response['id']
 
     def quipqiup_return(self):
         url = f"{self.url}status"
-        json = {"id": int(self.id)}
-        response_data = requests.post(url, headers=self.headers, json=json).json()
+        data = {"id": int(self.id)}
+        response_data = requests.post(url, headers=self.headers, json=data).json()
         self.json = response_data  # json 直接返回requests的response json
         return_list = []
         for response_list in response_data['solutions']:
@@ -93,5 +94,33 @@ class FeishuWebhook:
             }
         else:
             raise ValueError("Invalid send_type")
+        data = json.dumps(data, ensure_ascii=True).encode("utf-8")
+        requests.post(self.url, data=data, headers=self.headers)
+
+
+class DingTalk:
+    def __init__(self, title, message, token):
+        """
+        :param title: send_title
+        :param message: send_message
+        :param token: dingding tolken
+        """
+        self.url = f"https://oapi.dingtalk.com/robot/send?access_token={token}"
+        self.title = title
+        self.message = message
+        self.headers = {
+            "Content-Type": "application/json",
+            "charset": "utf-8"
+        }
+        self.send()
+
+    def send(self):
+        data = {
+            "msgtype": "text",
+            "text":
+                {
+                    "content": f"{self.title}\n{self.message}"
+                }
+        }
         data = json.dumps(data, ensure_ascii=True).encode("utf-8")
         requests.post(self.url, data=data, headers=self.headers)

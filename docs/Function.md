@@ -55,6 +55,30 @@ from qsnctf import *
 FeishuWebhook('青少年CTF', '你好，我是末心', 'xxxx-xxxxx-xxxx-xxxx-xxxxx','card')
 ```
 
+### DingTalk
+
+#### class-DingTalk
+
+##### DingTalk
+
+| **函数名** | **返回类型** |   **位置**   |    **说明**     |
+| :--------: | :----------: | :----------: | :-------------: |
+|  DingTalk  |     None     |    api.py    | 钉钉Webhook通知 |
+| **参数名** | **是否可空** | **传参类型** |    **说明**     |
+|   title    |    False     |    string    |   通知的标题    |
+|  message   |    False     |    string    |   通知的消息    |
+|   token    |    False     |    string    |   钉钉的Token   |
+
+**说明：此功能需要连接网络，请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+DingTalk('青少年CTF', '你好，我是末心', 'xxxx-xxxxx-xxxx-xxxx-xxxxx')
+```
+
 ## Base.py
 
 ### Base家族
