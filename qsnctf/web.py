@@ -7,6 +7,11 @@ import requests
 from qsnctf.auxiliary import read_file_to_list, is_http_or_https_url, normalize_url
 
 
+# 模块内公有函数
+def url_get(url):
+    headers = {}
+    return requests.get(url, header=headers)
+
 class DirScan:
     def __init__(self, url, threadline=100, sleep_time=0, dirlist=None, return_code=None):
         """
@@ -46,7 +51,8 @@ class DirScan:
         while not self.q.empty():
             # 从队列中取出一个路径
             path = self.q.get()
-            response = requests.get(self.url + path)
+            requests.packages.urllib3.disable_warnings()
+            response = requests.get(self.url + path, verify=False)
             time.sleep(self.sleep_time)
             # 将符合条件的扫描结果添加到results列表
             if response.status_code in self.return_code:

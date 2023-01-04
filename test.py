@@ -1,3 +1,3 @@
 from qsnctf import *
 
-print(DirScan('https://bbs.qsnctf.com/', 10, 0.5).results)
+print(DirScan('https://baidu.com', 10, 0.1).results)
