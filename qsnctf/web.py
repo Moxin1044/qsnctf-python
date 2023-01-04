@@ -21,6 +21,7 @@ class DirScan:
         self.threadline = threadline
         self.sleep_time = sleep_time
         self.results = []
+        self.results_code = []
         self.check_url = ""
         self.dirlist = dirlist
         if return_code is not None:
@@ -49,7 +50,8 @@ class DirScan:
             time.sleep(self.sleep_time)
             # 将符合条件的扫描结果添加到results列表
             if response.status_code in self.return_code:
-                self.results.append(f"{self.url}{path} {response.status_code}")
+                self.results.append(f"{self.url}{path}")
+                self.results_code.append(f"{self.url}{path} {response.status_code}")
             # 完成之后将任务标记为完成
             self.q.task_done()
 
