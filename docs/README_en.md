@@ -113,18 +113,19 @@ FUNCTIONS
 
 ### MISC
 
-|   Core values Encryption and decryption   | Text reverses | URL encryption and decryption | Bit XOR | Text Reverse (Step 2) |
-| :--------------------: | :------: | :---------: | :----: | ----------------- |
-| Text Reverse (custom step size) | Get the UUID |             |        |                   |
+| Core values Encryption and decryption | Text reverses | URL encryption and decryption | Bit XOR | Text Reverse (Step 2) |
+| :-----------------------------------: | :-----------: | :---------------------------: | :-----: | --------------------- |
+|    Text Reverse (custom step size)    | Get the UUID  |                               |         |                       |
 
 ### API
 
-| Quipqiup word frequency analysis | Feishu Webhook|
-| :--------------: | ----------- |
+| Quipqiup word frequency analysis | Feishu Webhook | DingTalk |
+| :------------------------------: | -------------- | -------- |
+
 ### WEB
 
-| Directory scanning | Website survival detection|
-| :--------------: | ----------- |
+| Directory scanning | Website survival detection |
+| :----------------: | -------------------------- |
 
 
 
@@ -206,6 +207,90 @@ print(b)
 
 Since there are many bases and various encryption methods, there are also many ways to pass parameters. Here is to write this document for you for easy reference, the following is the call example and parameter parameters description and precautions.
 
+
+## Web.py
+
+### Scan
+
+#### class-DirScan
+
+##### DirScan
+
+|   **Function name**    |   **Return type**   |    **location**    |                        **illustrate**                        |
+| :--------------------: | :-----------------: | :----------------: | :----------------------------------------------------------: |
+|        DirScan         |        list         |       web.py       |                   Site directory scanning                    |
+| **The parameter name** | **Nullable or not** | **Parameter type** |                        **illustrate**                        |
+|          url           |        False        |       string       | Website address, format: https://bbs.qsnctf.com If it exists/it will be automatically deleted |
+|       treadline        |        True         |        int         | The number of threads (need to pass integers) should not be too high The default is 10 threads |
+|       sleep_time       |        True         |        int         |           The default time between each scan is 0            |
+|        dirlist         |        True         |        list        | DirScan's list in the format ['/www.zip','/index.php'] The default scan library path is in the /plugin/txt/dirs.txt |
+|      return_code       |        True         |        list        | Returns a status list of results, in the format [200, 301, 302, 401, 403, 500], which is also the default format |
+|          echo          |        True         |      Boolean       | Whether to output scan results directly The default value is False |
+|          wait          |        True         |      Boolean       | Whether to wait for thread to end The default value is True  |
+
+**illustrate：Please pay attention to the rules of the contest for use。**
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+dir = DirScan('https://bbs.qsnctf.com/', 10, 0.5)
+print(dir.results_code) # ['https://bbs.qsnctf.com/robots.txt 200', 'https://bbs.qsnctf.com/admin.php 200', 'https://bbs.qsnctf.com/sitemap.txt 200', 'https://bbs.qsnctf.com/sitemap.xml 200']
+# 下面的结果中只会存在返回的请求
+print(dir.results) # ['https://bbs.qsnctf.com/robots.txt', 'https://bbs.qsnctf.com/admin.php', 'https://bbs.qsnctf.com/sitemap.txt', 'https://bbs.qsnctf.com/sitemap.xml']
+
+DirScan('https://bbs.qsnctf.com/', 100, 0.1, echo=True) # 将会直接进行扫描并打印结果（这样在显示上更快，但是效率同上）
+"""
+https://bbs.qsnctf.com/admin.php 200
+https://bbs.qsnctf.com/robots.txt 200
+https://bbs.qsnctf.com/sitemap.txt 200
+https://bbs.qsnctf.com/home.php 200
+https://bbs.qsnctf.com/sitemap.xml 200
+https://bbs.qsnctf.com/index.php 200
+https://bbs.qsnctf.com/install/ 403
+"""
+```
+
+#### class-UrlScan
+
+##### UrlScan
+
+|   **Function name**    |   **Return type**   |    **location**    |                        **illustrate**                        |
+| :--------------------: | :-----------------: | :----------------: | :----------------------------------------------------------: |
+|        UrlScan         |        list         |       web.py       |                     Site status scanning                     |
+| **The parameter name** | **Nullable or not** | **Parameter type** |                        **illustrate**                        |
+|        url_list        |        False        |       string       | Website address, format: https://bbs.qsnctf.com If it exists/it will be automatically deleted |
+|       treadline        |        True         |        int         | The number of threads (need to pass integers) should not be too high The default is 10 threads |
+|       sleep_time       |        True         |        int         |           The default time between each scan is 0            |
+|      return_code       |        True         |        list        | Returns a status list of results, in the format [200, 301, 302, 401, 403, 500], which is also the default format |
+|          echo          |        True         |      Boolean       | Whether to output scan results directly The default value is False |
+|          wait          |        True         |      Boolean       | Whether to wait for thread to end The default value is True  |
+
+**illustrate：Please pay attention to the rules of the contest for use。**
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+list = ["https://bbs.qsnctf.com/admin.php", "https://bbs.qsnctf.com/robots.txt", "https://www.qsnctf.com/"]
+dir = UrlScan(list, 10, 0.5)
+print(dir.results_code) # ['https://bbs.qsnctf.com/robots.txt 200', 'https://bbs.qsnctf.com/admin.php 200', 'https://www.qsnctf.com/ 200']
+# 下面的结果中只会存在返回的请求
+print(dir.results) # ['https://bbs.qsnctf.com/robots.txt', 'https://bbs.qsnctf.com/admin.php', 'https://www.qsnctf.com/']
+UrlScan(list, 100, 0.1, echo=True) # 将会直接进行扫描并打印结果（这样在显示上更快，但是效率同上）
+"""
+https://bbs.qsnctf.com/robots.txt 200 No Title
+https://bbs.qsnctf.com/admin.php 200 登录管理中心
+https://www.qsnctf.com/ 200 青少年CTF训练平台 | 原中学生CTF平台 | 青少年CTF
+"""
+```
+
+**illustrate：`No Title` is the Title tag in the HTML page that is not found**
+
+## API.py
+
 ### quipqiup
 
 #### class-quipqiup
@@ -219,7 +304,7 @@ Since there are many bases and various encryption methods, there are also many w
 |       ciphertext       |        False        |       string       |                       What is analyzed                       |
 |         clues          |        True         |       string       |  Analysis clues, empty by default, For example G=R QVW=THE   |
 
-**illustrate：This feature requires an internet connection, please pay attention to the rules of the contest to use.**
+**illustrate：This feature requires a network connection，please pay attention to the rules of the contest for use。**
 
 ##### Use examples
 
@@ -231,6 +316,57 @@ print(a.text) # that,high,area,died***
 print(a.json) # {'id': 931788518, 'result': 0, 'result-message': 'success', 'time0': 1672662393.35963, 'last': 1, 'solutions': [{'logp': -1.58357763290405, 'plaintext': 'that', ***
 print(a.list) # ['that', 'high',***
 ```
+
+### 飞书Webhook
+
+#### class-FeishuWebhook
+
+##### FeishuWebhook
+
+|   **Function name**    |   **Return type**   |    **location**    |                        **illustrate**                        |
+| :--------------------: | :-----------------: | :----------------: | :----------------------------------------------------------: |
+|     FeishuWebhook      |        None         |       api.py       |                 Feishu Webhook notifications                 |
+| **The parameter name** | **Nullable or not** | **Parameter type** |                        **illustrate**                        |
+|         title          |        False        |       string       |                The title of the notification                 |
+|        message         |        False        |       string       |               The message of the notification                |
+|         token          |        False        |       string       | Feishu token, take the content behind Feishu robot /v2/hook/ |
+|       send_type        |        False        |       string       | Types sent: text, card, text message and card message, respectively |
+
+**illustrate：This feature requires a network connection，Please pay attention to the rules of the contest for use。**
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+FeishuWebhook('青少年CTF', '你好，我是末心', 'xxxx-xxxxx-xxxx-xxxx-xxxxx','card')
+```
+
+### DingTalk
+
+#### class-DingTalk
+
+##### DingTalk
+
+|   **Function name**    |   **Return type**   |    **location**    |         **illustrate**          |
+| :--------------------: | :-----------------: | :----------------: | :-----------------------------: |
+|        DingTalk        |        None         |       api.py       | DingTalk Webhook notifications  |
+| **The parameter name** | **Nullable or not** | **Parameter type** |         **illustrate**          |
+|         title          |        False        |       string       |  The title of the notification  |
+|        message         |        False        |       string       | The message of the notification |
+|         token          |        False        |       string       |        Token of DingTalk        |
+
+**illustrate：This feature requires a network connection，Please pay attention to the rules of the contest for use。**
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+DingTalk('青少年CTF', '你好，我是末心', 'xxxx-xxxxx-xxxx-xxxx-xxxxx')
+```
+
+
 
 ### The Base family
 
