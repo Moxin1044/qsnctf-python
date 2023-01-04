@@ -30,6 +30,31 @@ print(a.json) # {'id': 931788518, 'result': 0, 'result-message': 'success', 'tim
 print(a.list) # ['that', 'high',***
 ```
 
+### 飞书Webhook
+
+#### class-FeishuWebhook
+
+##### FeishuWebhook
+
+|  **函数名**   | **返回类型** |   **位置**   |                    **说明**                     |
+| :-----------: | :----------: | :----------: | :---------------------------------------------: |
+| FeishuWebhook |     None     |    api.py    |                 飞书Webhook通知                 |
+|  **参数名**   | **是否可空** | **传参类型** |                    **说明**                     |
+|     title     |    False     |    string    |                   通知的标题                    |
+|    message    |    False     |    string    |                   通知的消息                    |
+|     token     |    False     |    string    |  飞书的Token，取飞书机器人/v2/hook/后面的内容   |
+|   send_type   |    False     |    string    | 发送的类型：text、card 分别为文本消息和卡片消息 |
+
+**说明：此功能需要连接网络，请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+FeishuWebhook('青少年CTF', '你好，我是末心', 'xxxx-xxxxx-xxxx-xxxx-xxxxx','card')
+```
+
 ## Base.py
 
 ### Base家族
