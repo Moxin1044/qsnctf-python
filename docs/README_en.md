@@ -127,8 +127,8 @@ FUNCTIONS
 | :--------------: | ----------- |
 ### WEB
 
-| Directory scanning |
-| -------- |
+| Directory scanning || Website survival detection|
+| :--------------: | ----------- |
 
 
 
