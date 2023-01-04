@@ -39,3 +39,10 @@ class quipqiup:
             return_list.append(response_list['plaintext'])
         self.list = return_list
         self.text = ','.join(return_list)
+
+
+class feishu_webhook:
+    # TODO: 增加飞书Webhook通知 后续还需要增加钉钉、cq-gohttp等
+    def __init__(self, title, message, token):
+        # https://open.feishu.cn/open-apis/bot/v2/hook/xxxxxxxxxxxxxxxxx
+        self.url = f"https://open.feishu.cn/open-apis/bot/v2/hook/{token}"
