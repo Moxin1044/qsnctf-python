@@ -2,6 +2,35 @@
 
 由于Base、各种加密的方法较多，传参方法也花样百出。这里给大家写出这个文档方便参考，包含了供给大家使用的函数的说明、注意事项、参数和返回值等信息。
 
+## Web.py
+
+### DirScan
+
+#### class-DirScan
+
+##### DirScan
+
+| **函数名**  | **返回类型** |   **位置**   |                           **说明**                           |
+| :---------: | :----------: | :----------: | :----------------------------------------------------------: |
+|   DirScan   |     list     |    web.py    |                       网站目录扫描工具                       |
+| **参数名**  | **是否可空** | **传参类型** |                           **说明**                           |
+|     url     |    False     |    string    | 网站地址，格式：https://bbs.qsnctf.com 如果后面存在/会自动删去 |
+|  treadline  |     True     |     int      |        线程数（需要传整数）不可以太高了哦 默认10线程         |
+| sleep_time  |     True     |     int      |                   每次扫描间隔时间 默认是0                   |
+|   dirlist   |     True     |     list     | DirScan的列表，格式['/www.zip','/index.php'] 默认扫描库路径下的/plugin/txt/dirs.txt中的内容 |
+| return_code |     True     |     list     | 返回结果的状态列表，格式[200, 301, 302, 401, 403, 500] ，格式也是默认值 |
+
+**说明：此功能需要连接网络，请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+dir = DirScan('https://bbs.qsnctf.com/', 10, 0.5)
+print(dir.results) # ['https://bbs.qsnctf.com/robots.txt 200', 'https://bbs.qsnctf.com/admin.php 200', 'https://bbs.qsnctf.com/sitemap.txt 200', 'https://bbs.qsnctf.com/sitemap.xml 200']
+```
+
 ## API.py
 
 ### quipqiup
