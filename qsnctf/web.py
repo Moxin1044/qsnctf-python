@@ -7,6 +7,8 @@ class dirscan:
         self.url = url
         self.threadline = threadline
         if dirlist:
-            print("true")
+            self.dirlist = dirlist
+            # TODO: dirlist in self, will san dirs
         else:
-            print("false")
+            # TODO: read local dirs
+            pass
