@@ -1,3 +1,3 @@
 from qsnctf import *
 
-FeishuWebhook('青少年CTF', '你好，我是末心', '88117bda','card')
+FeishuWebhook('青少年CTF', '你好，我是末心', '','card')
