@@ -53,7 +53,14 @@ class DirScan:
             # 从队列中取出一个路径
             path = self.q.get()
             requests.packages.urllib3.disable_warnings()
-            response = requests.get(self.url + path, verify=False)
+            browser = {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0",
+                "Accept": "*/*", "Accept-Language": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
+                "Accept-Encoding": "gzip, deflate", "Content-Type": "application/x-www-form-urlencoded",
+                "Referer": f"{self.url}{path}",
+                "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
+                "Te": "trailers", "Connection": "close"}
+            response = requests.get(self.url + path, headers=browser, verify=False)
             time.sleep(self.sleep_time)
             # 将符合条件的扫描结果添加到results列表
             if response.status_code in self.return_code:
@@ -108,7 +115,14 @@ class UrlScan:
             # 从队列中取出一个路径
             url = self.q.get()
             requests.packages.urllib3.disable_warnings()
-            response = requests.get(url, verify=False)
+            browser = {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0",
+                "Accept": "*/*", "Accept-Language": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
+                "Accept-Encoding": "gzip, deflate", "Content-Type": "application/x-www-form-urlencoded",
+                "Referer": f"{url}",
+                "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
+                "Te": "trailers", "Connection": "close"}
+            response = requests.get(url, headers=browser, verify=False)
             time.sleep(self.sleep_time)
             # 将符合条件的扫描结果添加到results列表
             if response.status_code in self.return_code:
@@ -140,3 +154,14 @@ class UrlScan:
         if self.wait:
             self.q.join()  # Wait for thread to finish
         # 如果不等待，也可以直接获取对象中的results、results_code属性
+
+
+def get_url_title(url):
+    browser = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0",
+        "Accept": "*/*", "Accept-Language": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
+        "Accept-Encoding": "gzip, deflate", "Content-Type": "application/x-www-form-urlencoded",
+        "Referer": f"{url}",
+        "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
+        "Te": "trailers", "Connection": "close"}
+    response = requests.get(url, headers=browser, verify=False)
