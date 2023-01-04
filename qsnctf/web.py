@@ -117,7 +117,11 @@ class UrlScan:
                 if response.status_code == 200:
                     soup = BeautifulSoup(response.text, "html.parser")
                     title = soup.find("title")
-                    title = re.search(r"<title>(.+?)</title>", str(title)).group(1)
+                    title = re.search(r"<title>(.+?)</title>", str(title))
+                    if title:
+                        title = title.group(1)
+                    else:
+                        title = "No Title"
                     self.results_title.append(f"{url} {title}")
                 if self.print_list and response.status_code == 200:
                     print(f"{url} {response.status_code} {title}")  # print response

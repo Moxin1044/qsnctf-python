@@ -4,7 +4,7 @@
 
 ## Web.py
 
-### DirScan
+### Scan
 
 #### class-DirScan
 
@@ -12,7 +12,7 @@
 
 | **函数名**  | **返回类型** |   **位置**   |                           **说明**                           |
 | :---------: | :----------: | :----------: | :----------------------------------------------------------: |
-|   DirScan   |     list     |    web.py    |                       网站目录扫描工具                       |
+|   DirScan   |     list     |    web.py    |                         网站目录扫描                         |
 | **参数名**  | **是否可空** | **传参类型** |                           **说明**                           |
 |     url     |    False     |    string    | 网站地址，格式：https://bbs.qsnctf.com 如果后面存在/会自动删去 |
 |  treadline  |     True     |     int      |        线程数（需要传整数）不可以太高了哦 默认10线程         |
@@ -22,7 +22,7 @@
 |    echo     |     True     |   Boolean    |              是否直接输出扫描结果 默认值为False              |
 |    wait     |     True     |   Boolean    |                是否等待线程结束 默认值为True                 |
 
-**说明：此功能需要连接网络，请注意比赛规则进行使用。**
+**说明：请注意比赛规则进行使用。**
 
 ##### 使用示例
 
@@ -45,6 +45,43 @@ https://bbs.qsnctf.com/index.php 200
 https://bbs.qsnctf.com/install/ 403
 """
 ```
+
+#### class-UrlScan
+
+##### UrlScan
+
+| **函数名**  | **返回类型** |   **位置**   |                           **说明**                           |
+| :---------: | :----------: | :----------: | :----------------------------------------------------------: |
+|   UrlScan   |     list     |    web.py    |                         网站状态扫描                         |
+| **参数名**  | **是否可空** | **传参类型** |                           **说明**                           |
+|  url_list   |    False     |    string    | 网站地址，格式：https://bbs.qsnctf.com 如果后面存在/会自动删去 |
+|  treadline  |     True     |     int      |        线程数（需要传整数）不可以太高了哦 默认10线程         |
+| sleep_time  |     True     |     int      |                   每次扫描间隔时间 默认是0                   |
+| return_code |     True     |     list     | 返回结果的状态列表，格式[200, 301, 302, 401, 403, 404, 500] ，格式也是默认值 |
+|    echo     |     True     |   Boolean    |              是否直接输出扫描结果 默认值为False              |
+|    wait     |     True     |   Boolean    |                是否等待线程结束 默认值为True                 |
+
+**说明：请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+list = ["https://bbs.qsnctf.com/admin.php", "https://bbs.qsnctf.com/robots.txt", "https://www.qsnctf.com/"]
+dir = UrlScan(list, 10, 0.5)
+print(dir.results_code) # ['https://bbs.qsnctf.com/robots.txt 200', 'https://bbs.qsnctf.com/admin.php 200', 'https://www.qsnctf.com/ 200']
+# 下面的结果中只会存在返回的请求
+print(dir.results) # ['https://bbs.qsnctf.com/robots.txt', 'https://bbs.qsnctf.com/admin.php', 'https://www.qsnctf.com/']
+UrlScan(list, 100, 0.1, echo=True) # 将会直接进行扫描并打印结果（这样在显示上更快，但是效率同上）
+"""
+https://bbs.qsnctf.com/robots.txt 200 No Title
+https://bbs.qsnctf.com/admin.php 200 登录管理中心
+https://www.qsnctf.com/ 200 青少年CTF训练平台 | 原中学生CTF平台 | 青少年CTF
+"""
+```
+
+**说明：No Title是没有找到HTML网页中的Title标签**
 
 ## API.py
 
