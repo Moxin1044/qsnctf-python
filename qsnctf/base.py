@@ -5,7 +5,6 @@ import base64
 import qsnctf.plugin.python.python3base92
 import struct
 import base62
-import pybase100
 import base58
 
 
