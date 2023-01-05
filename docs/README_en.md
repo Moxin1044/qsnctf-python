@@ -1034,7 +1034,163 @@ c = xor_list(a, b)
 print(c) # QSQWQ
 ```
 
-### 
+
+#### String conversion
+
+##### string_split
+
+|   **Function name**    |   **Return type**   |    **location**    |             **illustrate**              |
+| :--------------------: | :-----------------: | :----------------: | :-------------------------------------: |
+|      string_split      |        list         |      misc.py       | Automatic segmentation based on content |
+| **The parameter name** | **Nullable or not** | **Parameter type** |             **illustrate**              |
+|           s            |        False        |       string       | Text that needs to be split into lists  |
+
+##### Use example
+
+```python
+from qsnctf import *
+
+
+a = string_split("abcdefg")
+print(a)
+a = string_split("a,b,c,d,e,f,g")
+print(a)
+a = string_split("a b c d e f g")
+print(a)
+"""
+['a', 'b', 'c', 'd', 'e', 'f', 'g']
+['a', 'b', 'c', 'd', 'e', 'f', 'g']
+['a', 'b', 'c', 'd', 'e', 'f', 'g']
+"""
+```
+
+**illustrate：Interception can be made according to different content judgments, and the final result is consistent**
+
+##### ord_to_str
+
+|   **Function name**    |   **Return type**   |    **location**    |              **illustrate**              |
+| :--------------------: | :-----------------: | :----------------: | :--------------------------------------: |
+|       ord_to_str       |       string        |      misc.py       |             ord value to str             |
+| **The parameter name** | **Nullable or not** | **Parameter type** |              **illustrate**              |
+|          ord           |        False        |        int         | The ord value that needs to be converted |
+
+##### Use example
+
+```python
+from qsnctf import *
+
+
+print(ord_to_str(97)) #a
+```
+
+##### ord_list_to_str_list
+
+|   **Function name**    |   **Return type**   |    **location**    |               **illustrate**               |
+| :--------------------: | :-----------------: | :----------------: | :----------------------------------------: |
+|  ord_list_to_str_list  |        list         |      misc.py       |         ord to str (list support）         |
+| **The parameter name** | **Nullable or not** | **Parameter type** |               **illustrate**               |
+|        ord_list        |        False        |        list        | The list of ords that need to be converted |
+
+##### Use example
+
+```python
+from qsnctf import *
+
+
+a = ord_list_to_str_list(['97', '98', '99'])
+print(a)  # ['a', 'b', 'c']
+```
+
+##### ord_str_to_str
+
+|   **Function name**    |   **Return type**   |    **location**    |                     **illustrate**                      |
+| :--------------------: | :-----------------: | :----------------: | :-----------------------------------------------------: |
+|     ord_str_to_str     |       string        |      misc.py       |            ord value to str (string support)            |
+| **The parameter name** | **Nullable or not** | **Parameter type** |                     **illustrate**                      |
+|        ord_str         |        False        |        list        | ord string, which can be separated by commas and spaces |
+
+##### Use example
+
+```python
+from qsnctf import *
+
+
+a = ord_str_to_str('97,98,99')
+print(a)  # abc
+```
+
+##### chr_to_ord
+
+|   **Function name**    |   **Return type**   |    **location**    |               **illustrate**                |
+| :--------------------: | :-----------------: | :----------------: | :-----------------------------------------: |
+|       chr_to_ord       |       string        |      misc.py       |              char to ord value              |
+| **The parameter name** | **Nullable or not** | **Parameter type** |               **illustrate**                |
+|          char          |        False        |        int         | Char (characters) that need to be converted |
+
+##### Use example
+
+```python
+from qsnctf import *
+
+
+print(chr_to_ord('a')) #97
+```
+
+##### chr_list_to_ord_list
+
+|   **Function name**    |   **Return type**   |    **location**    |               **illustrate**               |
+| :--------------------: | :-----------------: | :----------------: | :----------------------------------------: |
+|  chr_list_to_ord_list  |        list         |      misc.py       |            CHR list to ord list            |
+| **The parameter name** | **Nullable or not** | **Parameter type** |               **illustrate**               |
+|        chr_list        |        False        |        list        | The list of chr that needs to be converted |
+
+##### Use example
+
+```python
+from qsnctf import *
+
+
+a = chr_list_to_ord_list(['a', 'b', 'c'])
+print(a)  # [97, 98, 99]
+```
+
+##### chr_str_to_ord_str
+
+|   **Function name**    |   **Return type**   |    **location**    |                        **illustrate**                        |
+| :--------------------: | :-----------------: | :----------------: | :----------------------------------------------------------: |
+|   chr_str_to_ord_str   |       string        |      misc.py       |                      chr to ord string                       |
+| **The parameter name** | **Nullable or not** | **Parameter type** |                        **illustrate**                        |
+|        chr_str         |        False        |        list        | The chr string can be separated by commas, spaces, or no distinction |
+
+##### Use example
+
+```python
+from qsnctf import *
+
+
+a = ord_str_to_str('abc')
+print(a)  # 97,98,99
+```
+
+##### search_flag
+
+|   **Function name**    |   **Return type**   |    **location**    |               **illustrate**               |
+| :--------------------: | :-----------------: | :----------------: | :----------------------------------------: |
+|      search_flag       |       string        |      misc.py       |      Find flags through regular regex      |
+| **The parameter name** | **Nullable or not** | **Parameter type** |               **illustrate**               |
+|          text          |        False        |       string       | Content that is suspected to contain flags |
+|      flag_prefix       |        True         |       string       |       Flag prefix, in the form flag        |
+
+##### Use example
+
+```python
+from qsnctf import *
+
+
+a = search_flag('hello, i will give you flag flag{qsnctf-12345}')
+print(a) # flag{qsnctf-12345}
+```
+
 
 ### Crypto
 
