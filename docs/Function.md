@@ -690,7 +690,7 @@ print(c) # QSQWQ
 
 #### UUID
 
-##### get_uuid()
+##### get_uuid
 
 | **函数名** | **返回类型** |   **位置**   | **说明** |
 | :--------: | :----------: | :----------: | :------: |
@@ -704,6 +704,143 @@ from qsnctf import *
 
 c = get_uuid()
 print(c) # d3a07212-a9dc-4129-937a-30fec20e604a
+```
+
+#### 字符串转换
+
+##### string_split
+
+|  **函数名**  | **返回类型** |   **位置**   |       **说明**       |
+| :----------: | :----------: | :----------: | :------------------: |
+| string_split |     list     |   misc.py    |   根据内容自动分割   |
+|  **参数名**  | **是否可空** | **传参类型** |       **说明**       |
+|      s       |    False     |    string    | 需要分割成列表的文本 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = string_split("abcdefg")
+print(a)
+a = string_split("a,b,c,d,e,f,g")
+print(a)
+a = string_split("a b c d e f g")
+print(a)
+"""
+['a', 'b', 'c', 'd', 'e', 'f', 'g']
+['a', 'b', 'c', 'd', 'e', 'f', 'g']
+['a', 'b', 'c', 'd', 'e', 'f', 'g']
+"""
+```
+
+**说明：可以根据不同的内容判断进行截取，最终结果是一致的**
+
+##### ord_to_str
+
+| **函数名** | **返回类型** |   **位置**   |    **说明**     |
+| :--------: | :----------: | :----------: | :-------------: |
+| ord_to_str |    string    |   misc.py    |   ord值转str    |
+| **参数名** | **是否可空** | **传参类型** |    **说明**     |
+|    ord     |    False     |     int      | 需要转换的ord值 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+print(ord_to_str(97)) #a
+```
+
+##### ord_list_to_str_list
+
+|      **函数名**      | **返回类型** |   **位置**   |        **说明**        |
+| :------------------: | :----------: | :----------: | :--------------------: |
+| ord_list_to_str_list |     list     |   misc.py    | ord值转str（列表支持） |
+|      **参数名**      | **是否可空** | **传参类型** |        **说明**        |
+|       ord_list       |    False     |     list     |   需要转换的ord列表    |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = ord_list_to_str_list(['97', '98', '99'])
+print(a)  # ['a', 'b', 'c']
+```
+
+##### ord_str_to_str
+
+|   **函数名**   | **返回类型** |   **位置**   |            **说明**             |
+| :------------: | :----------: | :----------: | :-----------------------------: |
+| ord_str_to_str |    string    |   misc.py    |    ord值转str（字符串支持）     |
+|   **参数名**   | **是否可空** | **传参类型** |            **说明**             |
+|    ord_str     |    False     |     list     | ord字符串，可以用逗号和空格分开 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = ord_str_to_str('97,98,99')
+print(a)  # abc
+```
+
+##### chr_to_ord
+
+| **函数名** | **返回类型** |   **位置**   |       **说明**       |
+| :--------: | :----------: | :----------: | :------------------: |
+| chr_to_ord |    string    |   misc.py    |     char转ord值      |
+| **参数名** | **是否可空** | **传参类型** |       **说明**       |
+|    char    |    False     |     int      | 需要转换的char(字符) |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+print(chr_to_ord('a')) #97
+```
+
+##### chr_list_to_ord_list
+
+|      **函数名**      | **返回类型** |   **位置**   |     **说明**      |
+| :------------------: | :----------: | :----------: | :---------------: |
+| chr_list_to_ord_list |     list     |   misc.py    | chr列表转ord列表  |
+|      **参数名**      | **是否可空** | **传参类型** |     **说明**      |
+|       chr_list       |    False     |     list     | 需要转换的chr列表 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = chr_list_to_ord_list(['a', 'b', 'c'])
+print(a)  # [97, 98, 99]
+```
+
+##### chr_str_to_ord_str
+
+|     **函数名**     | **返回类型** |   **位置**   |                  **说明**                   |
+| :----------------: | :----------: | :----------: | :-----------------------------------------: |
+| chr_str_to_ord_str |    string    |   misc.py    |               chr转ord字符串                |
+|     **参数名**     | **是否可空** | **传参类型** |                  **说明**                   |
+|      chr_str       |    False     |     list     | chr字符串，可以用逗号、空格分开，也可以不分 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = ord_str_to_str('abc')
+print(a)  # 97
 ```
 
 ## Crypto.py
