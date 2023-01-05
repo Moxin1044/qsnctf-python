@@ -840,7 +840,7 @@ from qsnctf import *
 
 
 a = ord_str_to_str('abc')
-print(a)  # 97
+print(a)  # 97,98,99
 ```
 
 ## Crypto.py
