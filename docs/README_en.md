@@ -509,7 +509,7 @@ print(a.json) # {'id': 931788518, 'result': 0, 'result-message': 'success', 'tim
 print(a.list) # ['that', 'high',***
 ```
 
-### 飞书Webhook
+### Feishu Webhook
 
 #### class-FeishuWebhook
 
@@ -886,9 +886,9 @@ a = base16_decode('E99D92E5B091E5B9B4435446')
 print(a) # 青少年CTF
 ```
 
-### 各种编码
+### Various encodings
 
-#### 核心价值观
+#### Core values
 
 ##### Chinese_socialism_encode
 
@@ -918,7 +918,7 @@ a = Chinese_socialism_decode('友善爱国敬业敬业诚信和谐敬业文明�
 print(a) # 青少年CTF
 ```
 
-#### URL编码
+#### URL encoding
 
 ##### url_encode
 
@@ -947,12 +947,11 @@ print(a) # %E9%9D%92%E5%B0%91%E5%B9%B4CTF%3D%E4%B8%AD%E5%AD%A6%E7%94%9FCTF
 a = url_decode('%E9%9D%92%E5%B0%91%E5%B9%B4CTF%3D%E4%B8%AD%E5%AD%A6%E7%94%9FCTF')
 print(a) # 青少年CTF=中学生CTF
 ```
+ 
 
-### 
+### String operations
 
-### 字符串操作
-
-#### 逆向字符串
+#### Inverse string
 
 ##### string_reverse
 
@@ -972,7 +971,47 @@ a = string_reverse('青少年CTF')
 print(a) # FTC年少青
 ```
 
-#### 列表异或
+
+
+#### Inverse string (including step size)
+
+##### string_reverse_step
+
+| **Function name**    | **Return type**     | **location**       | **illustrate**                     |
+| -------------------- | ------------------- | ------------------ | ---------------------------------- |
+| string_reverse_step2 | string              | misc.py            | String inverse with step 2         |
+| **The paramet name** | **Nullable or not** | **Parameter type** | **illustrate**                     |
+| string               | False               | string             | Content that needs to be reversed  |
+| step                 | False               | int                | Step length, generally more than 2 |
+
+##### Use example
+
+```python
+from qsnctf import *
+
+
+print(string_reverse_step('abc123', 3))  # cba321
+```
+
+##### string_reverse_step2
+
+| **Function name**    | **Return type**     | **location**       | **illustrate**                    |
+| -------------------- | ------------------- | ------------------ | --------------------------------- |
+| string_reverse_step2 | string              | misc.py            | String inverse with step 2        |
+| **The paramet name** | **Nullable or not** | **Parameter type** | **illustrate**                    |
+| string               | False               | string             | Content that needs to be reversed |
+
+##### Use example
+
+```python
+from qsnctf import *
+
+
+a = string_reverse_step2('abc123')
+print(a) # ba1c32
+```
+
+#### List XOR
 
 ##### xor_list
 
@@ -996,9 +1035,9 @@ print(c) # QSQWQ
 
 ### 
 
-### 密码学
+### Crypto
 
-#### 凯撒密码
+#### Caesar Code
 
 ##### caesar_encrypt
 
@@ -1029,7 +1068,7 @@ b = caesar_decrypt('yavkbn', 8)
 print(b) # qsnctf
 ```
 
-#### 凯撒密码爆破
+#### Caesar Code Blast
 
 ##### caesar_decrypt_cracking
 
