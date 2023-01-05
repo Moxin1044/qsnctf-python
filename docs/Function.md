@@ -975,7 +975,7 @@ ds = DaSheng('***','xxxx') # 主要是配合下面的调用返回的一个对象
 
 | **函数名** | **返回类型** |   **位置**   |                        **说明**                         |
 | :--------: | :----------: | :----------: | :-----------------------------------------------------: |
-|   token    |    object    |    api.py    | [大圣云沙箱](https://sandbox.freebuf.com/cloudApi)Token |
+|   token    |    string    |    api.py    | [大圣云沙箱](https://sandbox.freebuf.com/cloudApi)Token |
 | **参数名** | **是否可空** | **传参类型** |                        **说明**                         |
 
 **一般不写操作可能没啥用**
@@ -1036,6 +1036,53 @@ from qsnctf import *
 
 ds = DaSheng('***','xxxx')
 print(ds.search('sha1'))
+```
+
+### 零零信安
+
+#### class-ZeroZeon
+
+##### ZeroZeon
+
+| **函数名** | **返回类型** |   **位置**   |          **说明**           |
+| :--------: | :----------: | :----------: | :-------------------------: |
+|  ZeroZeon  |    object    |    api.py    | [零零信安](https://0.zone/) |
+| **参数名** | **是否可空** | **传参类型** |          **说明**           |
+|    key     |    False     |    string    |           api_key           |
+
+Key 获取地址：https://0.zone/plug-in-unit
+
+**说明：此功能需要连接网络，请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+zero = ZeroZeon('xxxx') # 主要是配合下面的调用返回的一个对象
+```
+
+#### 零零信安查询
+
+##### search
+
+| **函数名** | **返回类型** |   **位置**   |                        **说明**                         |
+| :--------: | :----------: | :----------: | :-----------------------------------------------------: |
+|   search   |     json     |    api.py    | [大圣云沙箱](https://sandbox.freebuf.com/cloudApi)Token |
+| **参数名** | **是否可空** | **传参类型** |                        **说明**                         |
+|   title    |    False     |    string    |                 查询语句，支持高级搜索                  |
+
+**一般不写操作可能没啥用**
+
+**说明：此功能需要连接网络，请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+zero = ZeroZeon('xxxx') # 主要是配合下面的调用返回的一个对象
+print(zero.search('title==零零信安'))
 ```
 
 ## Base.py

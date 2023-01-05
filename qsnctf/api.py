@@ -216,131 +216,6 @@ class ThreatBook:
         :param sha256: file_sha256
         :param sandbox_type: win7_sp1_enx64_office2013
         :return:
-            {
-              "response_code": 0,
-              "data": {
-                "summary": {    // 概要信息
-                  "threat_level": "malicious",// 威胁等级(malicious 恶意, suspicious 可疑, clean 安全)
-                  "is_whitelist": false,      // 是否为白名单文件，true 白名单
-                  "submit_time": "2019-01-22 17:36:21",     // 文件提交时间
-                  "file_name": "test.exe",  // 文件名称
-                  "file_type": "EXEx86",    // 文件类型
-                  "sample_sha256": "{sha256}",  // 文件的 Hash 值
-                  "tag": {
-                    "s": [     // 静态标签
-                      "语言neutral",
-                      "时间戳异常"
-                    ],
-                    "x": [     // 检测标签
-                      Trojan"
-                    ]
-                  },
-                  "threat_score": 60,
-                  "sandbox_type": "win7_sp1_enx86_office2013",  // 本次指定获取的沙箱运行分析环境.
-                  "sandbox_type_list": ["win7_sp1_enx86_office2013","win7_sp1_enx86_office2007"],  // 样本分析成功的所有沙箱运行环境列表境
-                  "multi_engines": "7/22"   // 反病毒扫描引擎检出率
-                },
-                "multiengines": {   // 反病毒扫描引擎检测结果(safe 无检出，e.g Trojan 检出结果)
-                  "result": {
-                    "Kaspersky": "Trojan",
-                    "Microsoft": "safe"
-                   },
-                   "scan_time": "2019-10-22 16:17:48"   //多引擎扫描样本的具体时间
-                },
-                "static": {     // 静态信息，以 PE 文件为例
-                  "details": {
-                    "pe_version_info": [],  // PE 文件版本信息
-                    "pe_sections": [],  // PE 文件节表信息
-                    "pe_signatures": {},    // PE 文件签名信息
-                    "pe_imports": [],   // PE 文件导入表信息
-                    "pe_resources": [],     // PE 文件资源信息
-                    "tag": [],  // PE 文件静态标签
-                    "pe_detect": {},    // PE 文件第三方检测信息
-                    "pe_basic": {},     // PE 文件基本信息
-                    "pe_exports": []    // PE 文件导出表信息
-                  },
-                  "basic": {    // 文件基本信息
-                    "sha1": "{sha1}",
-                    "sha256": "{sha256}",
-                    "file_type": "{magic}",
-                    "file_name": "test.exe",
-                    "ssdeep": "{ssdeep}",
-                    "file_size": 33397,
-                    "md5": "{md5}"
-                  }
-                },
-                "signature": [     // 行为签名
-                  {
-                    "severity": 1,  // 严重等级，数字越高等级越高
-                    "references": [],
-                    "sig_class": "Static File Characteristics",     // 签名分类
-                    "name": "static_linked",    // 签名名称
-                    "description": "{"en": "Binary is statically linked", "cn": "此文件是静态链接的"}",//行为描述
-                    "markcount": 1,
-                    "marks": [],    // 签名原始数据
-                    "families": [],
-                    "attck_id": "",
-                    "attck_info": {}
-                  }
-                ],
-                "dropped": [   // 释放行为
-                  {
-                    "sha1": "{sha1}",
-                    "urls": [],
-                    "sha256": "{sha256}",
-                    "size": 33558,
-                    "filepath": "C:\Users\test.exe",
-                    "name": "test.exe",
-                    "crc32": "",
-                    "ssdeep": "{ssdeep}",
-                    "type": "{magic}",
-                    "yara": [],
-                    "md5": "{md5}"
-                  }
-                ],
-                "pstree": {     // 进程行为
-                  "children": [
-                    {
-                      "track": true,
-                      "pid": 1255,  // 进程 ID
-                      "process_name": "",   // 进程名称
-                      "command_line": "",   // 进程命令符
-                      "first_seen": "17:36:34.047315676",
-                      "ppid": 1209,     // 父进程 ID
-                      "children": []    // 子进程 list
-                    }
-                  ],
-                  "process_name": {
-                    "en": "Analysed 1 processes in total",
-                    "cn": "共分析了1个进程"
-                  }
-                },
-                "network": {    // 网络行为
-                  "fingerprint": [],
-                  "tls": [],
-                  "udp": [],
-                  "dns_servers": [],
-                  "http": [],
-                  "irc": [],
-                  "smtp": [],
-                  "tcp": [],
-                  "smtp_ex": [],
-                  "mitm": [],
-                  "hosts": [],
-                  "dns": [],
-                  "http_ex": [],
-                  "domains": [],
-                  "dead_hosts": [],
-                  "icmp": [],
-                  "https_ex": []
-                },
-                "strings": {
-                  "sha256": [], //从文件中提取的字符串
-                  "pacp": [] //从流量中提取的字符串
-                }
-              },
-              "verbose_msg": "OK"
-            }
         """
         url = 'https://api.threatbook.cn/v3/file/report'
         params = {
@@ -464,3 +339,25 @@ class DaSheng:
         return response.json()
 
 
+class ZeroZeon:
+    def __init__(self, key):
+        self.key = key
+
+    def search(self, title):
+        url = "https://0.zone/api/data/"
+        payload = json.dumps({
+            "title": title,
+            "title_type": "site",
+            "page": 1,
+            "pagesize": 10,
+            "zone_key_id": self.key
+        })
+        headers = {
+            'User-Agent': 'qsnCTF/1.0.0 (https://www.qsnctf.com)',
+            'Content-Type': 'application/json',
+            'Accept': '*/*',
+            'Host': '0.zone',
+            'Connection': 'keep-alive'
+        }
+        response = requests.request("POST", url, headers=headers, data=payload)
+        return response.json()
