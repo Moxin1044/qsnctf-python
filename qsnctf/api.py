@@ -419,3 +419,48 @@ class FOFA:
         url = f"{self.url}/host/{host}?detail={detail}&email={self.email_check}&key={self.key}"
         response = qsnctf.plugin.python.pythonfofa.pythonfofa.operation.send_get_json(url, self.proxy)
         return response
+
+
+class DaSheng:
+    def __init__(self, id, key):
+        """
+        :param id: id
+        :param key: key # https://sandbox.freebuf.com/cloudApi
+        """
+        self.id = id
+        self.key = key
+
+    def token(self):
+        api = "https://sandbox.riskivy.com/openapi/oauth/token"
+        data = {
+            'client_id': self.id,
+            'client_secret': self.key,
+            'grant_type': 'client_credentials',
+            'scope': 'openapi'
+        }
+        q = requests.post(url=api, data=data)
+        data = q.json()
+        access_token = data['access_token']
+        return access_token
+
+    def upload(self, file_dir, file_name):
+        api = "https://sandbox.riskivy.com/openapi/mac/sample/upload"
+        headers = {
+            'Authorization': 'Bearer ' + self.token()
+        }
+        files = {
+            'file': (open(os.path.join(file_dir, file_name), 'rb'))
+        }
+        response = requests.post(api, headers=headers, files=files)
+        # q = requests.post(url=api, headers=headers)
+        return response.json()
+
+    def search(self, sha1):
+        api = "https://sandbox.riskivy.com/openapi/mac/sample/report/" + sha1
+        headers = {
+            'Authorization': 'Bearer ' + self.token()
+        }
+        response = requests.get(api, headers=headers)
+        return response.json()
+
+
