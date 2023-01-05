@@ -100,9 +100,10 @@ FUNCTIONS
 
 ### BASE
 
-| base16 | base32 | base36 | base58 | base62  |
-| :----: | :----: | :----: | :----: | :-----: |
-| base64 | base85 | base91 | base92 | base100 |
+|    base16    | base32 | base36 | base58 | base62  |
+| :----------: | :----: | :----: | :----: | :-----: |
+|    base64    | base85 | base91 | base92 | base100 |
+| 自定义base64 |        |        |        |         |
 
 ### CRYPTO
 

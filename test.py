@@ -1,6 +1,6 @@
 from qsnctf import *
 
-a = morse_encrypt('QSNCTF','/')
+data = 'SGVsbG8sIFdvcmxkIQ=='
+custom_table = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-'
+a = base64_encode_custom(data, custom_table)
 print(a)
-b = morse_decrypt('..-./---/.-/.-.-/./--.-','/', '-', '.')
-print(b)

@@ -131,6 +131,28 @@ def base64_decode(text, encoding="utf-8", decoding="utf-8"):
     return code
 
 
+def base64_encode_custom(source_text, custom_table, encoding="utf-8", decoding="utf-8"):
+    try:
+        STANDARD_ALPHABET = b'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+        CUSTOM_ALPHABET = custom_table.encode(encoding)
+        encode_typeTRANS = bytes.maketrans(STANDARD_ALPHABET, CUSTOM_ALPHABET)
+        result_text = base64.b64encode(source_text.encode(encoding)).translate(encode_typeTRANS).decode(decoding)
+        return result_text
+    except Exception as e:
+        return str(e)
+
+
+def base64_decode_custom(source_text, custom_table, encoding="utf-8", decoding="utf-8"):
+    try:
+        STANDARD_ALPHABET = b'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+        CUSTOM_ALPHABET = custom_table.encode(encoding)
+        encode_typeTRANS = bytes.maketrans(STANDARD_ALPHABET, CUSTOM_ALPHABET)
+        result_text = base64.b64decode(source_text.encode(encoding)).translate(encode_typeTRANS).decode(decoding)
+        return result_text
+    except Exception as e:
+        return str(e)
+
+
 def base62_encode(ints):
     return base62.encode(ints)
 

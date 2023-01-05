@@ -1217,6 +1217,41 @@ a = base85_decode('>7A10u#x4tv_n)z')
 print(a) # 青少年CTF
 ```
 
+#### 自定义Base64
+
+##### base64_encode_custom
+
+|      **函数名**      | **返回类型** |   **位置**   |           **说明**            |
+| :------------------: | :----------: | :----------: | :---------------------------: |
+| base64_encode_custom |    string    |   base.py    |    base64编码（支持中文）     |
+|      **参数名**      | **是否可空** | **传参类型** |           **说明**            |
+|         text         |    False     |    string    |        需要编码的内容         |
+|     custom_table     |    False     |    string    |            编码表             |
+|       encoding       |     True     |    string    | 解码文本时的编码，默认值utf-8 |
+|       decoding       |     True     |    string    | 输出文本时的编码，默认值utf-8 |
+
+##### base64_decode_custom
+
+|      **函数名**      | **返回类型** |   **位置**   |           **说明**            |
+| :------------------: | :----------: | :----------: | :---------------------------: |
+| base64_decode_custom |    string    |   base.py    |          base64解码           |
+|      **参数名**      | **是否可空** | **传参类型** |           **说明**            |
+|         text         |    False     |    string    |        需要解码的内容         |
+|     custom_table     |    False     |    string    |            编码表             |
+|       encoding       |     True     |    string    | 解码文本时的编码，默认值utf-8 |
+|       decoding       |     True     |    string    | 输出文本时的编码，默认值utf-8 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+data = 'SGVsbG8sIFdvcmxkIQ=='
+custom_table = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-'
+a = base64_encode_custom(data, custom_table)
+print(a)
+```
+
 #### Base64
 
 ##### base64_encode
