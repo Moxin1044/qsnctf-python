@@ -393,28 +393,6 @@ def get_eval_webshell_post(url, key, shell):
     return response.text
 
 
-def get_dns_resolver(domain):
-    # TODO: 还没写完捏！
-    """
-    :param domain: domain
-    :return: list
-    """
-    # 创建DNS解析器
-    resolver = dns.resolver.Resolver()
-    # 设置超时时间
-    resolver.timeout = 5
-    # 查询 NS 记录
-    ns_records = dns.resolver.query(domain, 'NS')
-    # 遍历每个 NS 记录
-    for ns_record in ns_records:
-        # 解析每个 NS 记录对应的域名
-        ip_records = dns.resolver.query(ns_record.to_text(), 'A')
-        # 遍历每个 A 记录
-        for ip_record in ip_records:
-            # 打印 IP 地址
-            print(ip_record.to_text())
-
-
 class DirScan:
     def __init__(self, url, threadline=10, sleep_time=0, dirlist=None, return_code=None, echo=False, wait=True, cookies=''):
         """

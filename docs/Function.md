@@ -1922,6 +1922,29 @@ a = eight_diagrams_decrypt('正巽震~正巽兑~正离巽~正艮兑~正巽艮~�
 print(a)  # qsnctf
 ```
 
+#### 埃特巴什码
+
+##### atbash_cipher
+
+|  **函数名**   | **返回类型** |   **位置**   |       **说明**       |
+| :-----------: | :----------: | :----------: | :------------------: |
+| atbash_cipher |    string    |  crypto.py   |      埃特巴什码      |
+|  **参数名**   | **是否可空** | **传参类型** |       **说明**       |
+|     text      |    False     |    string    | 需要加密或解密的内容 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = atbash_cipher('qsnctf.com')
+print(a) # jhmxgu.xln
+a = atbash_cipher('jhmxgu.xln')
+print(a) # qsnctf.com
+
+```
+
 ## Hash.py
 
 ### Hash

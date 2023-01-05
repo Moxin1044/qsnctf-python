@@ -196,6 +196,17 @@ def eight_diagrams_decrypt(text):
     return r
 
 
+def atbash_cipher(text):
+    # 建立映射关系 解密=加密
+    mapping = {chr(i): chr(ord('A') + ord('Z') - i) for i in range(ord('A'), ord('Z') + 1)}
+    mapping.update({chr(i): chr(ord('a') + ord('z') - i) for i in range(ord('a'), ord('z') + 1)})
+
+    # 加密
+    encrypted_text = ''.join(mapping[c] if c.isalpha() else c for c in text)
+
+    return encrypted_text
+
+
 # def vigenere_encrypt(text,key):
 #     return vigenere.encrypt(text, key, base64=False)
 #
