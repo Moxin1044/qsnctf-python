@@ -52,7 +52,7 @@ def string_reverse_step(string, step):
     lst = [c for c in string]
     result = ''
     for i in range(0, len(lst), step):
-        result += ''.join(lst[i:i+step][::-1])
+        result += ''.join(lst[i:i + step][::-1])
     return result
 
 
@@ -83,3 +83,71 @@ def xor_list(lt_data, lt_root):
         decrypted += chr(ord(lt_data[i]) ^ ord(lt_root[i]))
     return decrypted
 
+
+def string_split(s):
+    # 如果字符串中包含逗号，就按照逗号分割
+    if ',' in s:
+        return s.split(',')
+    # 如果包含空格按照空格分割
+    elif ' ' in s:
+        return s.split()
+    # 否则按照字符方式分割
+    else:
+        r_list = []
+        for str in s:
+            r_list.append(str)
+        return r_list
+
+
+def ord_to_str(ord):
+    return chr(int(ord))
+
+
+def ord_list_to_str_list(ord_list):
+    r_list = []
+    for ords in ord_list:
+        r_list.append(ord_to_str(ords))
+    return r_list
+
+
+def ord_str_to_str(ord_str):
+    r_text = ''
+    ord_list = string_split(ord_str)
+    for ords in ord_list:
+        r_text += ','.join(ord_to_str(ords))
+    return r_text
+
+
+def chr_to_ord(char):
+    return ord(char)
+
+
+def chr_list_to_ord_list(chr_list):
+    r_list = []
+    for char in chr_list:
+        r_list.append(chr_to_ord(char))
+    return r_list
+
+
+def chr_str_to_ord_str(chr_str):
+    r_text = ''
+    char = string_split(chr_str)
+    for chars in char:
+        r_text += str(chr_to_ord(chars)) + ","
+    return r_text[:-1]
+
+
+def search_flag(text, flag_prefix='flag|qsnctf|ctf'):
+    """
+    :param text: search string
+    :param flag_prefix: flag prefix eg: flag|qsnctf|ctf
+    :return: flag{xxxxxxx}
+    """
+    # pattern = f'({flag_prefix})' + r'\{[\w]+\}'
+    pattern = r'(' + flag_prefix + ')\{.+\}'
+    match = re.search(pattern, text)
+    if match:
+        result = match.group(0)
+        return result
+    else:
+        return False

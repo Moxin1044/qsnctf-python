@@ -1,5 +1,7 @@
+import qsnctf.plugin.python.pythonfofa.pythonfofa.operation
 import requests
 import json
+import os
 
 
 # 这里的操作一般都是需要联网的，如果是线下赛请确认主办方允许联网使用
@@ -124,3 +126,240 @@ class DingTalk:
         }
         data = json.dumps(data, ensure_ascii=True).encode("utf-8")
         requests.post(self.url, data=data, headers=self.headers)
+
+
+class ThreatBook:
+    def __init__(self, api_key):
+        self.key = api_key
+
+    def ip_reputation(self, ip):
+        api = "https://api.threatbook.cn/v3/scene/ip_reputation"
+        data = {
+            'apikey': self.key,
+            'resource': ip,
+            'lang': 'zh'
+        }
+        q = requests.post(url=api, data=data)
+        """ 引用
+        q_data = json.loads(q.text)
+        if q_data['response_code'] == 0:
+            data = q_data['data']
+            IP_info = data[IP]
+            severity = IP_info['severity']  # 威胁等级
+            IP_judg = IP_info['judgments']
+            if len(IP_judg) != 1:
+                tags = ""
+                for tag in IP_judg:
+                    tags = tags+tag+","
+                tags = tags[:-1]
+            else:
+                tags = IP_judg[0]  # IP标签
+            basic = IP_info['basic']
+            carrier = basic['carrier'] # 运营商
+            location = basic['location']
+            country = location['country']  # 国家
+            province = location['province']  # 省
+            city = location['city']  # 城市
+            lng = location['lng']  # 经度
+            lat = location['lat']  # 纬度
+            scene = IP_info['scene']  # 应用场景
+            confidence_level = IP_info['confidence_level']  # 可信度
+            is_malicious = IP_info['is_malicious']  # 是否为恶意
+            update_time = IP_info['update_time']  # 更新时间
+            tags_classes = IP_info['tags_classes']
+            if len(tags_classes) != 1:
+                tagss = ""
+                for tagsss in tags_classes:
+                    tagss = tagss + tagsss + ","
+                tagss = tagss[:-1]  # 团伙标签
+            else:
+                tagss = "空"
+        """
+        return q.json()
+
+    def file_upload(self, file_path, file_name, sandbox_type='win7_sp1_enx64_office2013'):
+        url = 'https://api.threatbook.cn/v3/file/upload';
+        fields = {
+            'apikey': self.key,
+            'sandbox_type': sandbox_type,
+            'run_time': 60
+        }
+        file_dir = file_path
+        file_name = file_name
+        files = {
+            'file': (file_name, open(os.path.join(file_dir, file_name), 'rb'))
+        }
+        response = requests.post(url, data=fields, files=files)
+        return response.json()
+
+    def file_report_multiengines(self, sha256):
+        """
+        :param sha256: file_sha256
+        :return: {'data': {'multiengines': {'threat_level': 'clean', 'total': 22,
+        'is_white': False, 'total2': 22, 'positives': 0, 'scan_date': '2023-01-05 19:04:42', 'scans': {'IKARUS':
+        'safe', 'vbwebshell': 'safe', 'Avast': 'safe', 'Avira': 'safe', 'Sophos': 'safe', 'K7': 'safe',
+        'Rising': 'safe', 'Kaspersky': 'safe', 'Panda': 'safe', 'Baidu-China': 'safe', 'NANO': 'safe',
+        'Antiy': 'safe', 'AVG': 'safe', 'Baidu': 'safe', 'DrWeb': 'safe', 'GDATA': 'safe', 'Microsoft': 'safe',
+        'Qihu360': 'safe', 'ESET': 'safe', 'ClamAV': 'safe', 'JiangMin': 'safe', 'Trustlook': 'safe'}}},
+        'response_code': 0, 'verbose_msg': 'OK'}
+        """
+        url = 'https://api.threatbook.cn/v3/file/report/multiengines'
+        params = {
+            'apikey': self.key,
+            'sha256': sha256
+        }
+        response = requests.get(url, params=params)
+        return response.json()
+
+    def file_report(self, sha256, sandbox_type='win7_sp1_enx64_office2013'):
+        """
+        :param sha256: file_sha256
+        :param sandbox_type: win7_sp1_enx64_office2013
+        :return:
+        """
+        url = 'https://api.threatbook.cn/v3/file/report'
+        params = {
+            'apikey': self.key,
+            'sandbox_type': sandbox_type,
+            'sha256': sha256
+        }
+        response = requests.get(url, params=params)
+        return response.json()
+
+
+class FOFA:
+    def __init__(self, email, key, proxy=""):
+        self.username = None
+        self.email_check = None
+        self.email = email
+        self.key = key
+        self.url = 'https://fofa.info/api/v1'
+        self.proxy = proxy
+        self.get_userinfo()
+
+    def check_fofa_config(self):
+        return f"Email:{self.email} Key:{self.key} Proxy:{self.proxy}"
+
+    def get_userinfo(self):
+        # Check Email and key
+        url = f"{self.url}/info/my?email={self.email}&key={self.key}"
+        response = qsnctf.plugin.python.pythonfofa.pythonfofa.operation.send_get_json(url, self.proxy)
+        if response['error']:
+            return response['errmsg']
+        else:
+            self.email_check = response['email']
+            self.username = response['username']
+            self.isvip = response['isvip']
+            self.viplevel = response['vip_level']
+            self.avatar = response['avatar']
+            self.fcoin = response['fcoin']
+            return self
+
+    def userinfo(self):
+        # Check Email and key
+        url = f"{self.url}/info/my?email={self.email_check}&key={self.key}"
+        response = qsnctf.plugin.python.pythonfofa.pythonfofa.operation.send_get_json(url, self.proxy)
+        if response['error']:
+            return response['errmsg']
+        else:
+            return response
+
+    def search(self, query_text, field=None, page=1, size=100, full=False):
+        if field is None:
+            field = ['ip', 'host', 'port']
+        fields = ','.join(field)
+        query = qsnctf.plugin.python.pythonfofa.pythonfofa.operation.get_base64_url(query_text)
+        url = f"{self.url}/search/all?email={self.email_check}&key={self.key}&qbase64={query}&fields={fields}&page={page}&size={size}&full={full}"
+        response = qsnctf.plugin.python.pythonfofa.pythonfofa.operation.send_get_json(url, self.proxy)
+        '''
+            # 考虑到生产环境，所以不可以在这里直接返回errmsg，统一返回response即可。
+            # 下同
+            if response['error']:
+                return response['errmsg']
+            else:
+                return response
+            '''
+        return response
+
+    def search_stats(self, query_text, field=None):
+        if field is None:
+            field = ['title']
+        fields = ','.join(field)
+        query = qsnctf.plugin.python.pythonfofa.pythonfofa.operation.get_base64_url(query_text)
+        url = f"{self.url}/search/stats?fields={fields}&qbase64={query}&email={self.email_check}&key={self.key}"
+        response = qsnctf.plugin.python.pythonfofa.pythonfofa.operation.send_get_json(url, self.proxy)
+        return response
+
+    def search_host(self, host, detail=False):
+        url = f"{self.url}/host/{host}?detail={detail}&email={self.email_check}&key={self.key}"
+        response = qsnctf.plugin.python.pythonfofa.pythonfofa.operation.send_get_json(url, self.proxy)
+        return response
+
+
+class DaSheng:
+    def __init__(self, id, key):
+        """
+        :param id: id
+        :param key: key # https://sandbox.freebuf.com/cloudApi
+        """
+        self.id = id
+        self.key = key
+
+    def token(self):
+        api = "https://sandbox.riskivy.com/openapi/oauth/token"
+        data = {
+            'client_id': self.id,
+            'client_secret': self.key,
+            'grant_type': 'client_credentials',
+            'scope': 'openapi'
+        }
+        q = requests.post(url=api, data=data)
+        data = q.json()
+        access_token = data['access_token']
+        return access_token
+
+    def upload(self, file_dir, file_name):
+        api = "https://sandbox.riskivy.com/openapi/mac/sample/upload"
+        headers = {
+            'Authorization': 'Bearer ' + self.token()
+        }
+        files = {
+            'file': (open(os.path.join(file_dir, file_name), 'rb'))
+        }
+        response = requests.post(api, headers=headers, files=files)
+        # q = requests.post(url=api, headers=headers)
+        return response.json()
+
+    def search(self, sha1):
+        api = "https://sandbox.riskivy.com/openapi/mac/sample/report/" + sha1
+        headers = {
+            'Authorization': 'Bearer ' + self.token()
+        }
+        response = requests.get(api, headers=headers)
+        return response.json()
+
+
+class ZeroZeon:
+    def __init__(self, key):
+        self.key = key
+
+    def search(self, title):
+        url = "https://0.zone/api/data/"
+        payload = json.dumps({
+            "title": title,
+            "title_type": "site",
+            "page": 1,
+            "pagesize": 10,
+            "zone_key_id": self.key
+        })
+        headers = {
+            'User-Agent': 'qsnCTF/1.0.0 (https://www.qsnctf.com)',
+            'Content-Type': 'application/json',
+            'Accept': '*/*',
+            'Host': '0.zone',
+            'Connection': 'keep-alive'
+        }
+        response = requests.request("POST", url, headers=headers, data=payload)
+        return response.json()
+
+

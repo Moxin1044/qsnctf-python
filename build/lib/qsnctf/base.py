@@ -2,10 +2,9 @@
 # 2023年1月1日
 # 末心
 import base64
-import python3base92
+import qsnctf.plugin.python.python3base92
 import struct
 import base62
-import pybase100
 import base58
 
 
@@ -13,19 +12,36 @@ import base58
 
 
 def base100_encode(text, encoding="utf-8", decoding="utf-8"):
-    return pybase100.encode(text, encoding).decode(decoding)
+    if isinstance(text, str):
+        data = text.encode(encoding)
+    out = [240, 159, 0, 0]*len(data)
+    for i, b in enumerate(data):
+        out[4*i+2] = (b + 55) // 64 + 143
+        out[4*i+3] = (b + 55) % 64 + 128
+    return bytes(out).decode(decoding)
 
 
 def base100_decode(text, encoding="utf-8", decoding="utf-8"):
-    return pybase100.decode(text, encoding).decode(decoding)
+    if isinstance(text, str):
+        data = text.encode(encoding)
+    if len(data) % 4 != 0:
+        raise Exception('Length of string should be divisible by 4')
+    tmp = 0
+    out = [None] * (len(data) // 4)
+    for i, b in enumerate(data):
+        if i % 4 == 2:
+            tmp = ((b - 143) * 64) % 256
+        elif i % 4 == 3:
+            out[i // 4] = (b - 128 + tmp - 55) & 0xff
+    return bytes(out).decode(decoding)
 
 
 def base92_encode(data):
-    return python3base92.b92encode(data)
+    return qsnctf.plugin.python.python3base92.b92encode(data)
 
 
 def base92_decode(data):
-    return python3base92.b92decode(data)
+    return qsnctf.plugin.python.python3base92.b92decode(data)
 
 
 def base91_encode(data):
