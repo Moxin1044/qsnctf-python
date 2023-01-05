@@ -253,6 +253,29 @@ print(a)  # ['/logo.png', 'data/attachment/block/b8/b85a300493f1bd7ef7e0268dec2c
 
 **说明：No src是没有找到HTML网页中的src标签**
 
+##### get_url_comment
+
+|   **函数名**    | **返回类型** |   **位置**   |     **说明**     |
+| :-------------: | :----------: | :----------: | :--------------: |
+| get_url_comment |     list     |    web.py    |   取网站中注释   |
+|   **参数名**    | **是否可空** | **传参类型** |     **说明**     |
+|       url       |    False     |    string    |     网站地址     |
+|     Cookie      |     True     |    string    | 网站Cookie，可空 |
+
+**说明：请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = get_url_comment('https://www.qsnctf.com/')
+print(a)  # ['baidutongji']
+```
+
+**说明：No comment是没有找到HTML网页中的注释节点**
+
 ## API.py
 
 ### quipqiup
