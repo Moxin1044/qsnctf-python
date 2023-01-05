@@ -248,6 +248,25 @@ def get_url_comment(url, cookies=""):
     return src
 
 
+def get_url_time(url):
+    """
+    :param url: url
+    :return: requests seconds
+    """
+    start_time = time.time()
+    browser = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0",
+        "Accept": "*/*", "Accept-Language": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
+        "Accept-Encoding": "gzip, deflate", "Content-Type": "application/x-www-form-urlencoded",
+        "Referer": f"{url}",
+        "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
+        "Te": "trailers", "Connection": "close"}
+    requests.packages.urllib3.disable_warnings()
+    response = requests.get(url, headers=browser, verify=False)
+    end_time = time.time()
+    speed = end_time - start_time
+    return speed
+
 class DirScan:
     def __init__(self, url, threadline=10, sleep_time=0, dirlist=None, return_code=None, echo=False, wait=True, cookies=''):
         """

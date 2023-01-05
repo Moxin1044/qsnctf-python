@@ -276,6 +276,28 @@ print(a)  # ['baidutongji']
 
 **说明：No comment是没有找到HTML网页中的注释节点**
 
+##### get_url_time
+
+|  **函数名**  | **返回类型** |   **位置**   |    **说明**    |
+| :----------: | :----------: | :----------: | :------------: |
+| get_url_time |    string    |    web.py    | 取网站响应时间 |
+|  **参数名**  | **是否可空** | **传参类型** |    **说明**    |
+|     url      |    False     |    string    |    网站地址    |
+
+**说明：请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = get_url_time('https://www.qsnctf.com/')
+print(a) # 0.7986516952514648
+```
+
+
+
 ## API.py
 
 ### quipqiup
@@ -980,25 +1002,6 @@ from qsnctf import *
 
 a = ord_str_to_str('abc')
 print(a)  # 97,98,99
-```
-
-##### search_flag
-
-| **函数名**  | **返回类型** |   **位置**   |            **说明**             |
-| :---------: | :----------: | :----------: | :-----------------------------: |
-| search_flag |    string    |   misc.py    |        通过正则查找flag         |
-| **参数名**  | **是否可空** | **传参类型** |            **说明**             |
-|    text     |    False     |    string    |       疑似包含flag的内容        |
-| flag_prefix |     True     |    string    | Flag前缀，格式flag\|qsnctf\|ctf |
-
-##### 使用示例
-
-```python
-from qsnctf import *
-
-
-a = search_flag('hello, i will give you flag flag{qsnctf-12345}')
-print(a) # flag{qsnctf-12345}
 ```
 
 ## Crypto.py

@@ -1,5 +1,5 @@
 from qsnctf import *
 
 
-a = search_flag('hello, i will give you flag flag{qsnctf-12345}')
+a = get_url_time('https://www.qsnctf.com/')
 print(a)
