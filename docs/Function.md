@@ -1541,6 +1541,44 @@ b = baijiaxing_decode('褚卫蒋沈韩')
 print(b) # abcde
 ```
 
+#### Qwerty编码
+
+##### qwerty_encode
+
+|  **函数名**   | **返回类型** |   **位置**   |    **说明**    |
+| :-----------: | :----------: | :----------: | :------------: |
+| qwerty_encode |    string    |  crypto.py   |   qwerty密码   |
+|  **参数名**   | **是否可空** | **传参类型** |    **说明**    |
+|  source_text  |    False     |    string    | 需要加密的内容 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+a = qwerty_encode('abcd')
+print(a) # qwer
+```
+
+##### qwerty_decode
+
+|  **函数名**   | **返回类型** |   **位置**   |    **说明**    |
+| :-----------: | :----------: | :----------: | :------------: |
+| qwerty_decode |    string    |  crypto.py   |   qwerty密码   |
+|  **参数名**   | **是否可空** | **传参类型** |    **说明**    |
+|  source_text  |    False     |    string    | 需要解密的内容 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+a = qwerty_decode('qwer')
+print(a) # abcd
+```
+
+
+
 ### 字符串操作
 
 #### 逆向字符串
@@ -2051,25 +2089,6 @@ from qsnctf import *
 
 b = morse_decrypt('..-./---/.-/.-.-/./--.-','/', '-', '.')
 print(b) # QSNCTF
-```
-
-#### Qwerty密码
-
-##### qwerty_cipher
-
-|  **函数名**   | **返回类型** |   **位置**   |       **说明**       |
-| :-----------: | :----------: | :----------: | :------------------: |
-| qwerty_cipher |    string    |  crypto.py   |      qwerty密码      |
-|  **参数名**   | **是否可空** | **传参类型** |       **说明**       |
-|  source_text  |    False     |    string    | 需要加密或解密的内容 |
-
-##### 使用示例
-
-```python
-from qsnctf import *
-
-a = func_qwerty('abcd')
-print(a) # qwer
 ```
 
 ## Hash.py

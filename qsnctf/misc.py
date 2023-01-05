@@ -205,3 +205,41 @@ def baijiaxing_decode(source_text):
         return dd
     else:
         return '解码失败'
+
+
+def qwerty_encode(source_text):
+    str1 = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
+    str2 = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    result_text = ""
+    for s in source_text:
+        if s in str1:
+            if s != ' ':
+                result_text = result_text + str1[str2.index(s)]
+            else:
+                result_text = result_text + ' '
+        else:
+            return 'Qwerty只能对字母加密!'
+    return result_text
+
+
+def qwerty_decode(source_text):
+    try:
+        letter = {
+            'q': 'a', 'w': 'b', 'e': 'c', 'r': 'd', 't': 'e', 'y': 'f', 'u': 'g',
+            'i': 'h', 'o': 'i', 'p': 'j', 'a': 'k', 's': 'l', 'd': 'm', 'f': 'n',
+            'g': 'o', 'h': 'p', 'j': 'q', 'k': 'r', 'l': 's', 'z': 't',
+            'x': 'u', 'c': 'v', 'v': 'w', 'b': 'x', 'n': 'y', 'm': 'z',
+            'Q': 'A', 'W': 'B', 'E': 'C', 'R': 'D', 'T': 'E', 'Y': 'F', 'U': 'G',
+            'I': 'H', 'O': 'I', 'P': 'J', 'A': 'K', 'S': 'L', 'D': 'M', 'F': 'N',
+            'G': 'O', 'H': 'P', 'J': 'Q', 'K': 'R', 'L': 'S', 'Z': 'T',
+            'X': 'U', 'C': 'V', 'V': 'W', 'B': 'X', 'N': 'Y', 'M': 'Z',
+        }
+        result_text = ''
+        for i in range(0, len(source_text)):
+            if source_text[i] != ' ':
+                result_text = result_text + letter.get(source_text[i])
+            else:
+                result_text = result_text + ' '
+    except Exception as e:
+        return '解码失败'
+    return result_text.strip()
