@@ -636,25 +636,312 @@ print(a)
 
 #### 文件上传分析
 
-##### threatbook_file_multiengines
+##### file_upload
 
-|          **函数名**          | **返回类型** |   **位置**   |          **说明**          |
-| :--------------------------: | :----------: | :----------: | :------------------------: |
-| threatbook_file_multiengines |     json     |    api.py    | 微步文件反病毒引擎检测报告 |
-|          **参数名**          | **是否可空** | **传参类型** |          **说明**          |
-|          file_path           |    False     |    string    |         上传的路径         |
-|          file_name           |    False     |    string    |      需要上传的文件名      |
+|  **函数名**  | **返回类型** |   **位置**   |                **说明**                 |
+| :----------: | :----------: | :----------: | :-------------------------------------: |
+| file_upload  |     json     |    api.py    |       微步文件反病毒引擎检测报告        |
+|  **参数名**  | **是否可空** | **传参类型** |                **说明**                 |
+|  file_path   |    False     |    string    |               上传的路径                |
+|  file_name   |    False     |    string    |            需要上传的文件名             |
+| sandbox_type |     True     |    string    | 沙箱环境，默认win7_sp1_enx64_office2013 |
+
+ 沙箱运行环境，用户可以指定文件的沙箱运行环境，可选环境包括：
+
+- **Windows** 
+  - win7_sp1_enx64_office2013 
+  - win7_sp1_enx86_office2013 
+  - win7_sp1_enx86_office2010 
+  - win7_sp1_enx86_office2007 
+  - win7_sp1_enx86_office2003
+- **Linux** 
+  - ubuntu_1704_x64 
+  - centos_7_x64
 
 **说明：此功能需要连接网络，请注意比赛规则进行使用。**
 
 ##### 使用示例
 
-```
+```python
 from qsnctf import *
 
 tb = ThreatBook('***')
-a = tb.threatbook_file_multiengines('/','123.exe')
+a = tb.file_upload('./','1.exe')
 print(a)
+# {'data': {'sha256': '***', 'permalink': 'https://s.threatbook.cn/search?query=***&type=sha256'}, 'response_code': 0, 'verbose_msg': 'OK'}
+```
+
+#### 微步文件反病毒引擎检测报告
+
+##### file_report_multiengines
+
+|        **函数名**        | **返回类型** |   **位置**   |          **说明**          |
+| :----------------------: | :----------: | :----------: | :------------------------: |
+| file_report_multiengines |     json     |    api.py    | 微步文件反病毒引擎检测报告 |
+|        **参数名**        | **是否可空** | **传参类型** |          **说明**          |
+|          sha256          |    False     |    string    |        文件的sha256        |
+
+**说明：此功能需要连接网络，请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+tb = ThreatBook('***')
+a = tb.file_report_multiengines('******')
+print(a)
+# {'data': {'multiengines': {'threat_level': 'clean', 'total': 22, 'is_white': False, 'total2': 22, 'positives': 0, 'scan_date': '2023-01-05 19:04:42', 'scans': {'IKARUS': 'safe', 'vbwebshell': 'safe', 'Avast': 'safe', 'Avira': 'safe', 'Sophos': 'safe', 'K7': 'safe', 'Rising': 'safe', 'Kaspersky': 'safe', 'Panda': 'safe', 'Baidu-China': 'safe', 'NANO': 'safe', 'Antiy': 'safe', 'AVG': 'safe', 'Baidu': 'safe', 'DrWeb': 'safe', 'GDATA': 'safe', 'Microsoft': 'safe', 'Qihu360': 'safe', 'ESET': 'safe', 'ClamAV': 'safe', 'JiangMin': 'safe', 'Trustlook': 'safe'}}}, 'response_code': 0, 'verbose_msg': 'OK'}
+```
+
+#### 微步文件报告
+
+##### file_report
+
+|  **函数名**  | **返回类型** |   **位置**   |                **说明**                 |
+| :----------: | :----------: | :----------: | :-------------------------------------: |
+| file_report  |     json     |    api.py    |              微步文件报告               |
+|  **参数名**  | **是否可空** | **传参类型** |                **说明**                 |
+|    sha256    |    False     |    string    |              文件的sha256               |
+| sandbox_type |     True     |    string    | 沙箱环境，默认win7_sp1_enx64_office2013 |
+
+ 沙箱运行环境，用户可以指定文件的沙箱运行环境，可选环境包括：
+
+- **Windows** 
+  - win7_sp1_enx64_office2013 
+  - win7_sp1_enx86_office2013 
+  - win7_sp1_enx86_office2010 
+  - win7_sp1_enx86_office2007 
+  - win7_sp1_enx86_office2003
+- **Linux** 
+  - ubuntu_1704_x64 
+  - centos_7_x64
+
+**说明：此功能需要连接网络，请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+tb = ThreatBook('***')
+a = tb.file_report('******')
+print(a)
+
+```
+
+### FOFA
+
+#### class-FOFA
+
+##### FOFA
+
+| **函数名** | **返回类型** |   **位置**   |                      **说明**                       |
+| :--------: | :----------: | :----------: | :-------------------------------------------------: |
+|    FOFA    |    object    |    api.py    | [FOFA_SDK](https://github.com/Moxin1044/pythonfofa) |
+| **参数名** | **是否可空** | **传参类型** |                      **说明**                       |
+|   email    |    False     |    string    |                     FOFA Email                      |
+|    key     |    False     |    string    |                      FOFA Key                       |
+
+Key 获取地址：https://fofa.info/
+
+**说明：此功能需要连接网络，请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+fofa = FOFA('***','xxxx') # 主要是配合下面的调用返回的一个对象
+```
+
+#### FOFA用户信息
+
+##### userinfo
+
+| **函数名** | **返回类型** |   **位置**   |   **说明**    |
+| :--------: | :----------: | :----------: | :-----------: |
+|  userinfo  |     json     |    api.py    | FOFA 用户信息 |
+| **参数名** | **是否可空** | **传参类型** |   **说明**    |
+
+**说明：此功能需要连接网络，请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+fofa = FOFA('***','xxxx')
+print(fofa.userinfo())
+```
+
+```json
+{
+  "error": false,
+  "email": "****@qq.com",
+  "username": "***",
+  "fcoin": 48,
+  "isvip": true,
+  "vip_level": 2,
+  "is_verified": false,
+  "avatar": "https://i.nosec.org/avatar/system/****",
+  "message": "",
+  "fofacli_ver": "4.0.3",
+  "fofa_server": true
+}
+```
+
+
+
+#### FOFA查询
+
+##### search
+
+| **函数名** | **返回类型** |   **位置**   |                     **说明**                     |
+| :--------: | :----------: | :----------: | :----------------------------------------------: |
+|   search   |     json     |    api.py    |                FOFA 查询接口调用                 |
+| **参数名** | **是否可空** | **传参类型** |                     **说明**                     |
+| query_text |    False     |    string    |                 支持FOFA高级语句                 |
+|   field    |     True     |    string    |                默认 host,ip,port                 |
+|    page    |     True     |     int      |                       页数                       |
+|    size    |     True     |     int      |                   每页查询数量                   |
+|    full    |     True     |   Boolean    | 默认搜索一年内的数据，指定为true即可搜索全部数据 |
+
+**说明：此功能需要连接网络，请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+fofa = FOFA('***','xxxx')
+print(fofa.search('title="bing"'))
+# field =  ['ip','port','title','icp']
+# fofa.search('domain="qq.com"',field=field,size=10)
+```
+
+```json
+{
+  "error": false,
+  "size": 8683,
+  "page": 1,
+  "mode": "extended",
+  "query": "title\u003d\"bing\"",
+  "results": [
+    [
+      "46.101.204.107",
+      "hotel-bing.hotels-rimini-it.com",
+      "80"
+    ],
+    [
+      "104.21.32.129",
+      "https://peapix.com",
+      "443"
+    ],
+    [
+      "193.8.37.83",
+      "https://www.thorsmindecamping.dk",
+      "443"
+    ]
+  ]
+}
+```
+
+#### FOFA统计聚合
+
+##### search_stats
+
+|  **函数名**  | **返回类型** |   **位置**   |                           **说明**                           |
+| :----------: | :----------: | :----------: | :----------------------------------------------------------: |
+| search_stats |     json     |    api.py    |                      FOFA 统计聚合查询                       |
+|  **参数名**  | **是否可空** | **传参类型** |                           **说明**                           |
+|  query_text  |    False     |    string    |             需要进行查询的语句,即输入的查询内容              |
+|    field     |     True     |    string    | 可选字段，默认title，详见[附录2](https://fofa.info/api/stats/statistical) |
+
+**说明：此功能需要连接网络，请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+fofa = FOFA('***','xxxx')
+print(fofa.search_stats('ip="103.35.168.38"'))
+# field =  ['ip','port','title','icp']
+# fofa.search('domain="qq.com"',field=field,size=10)
+```
+
+```json
+{
+  "error": false,
+  "distinct": {
+    "ip": 1,
+    "title": 1
+  },
+  "aggs": {
+    "countries": [],
+    "title": [
+      {
+        "count": 1,
+        "name": "RouterOS router configuration page"
+      }
+    ]
+  },
+  "lastupdatetime": "2022-06-11 07:00:00"
+}
+```
+
+#### FOFA HOST 聚合
+
+##### search_host
+
+| **函数名**  | **返回类型** |   **位置**   |     **说明**      |
+| :---------: | :----------: | :----------: | :---------------: |
+| search_host |     json     |    api.py    | FOFA HOST聚合查询 |
+| **参数名**  | **是否可空** | **传参类型** |     **说明**      |
+|    host     |    False     |    string    | host名，通常是ip  |
+|   detail    |     True     |   Boolean    |   显示端口详情    |
+
+**说明：此功能需要连接网络，请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+fofa = FOFA('***','xxxx')
+print(fofa.search_host('78.48.50.249'))
+```
+
+```json
+{
+  "error": false,
+  "host": "78.48.50.249",
+  "ip": "78.48.50.249",
+  "asn": 6805,
+  "org": "Telefonica Germany",
+  "country_name": "Germany",
+  "country_code": "DE",
+  "protocol": [
+    "http",
+    "sip",
+    "https"
+  ],
+  "port": [
+    8089,
+    5060,
+    7170,
+    80,
+    443
+  ],
+  "category": [
+    "CMS"
+  ],
+  "product": [
+    "Synology-WebStation"
+  ],
+  "update_time": "2022-12-29 05:00:00"
+}
 ```
 
 ## Base.py

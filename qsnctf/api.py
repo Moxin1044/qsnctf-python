@@ -1,3 +1,4 @@
+import qsnctf.plugin.python.pythonfofa.pythonfofa.operation
 import requests
 import json
 import os
@@ -176,11 +177,11 @@ class ThreatBook:
         """
         return q.json()
 
-    def threatbook_file_multiengines(self, file_path, file_name):
+    def file_upload(self, file_path, file_name, sandbox_type='win7_sp1_enx64_office2013'):
         url = 'https://api.threatbook.cn/v3/file/upload';
         fields = {
-            'apikey': self.api_key,
-            'sandbox_type': 'win7_sp1_enx64_office2013',
+            'apikey': self.key,
+            'sandbox_type': sandbox_type,
             'run_time': 60
         }
         file_dir = file_path
@@ -190,3 +191,230 @@ class ThreatBook:
         }
         response = requests.post(url, data=fields, files=files)
         return response.json()
+
+    def file_report_multiengines(self, sha256):
+        """
+        :param sha256: file_sha256
+        :return: {'data': {'multiengines': {'threat_level': 'clean', 'total': 22,
+        'is_white': False, 'total2': 22, 'positives': 0, 'scan_date': '2023-01-05 19:04:42', 'scans': {'IKARUS':
+        'safe', 'vbwebshell': 'safe', 'Avast': 'safe', 'Avira': 'safe', 'Sophos': 'safe', 'K7': 'safe',
+        'Rising': 'safe', 'Kaspersky': 'safe', 'Panda': 'safe', 'Baidu-China': 'safe', 'NANO': 'safe',
+        'Antiy': 'safe', 'AVG': 'safe', 'Baidu': 'safe', 'DrWeb': 'safe', 'GDATA': 'safe', 'Microsoft': 'safe',
+        'Qihu360': 'safe', 'ESET': 'safe', 'ClamAV': 'safe', 'JiangMin': 'safe', 'Trustlook': 'safe'}}},
+        'response_code': 0, 'verbose_msg': 'OK'}
+        """
+        url = 'https://api.threatbook.cn/v3/file/report/multiengines'
+        params = {
+            'apikey': self.key,
+            'sha256': sha256
+        }
+        response = requests.get(url, params=params)
+        return response.json()
+
+    def file_report(self, sha256, sandbox_type='win7_sp1_enx64_office2013'):
+        """
+        :param sha256: file_sha256
+        :param sandbox_type: win7_sp1_enx64_office2013
+        :return:
+            {
+              "response_code": 0,
+              "data": {
+                "summary": {    // 概要信息
+                  "threat_level": "malicious",// 威胁等级(malicious 恶意, suspicious 可疑, clean 安全)
+                  "is_whitelist": false,      // 是否为白名单文件，true 白名单
+                  "submit_time": "2019-01-22 17:36:21",     // 文件提交时间
+                  "file_name": "test.exe",  // 文件名称
+                  "file_type": "EXEx86",    // 文件类型
+                  "sample_sha256": "{sha256}",  // 文件的 Hash 值
+                  "tag": {
+                    "s": [     // 静态标签
+                      "语言neutral",
+                      "时间戳异常"
+                    ],
+                    "x": [     // 检测标签
+                      Trojan"
+                    ]
+                  },
+                  "threat_score": 60,
+                  "sandbox_type": "win7_sp1_enx86_office2013",  // 本次指定获取的沙箱运行分析环境.
+                  "sandbox_type_list": ["win7_sp1_enx86_office2013","win7_sp1_enx86_office2007"],  // 样本分析成功的所有沙箱运行环境列表境
+                  "multi_engines": "7/22"   // 反病毒扫描引擎检出率
+                },
+                "multiengines": {   // 反病毒扫描引擎检测结果(safe 无检出，e.g Trojan 检出结果)
+                  "result": {
+                    "Kaspersky": "Trojan",
+                    "Microsoft": "safe"
+                   },
+                   "scan_time": "2019-10-22 16:17:48"   //多引擎扫描样本的具体时间
+                },
+                "static": {     // 静态信息，以 PE 文件为例
+                  "details": {
+                    "pe_version_info": [],  // PE 文件版本信息
+                    "pe_sections": [],  // PE 文件节表信息
+                    "pe_signatures": {},    // PE 文件签名信息
+                    "pe_imports": [],   // PE 文件导入表信息
+                    "pe_resources": [],     // PE 文件资源信息
+                    "tag": [],  // PE 文件静态标签
+                    "pe_detect": {},    // PE 文件第三方检测信息
+                    "pe_basic": {},     // PE 文件基本信息
+                    "pe_exports": []    // PE 文件导出表信息
+                  },
+                  "basic": {    // 文件基本信息
+                    "sha1": "{sha1}",
+                    "sha256": "{sha256}",
+                    "file_type": "{magic}",
+                    "file_name": "test.exe",
+                    "ssdeep": "{ssdeep}",
+                    "file_size": 33397,
+                    "md5": "{md5}"
+                  }
+                },
+                "signature": [     // 行为签名
+                  {
+                    "severity": 1,  // 严重等级，数字越高等级越高
+                    "references": [],
+                    "sig_class": "Static File Characteristics",     // 签名分类
+                    "name": "static_linked",    // 签名名称
+                    "description": "{"en": "Binary is statically linked", "cn": "此文件是静态链接的"}",//行为描述
+                    "markcount": 1,
+                    "marks": [],    // 签名原始数据
+                    "families": [],
+                    "attck_id": "",
+                    "attck_info": {}
+                  }
+                ],
+                "dropped": [   // 释放行为
+                  {
+                    "sha1": "{sha1}",
+                    "urls": [],
+                    "sha256": "{sha256}",
+                    "size": 33558,
+                    "filepath": "C:\Users\test.exe",
+                    "name": "test.exe",
+                    "crc32": "",
+                    "ssdeep": "{ssdeep}",
+                    "type": "{magic}",
+                    "yara": [],
+                    "md5": "{md5}"
+                  }
+                ],
+                "pstree": {     // 进程行为
+                  "children": [
+                    {
+                      "track": true,
+                      "pid": 1255,  // 进程 ID
+                      "process_name": "",   // 进程名称
+                      "command_line": "",   // 进程命令符
+                      "first_seen": "17:36:34.047315676",
+                      "ppid": 1209,     // 父进程 ID
+                      "children": []    // 子进程 list
+                    }
+                  ],
+                  "process_name": {
+                    "en": "Analysed 1 processes in total",
+                    "cn": "共分析了1个进程"
+                  }
+                },
+                "network": {    // 网络行为
+                  "fingerprint": [],
+                  "tls": [],
+                  "udp": [],
+                  "dns_servers": [],
+                  "http": [],
+                  "irc": [],
+                  "smtp": [],
+                  "tcp": [],
+                  "smtp_ex": [],
+                  "mitm": [],
+                  "hosts": [],
+                  "dns": [],
+                  "http_ex": [],
+                  "domains": [],
+                  "dead_hosts": [],
+                  "icmp": [],
+                  "https_ex": []
+                },
+                "strings": {
+                  "sha256": [], //从文件中提取的字符串
+                  "pacp": [] //从流量中提取的字符串
+                }
+              },
+              "verbose_msg": "OK"
+            }
+        """
+        url = 'https://api.threatbook.cn/v3/file/report'
+        params = {
+            'apikey': self.key,
+            'sandbox_type': sandbox_type,
+            'sha256': sha256
+        }
+        response = requests.get(url, params=params)
+        return response.json()
+
+    class FOFA:
+        def __init__(self, email, key, proxy=""):
+            self.username = None
+            self.email_check = None
+            self.email = email
+            self.key = key
+            self.url = 'https://fofa.info/api/v1'
+            self.proxy = proxy
+            self.get_userinfo()
+
+        def check_fofa_config(self):
+            return f"Email:{self.email} Key:{self.key} Proxy:{self.proxy}"
+
+        def get_userinfo(self):
+            # Check Email and key
+            url = f"{self.url}/info/my?email={self.email}&key={self.key}"
+            response = qsnctf.plugin.python.pythonfofa.pythonfofa.operation.send_get_json(url, self.proxy)
+            if response['error']:
+                return response['errmsg']
+            else:
+                self.email_check = response['email']
+                self.username = response['username']
+                self.isvip = response['isvip']
+                self.viplevel = response['vip_level']
+                self.avatar = response['avatar']
+                self.fcoin = response['fcoin']
+                return self
+
+        def userinfo(self):
+            # Check Email and key
+            url = f"{self.url}/info/my?email={self.email_check}&key={self.key}"
+            response = qsnctf.plugin.python.pythonfofa.pythonfofa.operation.send_get_json(url, self.proxy)
+            if response['error']:
+                return response['errmsg']
+            else:
+                return response
+
+        def search(self, query_text, field=None, page=1, size=100, full=False):
+            if field is None:
+                field = ['ip', 'host', 'port']
+            fields = ','.join(field)
+            query = qsnctf.plugin.python.pythonfofa.pythonfofa.operation.get_base64_url(query_text)
+            url = f"{self.url}/search/all?email={self.email_check}&key={self.key}&qbase64={query}&fields={fields}&page={page}&size={size}&full={full}"
+            response = qsnctf.plugin.python.pythonfofa.pythonfofa.operation.send_get_json(url, self.proxy)
+            '''
+            # 考虑到生产环境，所以不可以在这里直接返回errmsg，统一返回response即可。
+            # 下同
+            if response['error']:
+                return response['errmsg']
+            else:
+                return response
+            '''
+            return response
+
+        def search_stats(self, query_text, field=None):
+            if field is None:
+                field = ['title']
+            fields = ','.join(field)
+            query = qsnctf.plugin.python.pythonfofa.pythonfofa.operation.get_base64_url(query_text)
+            url = f"{self.url}/search/stats?fields={fields}&qbase64={query}&email={self.email_check}&key={self.key}"
+            response = qsnctf.plugin.python.pythonfofa.pythonfofa.operation.send_get_json(url, self.proxy)
+            return response
+
+        def search_host(self, host, detail=False):
+            url = f"{self.url}/host/{host}?detail={detail}&email={self.email_check}&key={self.key}"
+            response = qsnctf.plugin.python.pythonfofa.pythonfofa.operation.send_get_json(url, self.proxy)
+            return response
