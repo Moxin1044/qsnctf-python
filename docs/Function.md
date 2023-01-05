@@ -114,7 +114,9 @@ print(a.results)
 
 ```
 
-#### 取网站信息
+### 取网站信息
+
+#### 取网站标题
 
 ##### get_url_title
 
@@ -137,6 +139,8 @@ print(a) # 百度一下，你就知道
 ```
 
 **说明：No Title是没有找到HTML网页中的Title标签**
+
+#### 取网站描述
 
 ##### get_url_description
 
@@ -161,6 +165,8 @@ print(a)  # 青少年CTF|青少年CTF训练平台是针对青少年网络安全�
 
 **说明：No description是没有找到HTML网页中的description标签**
 
+#### 取网站关键词
+
 ##### get_url_keywords
 
 |    **函数名**    | **返回类型** |   **位置**   |     **说明**     |
@@ -183,6 +189,8 @@ print(a)  # 青少年CTF,青少年CTF平台,青少年CTF训练平台,中学生CT
 ```
 
 **说明：No keywords是没有找到HTML网页中的keywords标签**
+
+#### 取网站ICP备案号
 
 ##### get_url_ICP
 
@@ -207,6 +215,8 @@ print(a)  # 备案号：鲁ICP备2022011740号-3
 
 **说明：No ICP是没有找到HTML网页中的ICP标签**
 
+#### 取网站中的href地址
+
 ##### get_url_a_href
 
 |   **函数名**   | **返回类型** |   **位置**   |     **说明**      |
@@ -229,6 +239,8 @@ print(a)  # ['/', 'login', 'http://bbs.qsnctf.com/', 'javascript:;', 'https://ww
 ```
 
 **说明：No href是没有找到HTML网页中的href标签**
+
+#### 取网站中的URL地址
 
 ##### get_url_img
 
@@ -253,6 +265,8 @@ print(a)  # ['/logo.png', 'data/attachment/block/b8/b85a300493f1bd7ef7e0268dec2c
 
 **说明：No src是没有找到HTML网页中的src标签**
 
+#### 取网站的注释
+
 ##### get_url_comment
 
 |   **函数名**    | **返回类型** |   **位置**   |     **说明**     |
@@ -276,6 +290,8 @@ print(a)  # ['baidutongji']
 
 **说明：No comment是没有找到HTML网页中的注释节点**
 
+#### 取网站响应时间
+
 ##### get_url_time
 
 |  **函数名**  | **返回类型** |   **位置**   |    **说明**    |
@@ -293,10 +309,202 @@ from qsnctf import *
 
 
 a = get_url_time('https://www.qsnctf.com/')
-print(a) # 0.7986516952514648
+print(a)  # ['0.0155']
 ```
 
+#### 取网站的ICO
 
+##### get_url_ico
+
+| **函数名**  | **返回类型** |   **位置**   |   **说明**    |
+| :---------: | :----------: | :----------: | :-----------: |
+| get_url_ico |    string    |    web.py    | 取网站ico地址 |
+| **参数名**  | **是否可空** | **传参类型** |   **说明**    |
+|     url     |    False     |    string    |   网站地址    |
+
+**说明：请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = get_url_ico('https://www.qsnctf.com/')
+print(a)  # ['/ico.ico']
+```
+
+### WebShell操作
+
+**此功能仅限CTF和管理自己的网站使用，请勿用于非法用途。**
+
+#### POST方式测试WebShell密码
+
+##### get_webshell_post
+
+|    **函数名**     | **返回类型** |   **位置**   |   **说明**   |
+| :---------------: | :----------: | :----------: | :----------: |
+| get_webshell_post |    string    |    web.py    | 测试Webshell |
+|    **参数名**     | **是否可空** | **传参类型** |   **说明**   |
+|        url        |    False     |    string    |  shell地址   |
+|        key        |    False     |    string    |     key      |
+
+**说明：请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = get_webshell_post('http://localhost/shell.php', 'cmd')
+print(a) # True
+```
+
+#### GET方式测试WebShell密码
+
+##### get_webshell_get
+
+|    **函数名**    | **返回类型** |   **位置**   |   **说明**   |
+| :--------------: | :----------: | :----------: | :----------: |
+| get_webshell_get |    string    |    web.py    | 测试Webshell |
+|    **参数名**    | **是否可空** | **传参类型** |   **说明**   |
+|       url        |    False     |    string    |  shell地址   |
+|       key        |    False     |    string    |     key      |
+
+**说明：请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = get_webshell_get('http://localhost/shell.php', 'cmd')
+print(a) # True
+```
+
+#### exec-webshell命令执行（POST）
+
+##### get_exec_webshell_post
+
+|       **函数名**       | **返回类型** |   **位置**   |   **说明**   |
+| :--------------------: | :----------: | :----------: | :----------: |
+| get_exec_webshell_post |    string    |    web.py    | exec命令执行 |
+|       **参数名**       | **是否可空** | **传参类型** |   **说明**   |
+|          url           |    False     |    string    |  shell地址   |
+|          key           |    False     |    string    |     key      |
+|         shell          |    Fasle     |    string    |  执行的命令  |
+
+**说明：请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = get_exec_webshell_post('http://localhost/shell.php', 'cmd', 'whoami')
+print(a) # root
+```
+
+#### exec-webshell命令执行（get）
+
+##### get_exec_webshell_get
+
+|      **函数名**       | **返回类型** |   **位置**   |   **说明**   |
+| :-------------------: | :----------: | :----------: | :----------: |
+| get_exec_webshell_get |    string    |    web.py    | exec命令执行 |
+|      **参数名**       | **是否可空** | **传参类型** |   **说明**   |
+|          url          |    False     |    string    |  shell地址   |
+|          key          |    False     |    string    |     key      |
+|         shell         |    Fasle     |    string    |  执行的命令  |
+
+**说明：请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = get_exec_webshell_get('http://localhost/shell.php', 'cmd', 'whoami')
+print(a) # root
+```
+
+#### eval-webshell代码执行（get）
+
+##### get_eval_webshell_get
+
+|      **函数名**       | **返回类型** |   **位置**   |   **说明**   |
+| :-------------------: | :----------: | :----------: | :----------: |
+| get_eval_webshell_get |    string    |    web.py    | eval代码执行 |
+|      **参数名**       | **是否可空** | **传参类型** |   **说明**   |
+|          url          |    False     |    string    |  shell地址   |
+|          key          |    False     |    string    |     key      |
+|         shell         |    Fasle     |    string    |  执行的代码  |
+
+**说明：请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = get_eval_webshell_get('http://localhost/shell.php', 'cmd', 'print("123");')
+print(a) # 123
+```
+
+#### eval-webshell代码执行（post）
+
+##### get_eval_webshell_post
+
+|       **函数名**       | **返回类型** |   **位置**   |   **说明**   |
+| :--------------------: | :----------: | :----------: | :----------: |
+| get_eval_webshell_post |    string    |    web.py    | eval代码执行 |
+|       **参数名**       | **是否可空** | **传参类型** |   **说明**   |
+|          url           |    False     |    string    |  shell地址   |
+|          key           |    False     |    string    |     key      |
+|         shell          |    Fasle     |    string    |  执行的代码  |
+
+**说明：请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = get_eval_webshell_post('http://localhost/shell.php', 'cmd', 'print("123");')
+print(a) # 123
+```
+
+#### WebShell爆破
+
+##### WebShellCracking
+
+|    **函数名**    | **返回类型** |   **位置**   |       **说明**        |
+| :--------------: | :----------: | :----------: | :-------------------: |
+| WebShellCracking |    string    |    web.py    |   WebShell密码爆破    |
+|    **参数名**    | **是否可空** | **传参类型** |       **说明**        |
+|       url        |    False     |    string    |       shell地址       |
+|    threadline    |    False     |     int      |        线程数         |
+|    sleep_time    |    Fasle     |     int      |       访问延时        |
+|     passlist     |    False     |     list     |    可能的密码列表     |
+|       mode       |    False     |    string    | GET or POST 默认 POST |
+
+**说明：请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = WebShellCracking('http://localhost/shell.php', threadline=50,mode="GET")
+print(a.results) # cmd
+```
 
 ## API.py
 
@@ -1002,6 +1210,25 @@ from qsnctf import *
 
 a = ord_str_to_str('abc')
 print(a)  # 97,98,99
+```
+
+##### search_flag
+
+| **函数名**  | **返回类型** |   **位置**   |            **说明**             |
+| :---------: | :----------: | :----------: | :-----------------------------: |
+| search_flag |    string    |   misc.py    |        通过正则查找flag         |
+| **参数名**  | **是否可空** | **传参类型** |            **说明**             |
+|    text     |    False     |    string    |       疑似包含flag的内容        |
+| flag_prefix |     True     |    string    | Flag前缀，格式flag\|qsnctf\|ctf |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = search_flag('hello, i will give you flag flag{qsnctf-12345}')
+print(a) # flag{qsnctf-12345}
 ```
 
 ## Crypto.py
