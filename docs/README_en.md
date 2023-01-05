@@ -319,7 +319,7 @@ print(a.results)
 
 ```
 
-#### 取网站信息
+#### Take the website information
 
 ##### get_url_title
 
