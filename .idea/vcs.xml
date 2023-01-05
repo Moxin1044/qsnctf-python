@@ -2,6 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/build/lib/qsnctf/plugin/python/pythonfofa" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/qsnctf/plugin/python/pythonfofa" vcs="Git" />
   </component>
 </project>
