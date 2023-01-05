@@ -1512,6 +1512,35 @@ a = url_decode('%E9%9D%92%E5%B0%91%E5%B9%B4CTF%3D%E4%B8%AD%E5%AD%A6%E7%94%9FCTF'
 print(a) # 青少年CTF=中学生CTF
 ```
 
+#### 百家姓编码
+
+##### baijiaxing_encode
+
+|    **函数名**     | **返回类型** |   **位置**   |    **说明**    |
+| :---------------: | :----------: | :----------: | :------------: |
+| baijiaxing_encode |    string    |   misc.py    |   百家姓编码   |
+|    **参数名**     | **是否可空** | **传参类型** |    **说明**    |
+|    source_text    |    False     |    string    | 需要编码的内容 |
+
+##### baijiaxing_decode
+
+|    **函数名**     | **返回类型** |   **位置**   |    **说明**    |
+| :---------------: | :----------: | :----------: | :------------: |
+| baijiaxing_decode |    string    |   misc.py    |   百家姓解码   |
+|    **参数名**     | **是否可空** | **传参类型** |    **说明**    |
+|    source_text    |    False     |    string    | 需要解码的内容 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+a = baijiaxing_encode('abcde')
+print(a) # 褚卫蒋沈韩
+b = baijiaxing_decode('褚卫蒋沈韩')
+print(b) # abcde
+```
+
 ### 字符串操作
 
 #### 逆向字符串
@@ -2022,6 +2051,25 @@ from qsnctf import *
 
 b = morse_decrypt('..-./---/.-/.-.-/./--.-','/', '-', '.')
 print(b) # QSNCTF
+```
+
+#### Qwerty密码
+
+##### qwerty_cipher
+
+|  **函数名**   | **返回类型** |   **位置**   |       **说明**       |
+| :-----------: | :----------: | :----------: | :------------------: |
+| qwerty_cipher |    string    |  crypto.py   |      qwerty密码      |
+|  **参数名**   | **是否可空** | **传参类型** |       **说明**       |
+|  source_text  |    False     |    string    | 需要加密或解密的内容 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+a = func_qwerty('abcd')
+print(a) # qwer
 ```
 
 ## Hash.py

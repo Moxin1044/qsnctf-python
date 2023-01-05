@@ -293,6 +293,19 @@ def morse_decrypt(cipher, split=" ", point='.', bar='-'):
     return message
 
 
+def qwerty_cipher(source_text):
+    str1 = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
+    str2 = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    result_text = ""
+    for s in source_text:
+        if s in str1:
+            if s != ' ':
+                result_text = result_text + str1[str2.index(s)]
+            else:
+                result_text = result_text + ' '
+        else:
+            return 'Qwerty只能对字母加密!'
+    return result_text
 
 # def vigenere_encrypt(text,key):
 #     return vigenere.encrypt(text, key, base64=False)

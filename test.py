@@ -1,6 +1,6 @@
 from qsnctf import *
 
-data = 'SGVsbG8sIFdvcmxkIQ=='
-custom_table = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-'
-a = base64_encode_custom(data, custom_table)
+a = baijiaxing_encode('abcde')
 print(a)
+b = baijiaxing_decode('褚卫蒋沈韩')
+print(b)
