@@ -332,7 +332,7 @@ print(a.results)
 
 **illustrate：Please pay attention to the rules of the contest for use.**
 
-##### 使用示例
+##### Use examples
 
 ```python
 from qsnctf import *
@@ -354,7 +354,7 @@ print(a) # 百度一下，你就知道
 
 **illustrate：Please pay attention to the rules of the contest for use.**
 
-##### 使用示例
+##### Use examples
 
 ```python
 from qsnctf import *
@@ -377,7 +377,7 @@ print(a)  # 青少年CTF|青少年CTF训练平台是针对青少年网络安全�
 
 **illustrate：Please pay attention to the rules of the contest for use.**
 
-##### 使用示例
+##### Use examples
 
 ```python
 from qsnctf import *
@@ -400,7 +400,7 @@ print(a)  # 青少年CTF,青少年CTF平台,青少年CTF训练平台,中学生CT
 
 **illustrate：Please pay attention to the rules of the contest for use.**
 
-##### 使用示例
+##### Use examples
 
 ```python
 from qsnctf import *
@@ -423,7 +423,7 @@ print(a)  # 备案号：鲁ICP备2022011740号-3
 
 **illustrate：Please pay attention to the rules of the contest for use.**
 
-##### 使用示例
+##### Use examples
 
 ```python
 from qsnctf import *
@@ -446,7 +446,7 @@ print(a)  # ['/', 'login', 'http://bbs.qsnctf.com/', 'javascript:;', 'https://ww
 
 **illustrate：Please pay attention to the rules of the contest for use.**
 
-##### 使用示例
+##### Use examples
 
 ```python
 from qsnctf import *
@@ -469,7 +469,7 @@ print(a)  # ['/logo.png', 'data/attachment/block/b8/b85a300493f1bd7ef7e0268dec2c
 
 **illustrate：Please pay attention to the rules of the contest for use.**
 
-##### 使用示例
+##### Use examples
 
 ```python
 from qsnctf import *
@@ -480,7 +480,6 @@ print(a)  # ['baidutongji']
 ```
 
 **illustrate：No comment is a comment node found in the HTML page**
-
 
 ## API.py
 
