@@ -116,6 +116,7 @@ FUNCTIONS
 | Core values Encryption and decryption | Text reverses | URL encryption and decryption | Bit XOR | Text Reverse (Step 2) |
 | :-----------------------------------: | :-----------: | :---------------------------: | :-----: | --------------------- |
 |    Text Reverse (custom step size)    | Get the UUID  | ord to string|      String to ord   |    String splitting                   |
+| Flag looking |  | |  |  |
 
 ### API
 
