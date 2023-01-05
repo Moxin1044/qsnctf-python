@@ -181,6 +181,28 @@ print(a)  # 青少年CTF,青少年CTF平台,青少年CTF训练平台,中学生CT
 
 **说明：No keywords是没有找到HTML网页中的keywords标签**
 
+##### get_url_ICP
+
+| **函数名**  | **返回类型** |   **位置**   |    **说明**     |
+| :---------: | :----------: | :----------: | :-------------: |
+| get_url_ICP |    string    |    web.py    | 取网站ICP备案号 |
+| **参数名**  | **是否可空** | **传参类型** |    **说明**     |
+|     url     |    False     |    string    |    网站地址     |
+
+**说明：请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = get_url_ICP('https://www.qsnctf.com/')
+print(a)  # 备案号：鲁ICP备2022011740号-3
+```
+
+**说明：No ICP是没有找到HTML网页中的ICP标签**
+
 ## API.py
 
 ### quipqiup

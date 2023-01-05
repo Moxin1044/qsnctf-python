@@ -39,7 +39,7 @@ def get_url_title(url):
 def get_url_description(url):
     """
     :param url: get url
-    :return:  url title
+    :return:  url description
     """
     browser = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0",
@@ -65,7 +65,7 @@ def get_url_description(url):
 def get_url_keywords(url):
     """
     :param url: get url
-    :return:  url title
+    :return:  url keywords
     """
     browser = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0",
@@ -86,6 +86,32 @@ def get_url_keywords(url):
     else:
         keywords = "Request unreachable"
     return keywords
+
+
+def get_url_ICP(url):
+    """
+    :param url: get url
+    :return:  url ICP
+    """
+    browser = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0",
+        "Accept": "*/*", "Accept-Language": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
+        "Accept-Encoding": "gzip, deflate", "Content-Type": "application/x-www-form-urlencoded",
+        "Referer": f"{url}",
+        "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
+        "Te": "trailers", "Connection": "close"}
+    requests.packages.urllib3.disable_warnings()
+    response = requests.get(url, headers=browser, verify=False)
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.text, "html.parser")
+        icp_tag = soup.find('a', attrs={'href': 'https://beian.miit.gov.cn'})
+        if icp_tag:
+            icp = icp_tag.text
+        else:
+            icp = 'No ICP'
+    else:
+        icp = "Request unreachable"
+    return icp.lstrip()
 
 
 class DirScan:
