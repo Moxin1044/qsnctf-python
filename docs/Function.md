@@ -1945,6 +1945,50 @@ print(a) # qsnctf.com
 
 ```
 
+#### 摩斯密码加密
+
+##### morse_encrypt
+
+|  **函数名**   | **返回类型** |   **位置**   |             **说明**              |
+| :-----------: | :----------: | :----------: | :-------------------------------: |
+| morse_encrypt |    string    |  crypto.py   |           摩斯密码加密            |
+|  **参数名**   | **是否可空** | **传参类型** |             **说明**              |
+|    message    |    False     |    string    |          需要加密的内容           |
+|     split     |     True     |    string    | 分隔符（默认为空格）可以设置为"/" |
+|     point     |     True     |    string    |     点 用做替换摩斯密码的“.”      |
+|      bar      |     True     |    string    |     横 用作替换摩斯密码的“-”      |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+a = morse_encrypt('QSNCTF','/')
+print(a) # --.-/.../-./-.-./-/..-.
+```
+
+#### 摩斯密码解密
+
+##### morse_decrypt
+
+|  **函数名**   | **返回类型** |   **位置**   |             **说明**              |
+| :-----------: | :----------: | :----------: | :-------------------------------: |
+| morse_decrypt |    string    |  crypto.py   |           摩斯密码解密            |
+|  **参数名**   | **是否可空** | **传参类型** |             **说明**              |
+|    cipher     |    False     |    string    |          需要解密的内容           |
+|     split     |     True     |    string    | 分隔符（默认为空格）可以设置为"/" |
+|     point     |     True     |    string    |     点 用做替换摩斯密码的“.”      |
+|      bar      |     True     |    string    |     横 用作替换摩斯密码的“-”      |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+b = morse_decrypt('..-./---/.-/.-.-/./--.-','/', '-', '.')
+print(b) # QSNCTF
+```
+
 ## Hash.py
 
 ### Hash

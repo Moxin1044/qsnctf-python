@@ -203,8 +203,95 @@ def atbash_cipher(text):
 
     # 加密
     encrypted_text = ''.join(mapping[c] if c.isalpha() else c for c in text)
-
     return encrypted_text
+
+
+def morse_encrypt(message, split=" ", point='.', bar='-'):
+    """
+    :param message: 加密内容
+    :param split: 分隔符
+    :param point: 点
+    :param bar: 横杠
+    :return:
+    """
+    # 字符映射表
+    morse_code_dict = {
+        'A': '.-', 'B': '-...', 'C': '-.-.',
+        'D': '-..', 'E': '.', 'F': '..-.',
+        'G': '--.', 'H': '....', 'I': '..',
+        'J': '.---', 'K': '-.-', 'L': '.-..',
+        'M': '--', 'N': '-.', 'O': '---',
+        'P': '.--.', 'Q': '--.-', 'R': '.-.',
+        'S': '...', 'T': '-', 'U': '..-',
+        'V': '...-', 'W': '.--', 'X': '-..-',
+        'Y': '-.--', 'Z': '--..', '1': '.----',
+        '2': '..---', '3': '...--', '4': '....-',
+        '5': '.....', '6': '-....', '7': '--...',
+        '8': '---..', '9': '----.', '0': '-----',
+        ', ': '--..--', '.': '.-.-.-', '?': '..--..',
+        '/': '-..-.', '-': '-....-', '(': '-.--.', ')': '-.--.-',
+        ' ': ' ', '{': '----.--', '}': '-----.-', ':': '---...'
+    }
+    cipher = ''
+    for letter in message.upper():
+        if letter in morse_code_dict:  # 对映射表没有的东进行跳过
+            if letter != ' ':
+                string = morse_code_dict[letter]
+                new_string = ""
+                for ch in string:
+                    if ch == ".":
+                        new_string += point
+                    elif ch == "-":
+                        new_string += bar
+                cipher += new_string + split
+            else:
+                cipher += ' '
+        else:
+            cipher += ''
+    return cipher[:-1]
+
+
+def morse_decrypt(cipher, split=" ", point='.', bar='-'):
+    """
+    :param cipher: 解密内容
+    :param split: 分隔符
+    :param point: 点
+    :param bar: 横杠
+    :return:
+    """
+    morse_code_dict = {
+        'A': '.-', 'B': '-...', 'C': '-.-.',
+        'D': '-..', 'E': '.', 'F': '..-.',
+        'G': '--.', 'H': '....', 'I': '..',
+        'J': '.---', 'K': '-.-', 'L': '.-..',
+        'M': '--', 'N': '-.', 'O': '---',
+        'P': '.--.', 'Q': '--.-', 'R': '.-.',
+        'S': '...', 'T': '-', 'U': '..-',
+        'V': '...-', 'W': '.--', 'X': '-..-',
+        'Y': '-.--', 'Z': '--..', '1': '.----',
+        '2': '..---', '3': '...--', '4': '....-',
+        '5': '.....', '6': '-....', '7': '--...',
+        '8': '---..', '9': '----.', '0': '-----',
+        ', ': '--..--', '.': '.-.-.-', '?': '..--..',
+        '/': '-..-.', '-': '-....-', '(': '-.--.', ')': '-.--.-',
+        ' ': ' ', '{': '----.--', '}': '-----.-', ':': '---...'
+    }
+    inverted_dict = {v: k for k, v in morse_code_dict.items()}
+    # 初始化解密后的字符串
+    message = ''
+    # 遍历每个摩尔斯码，并根据映射表解码
+    for code in cipher.split(split):
+        string = code
+        new_string = ""
+        for ch in string:
+            if ch == point:
+                new_string += '.'
+            elif ch == bar:
+                new_string += '-'
+        message += inverted_dict[new_string]
+
+    return message
+
 
 
 # def vigenere_encrypt(text,key):
