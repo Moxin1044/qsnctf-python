@@ -36,6 +36,58 @@ def get_url_title(url):
     return title
 
 
+def get_url_description(url):
+    """
+    :param url: get url
+    :return:  url title
+    """
+    browser = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0",
+        "Accept": "*/*", "Accept-Language": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
+        "Accept-Encoding": "gzip, deflate", "Content-Type": "application/x-www-form-urlencoded",
+        "Referer": f"{url}",
+        "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
+        "Te": "trailers", "Connection": "close"}
+    requests.packages.urllib3.disable_warnings()
+    response = requests.get(url, headers=browser, verify=False)
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.text, "html.parser")
+        description_tag = soup.find('meta', attrs={'name': 'description'})
+        if description_tag:
+            description = description_tag['content']
+        else:
+            description = 'No description'
+    else:
+        description = "Request unreachable"
+    return description
+
+
+def get_url_keywords(url):
+    """
+    :param url: get url
+    :return:  url title
+    """
+    browser = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0",
+        "Accept": "*/*", "Accept-Language": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
+        "Accept-Encoding": "gzip, deflate", "Content-Type": "application/x-www-form-urlencoded",
+        "Referer": f"{url}",
+        "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
+        "Te": "trailers", "Connection": "close"}
+    requests.packages.urllib3.disable_warnings()
+    response = requests.get(url, headers=browser, verify=False)
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.text, "html.parser")
+        keywords_tag = soup.find('meta', attrs={'name': 'keywords'})
+        if keywords_tag:
+            keywords = keywords_tag['content']
+        else:
+            keywords = 'No keywords'
+    else:
+        keywords = "Request unreachable"
+    return keywords
+
+
 class DirScan:
     def __init__(self, url, threadline=10, sleep_time=0, dirlist=None, return_code=None, echo=False, wait=True):
         """

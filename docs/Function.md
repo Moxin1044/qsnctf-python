@@ -114,13 +114,13 @@ print(a.results)
 
 ```
 
-#### 取网站标题
+#### 取网站信息
 
 ##### get_url_title
 
 |  **函数名**   | **返回类型** |   **位置**   |  **说明**  |
 | :-----------: | :----------: | :----------: | :--------: |
-| get_url_title |     text     |    web.py    | 取网站标题 |
+| get_url_title |    string    |    web.py    | 取网站标题 |
 |  **参数名**   | **是否可空** | **传参类型** |  **说明**  |
 |      url      |    False     |    string    |  网站地址  |
 
@@ -136,6 +136,50 @@ print(a) # 百度一下，你就知道
 ```
 
 **说明：No Title是没有找到HTML网页中的Title标签**
+
+##### get_url_description
+
+|     **函数名**      | **返回类型** |   **位置**   |  **说明**  |
+| :-----------------: | :----------: | :----------: | :--------: |
+| get_url_description |    string    |    web.py    | 取网站描述 |
+|     **参数名**      | **是否可空** | **传参类型** |  **说明**  |
+|         url         |    False     |    string    |  网站地址  |
+
+**说明：请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = get_url_description('https://www.qsnctf.com/')
+print(a)  # 青少年CTF|青少年CTF训练平台是针对青少年网络安全爱好者的训练平台，平台内有大量原创题，并收录了各大比赛的题目进行公益的学习。我们所有的题目均为免费公开，给广大学子提供更多的学习途径。
+```
+
+**说明：No description是没有找到HTML网页中的description标签**
+
+##### get_url_keywords
+
+|    **函数名**    | **返回类型** |   **位置**   |   **说明**   |
+| :--------------: | :----------: | :----------: | :----------: |
+| get_url_keywords |    string    |    web.py    | 取网站关键字 |
+|    **参数名**    | **是否可空** | **传参类型** |   **说明**   |
+|       url        |    False     |    string    |   网站地址   |
+
+**说明：请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = get_url_keywords('https://www.qsnctf.com/')
+print(a)  # 青少年CTF,青少年CTF平台,青少年CTF训练平台,中学生CTF平台,中学生CTF训练平台,青少年网络安全,青少年CTF在线训练平台,CTF训练平台,CTF平台
+```
+
+**说明：No keywords是没有找到HTML网页中的keywords标签**
 
 ## API.py
 
