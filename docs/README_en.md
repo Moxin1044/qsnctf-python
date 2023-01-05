@@ -290,6 +290,198 @@ https://www.qsnctf.com/ 200 青少年CTF训练平台 | 原中学生CTF平台 | �
 
 **illustrate：`No Title` is the Title tag in the HTML page that is not found**
 
+#### class-DomainScan
+
+##### DomainScan
+
+| **Function name	**  |   **Return type**   |    **location**    |                        **illustrate**                        |
+| :--------------------: | :-----------------: | :----------------: | :----------------------------------------------------------: |
+|       DomainScan       |        list         |       web.py       |                      Subdomain scanning                      |
+| **The parameter name** | **Nullable or not** | **Parameter type** |                        **illustrate**                        |
+|         domain         |        False        |       string       |           Website domain name, format: qsnctf.com            |
+|       treadline        |        True         |        int         | The number of threads (need to pass integers) should not be too high The default is 10 threads |
+|       sleep_time       |        True         |        int         |           The default time between each scan is 0            |
+|       domainlist       |        True         |        list        | List of scanned subdomains, in the format ['abc', 'www'] The contents of the /plugin/txt/domain.txt under the default library path are scanned |
+|      return_code       |        True         |        list        | Returns a status list of results, in the format [200, 301, 302, 401, 403, 404, 500], which is also the default format |
+|          echo          |        True         |      Boolean       | Whether to output scan results directly The default value is False |
+|          wait          |        True         |      Boolean       | Whether to wait for thread to end The default value is True  |
+
+**illustrate：Please pay attention to the rules of the contest for use.**
+
+```python
+from qsnctf import *
+
+a = DomainScan("qsnctf.com")
+print(a.results_title)
+# ['http://www.qsnctf.com/ 青少年CTF训练平台 | 原中学生CTF平台 | 青少年CTF', 'http://ctf.qsnctf.com/ 克拉玛依市第一届网络安全技能大赛', 'http://test.qsnctf.com/ 克拉玛依高级中学--十三年', 'http://tools.qsnctf.com/ 青少年CTF在线工具箱 | CTF在线工具']
+print(a.results) 
+# ['http://www.qsnctf.com/', 'http://ctf.qsnctf.com/', 'http://test.qsnctf.com/', 'http://tools.qsnctf.com/']
+
+```
+
+#### 取网站信息
+
+##### get_url_title
+
+| **Function name	**  |   **Return type**   |    **location**    |           **illustrate**            |
+| :--------------------: | :-----------------: | :----------------: | :---------------------------------: |
+|     get_url_title      |       string        |       web.py       |    Take the title of the website    |
+| **The parameter name** | **Nullable or not** | **Parameter type** |           **illustrate**            |
+|          url           |        False        |       string       |           Website address           |
+|         Cookie         |        True         |       string       | Website cookies, which can be empty |
+
+**illustrate：Please pay attention to the rules of the contest for use.**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+a = get_url_title("https://www.baidu.com/")
+print(a) # 百度一下，你就知道
+```
+
+**illustrate：No Title is the Title tag in the HTML page that is not found**
+
+##### get_url_description
+
+| **Function name	**  |   **Return type**   |    **location**    |           **illustrate**            |
+| :--------------------: | :-----------------: | :----------------: | :---------------------------------: |
+|  get_url_description   |       string        |       web.py       |      Take the site description      |
+| **The parameter name** | **Nullable or not** | **Parameter type** |           **illustrate**            |
+|          url           |        False        |       string       |           Website address           |
+|         Cookie         |        True         |       string       | Website cookies, which can be empty |
+
+**illustrate：Please pay attention to the rules of the contest for use.**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = get_url_description('https://www.qsnctf.com/')
+print(a)  # 青少年CTF|青少年CTF训练平台是针对青少年网络安全爱好者的训练平台，平台内有大量原创题，并收录了各大比赛的题目进行公益的学习。我们所有的题目均为免费公开，给广大学子提供更多的学习途径。
+```
+
+**illustrate：No description is the description tag in the HTML page that is not found**
+
+##### get_url_keywords
+
+| **Function name	**  |   **Return type**   |    **location**    |           **illustrate**            |
+| :--------------------: | :-----------------: | :----------------: | :---------------------------------: |
+|    get_url_keywords    |       string        |       web.py       |      Take the website keyword       |
+| **The parameter name** | **Nullable or not** | **Parameter type** |           **illustrate**            |
+|          url           |        False        |       string       |           Website address           |
+|         Cookie         |        True         |       string       | Website cookies, which can be empty |
+
+**illustrate：Please pay attention to the rules of the contest for use.**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = get_url_keywords('https://www.qsnctf.com/')
+print(a)  # 青少年CTF,青少年CTF平台,青少年CTF训练平台,中学生CTF平台,中学生CTF训练平台,青少年网络安全,青少年CTF在线训练平台,CTF训练平台,CTF平台
+```
+
+**illustrate：No keywords are keywords tags that are not found in HTML pages**
+
+##### get_url_ICP
+
+| **Function name	**  |   **Return type**   |    **location**    |              **illustrate**               |
+| :--------------------: | :-----------------: | :----------------: | :---------------------------------------: |
+|      get_url_ICP       |       string        |       web.py       | Take the ICP filing number of the website |
+| **The parameter name** | **Nullable or not** | **Parameter type** |              **illustrate**               |
+|          url           |        False        |       string       |              Website address              |
+|         Cookie         |        True         |       string       |    Website cookies, which can be empty    |
+
+**illustrate：Please pay attention to the rules of the contest for use.**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = get_url_ICP('https://www.qsnctf.com/')
+print(a)  # 备案号：鲁ICP备2022011740号-3
+```
+
+**illustrate：No ICP is the ICP tag in the HTML page that is not found**
+
+##### get_url_a_href
+
+| **Function name	**  |   **Return type**   |    **location**    |              **illustrate**               |
+| :--------------------: | :-----------------: | :----------------: | :---------------------------------------: |
+|     get_url_a_href     |        list         |       web.py       | Take the href of the A tag of the website |
+| **The parameter name** | **Nullable or not** | **Parameter type** |              **illustrate**               |
+|          url           |        False        |       string       |              Website address              |
+|         Cookie         |        True         |       string       |    Website cookies, which can be empty    |
+
+**illustrate：Please pay attention to the rules of the contest for use.**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = get_url_a_href('https://www.qsnctf.com/')
+print(a)  # ['/', 'login', 'http://bbs.qsnctf.com/', 'javascript:;', 'https://www.sierting.com', 'https://beian.miit.gov.cn']
+```
+
+**illustrate：No href is the href tag in the HTML page that is not found**
+
+##### get_url_img
+
+| **Function name	**  |   **Return type**   |    **location**    |           **illustrate**            |
+| :--------------------: | :-----------------: | :----------------: | :---------------------------------: |
+|      get_url_img       |        list         |       web.py       |        Take the website img         |
+| **The parameter name** | **Nullable or not** | **Parameter type** |           **illustrate**            |
+|          url           |        False        |       string       |           Website address           |
+|         Cookie         |        True         |       string       | Website cookies, which can be empty |
+
+**illustrate：Please pay attention to the rules of the contest for use.**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = get_url_a_href('https://www.qsnctf.com/')
+print(a)  # ['/logo.png', 'data/attachment/block/b8/b85a300493f1bd7ef7e0268dec2c3217.jpg']
+```
+
+**illustrate：No src is the src tag found in the HTML web page**
+
+##### get_url_comment
+
+| **Function name	**  |   **Return type**   |    **location**    |           **illustrate**            |
+| :--------------------: | :-----------------: | :----------------: | :---------------------------------: |
+|    get_url_comment     |        list         |       web.py       |  Take the comments in the website   |
+| **The parameter name** | **Nullable or not** | **Parameter type** |           **illustrate**            |
+|          url           |        False        |       string       |           Website address           |
+|         Cookie         |        True         |       string       | Website cookies, which can be empty |
+
+**illustrate：Please pay attention to the rules of the contest for use.**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = get_url_comment('https://www.qsnctf.com/')
+print(a)  # ['baidutongji']
+```
+
+**illustrate：No comment is a comment node found in the HTML page**
+
+
 ## API.py
 
 ### quipqiup
