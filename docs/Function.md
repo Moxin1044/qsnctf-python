@@ -203,6 +203,28 @@ print(a)  # 备案号：鲁ICP备2022011740号-3
 
 **说明：No ICP是没有找到HTML网页中的ICP标签**
 
+##### get_url_a_href
+
+|   **函数名**   | **返回类型** |   **位置**   |     **说明**      |
+| :------------: | :----------: | :----------: | :---------------: |
+| get_url_a_href |     list     |    web.py    | 取网站a标签的href |
+|   **参数名**   | **是否可空** | **传参类型** |     **说明**      |
+|      url       |    False     |    string    |     网站地址      |
+
+**说明：请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = get_url_a_href('https://www.qsnctf.com/')
+print(a)  # ['/', 'login', 'http://bbs.qsnctf.com/', 'javascript:;', 'https://www.sierting.com', 'https://beian.miit.gov.cn']
+```
+
+**说明：No href是没有找到HTML网页中的href标签**
+
 ## API.py
 
 ### quipqiup

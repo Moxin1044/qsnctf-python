@@ -114,6 +114,37 @@ def get_url_ICP(url):
     return icp.lstrip()
 
 
+def get_url_a_href(url):
+    """
+    :param url: get url
+    :return:  url a_href list
+    """
+    browser = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0",
+        "Accept": "*/*", "Accept-Language": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
+        "Accept-Encoding": "gzip, deflate", "Content-Type": "application/x-www-form-urlencoded",
+        "Referer": f"{url}",
+        "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
+        "Te": "trailers", "Connection": "close"}
+    requests.packages.urllib3.disable_warnings()
+    r_list = []
+    response = requests.get(url, headers=browser, verify=False)
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.text, "html.parser")
+        a_tags = soup.find_all('a')
+        if a_tags:
+            for a_tag in a_tags:
+                # 取出 a 标签的 href 属性值
+                href = a_tag.get('href')
+                r_list.append(href)
+            href = r_list
+        else:
+            href = 'No href'
+    else:
+        href = "Request unreachable"
+    return href
+
+
 class DirScan:
     def __init__(self, url, threadline=10, sleep_time=0, dirlist=None, return_code=None, echo=False, wait=True):
         """
