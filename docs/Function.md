@@ -609,15 +609,13 @@ tb = ThreatBook('***') # 主要是配合下面的调用返回的一个对象
 
 #### 微步-IP信誉
 
-##### ThreatBook
+##### ip_reputation
 
 |  **函数名**   | **返回类型** |   **位置**   |     **说明**     |
 | :-----------: | :----------: | :----------: | :--------------: |
 | ip_reputation |     json     |    api.py    |  微步在线IP信誉  |
 |  **参数名**   | **是否可空** | **传参类型** |     **说明**     |
 |      ip       |    False     |    string    | 需要查询的IP地址 |
-
-API Key 获取地址：https://x.threatbook.com/v5/myApi
 
 **说明：此功能需要连接网络，请注意比赛规则进行使用。**
 
@@ -636,9 +634,28 @@ print(a)
 
 ```
 
-#### IP信誉查询
-
 #### 文件上传分析
+
+##### threatbook_file_multiengines
+
+|          **函数名**          | **返回类型** |   **位置**   |          **说明**          |
+| :--------------------------: | :----------: | :----------: | :------------------------: |
+| threatbook_file_multiengines |     json     |    api.py    | 微步文件反病毒引擎检测报告 |
+|          **参数名**          | **是否可空** | **传参类型** |          **说明**          |
+|          file_path           |    False     |    string    |         上传的路径         |
+|          file_name           |    False     |    string    |      需要上传的文件名      |
+
+**说明：此功能需要连接网络，请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```
+from qsnctf import *
+
+tb = ThreatBook('***')
+a = tb.threatbook_file_multiengines('/','123.exe')
+print(a)
+```
 
 ## Base.py
 

@@ -1,5 +1,6 @@
 import requests
 import json
+import os
 
 
 # 这里的操作一般都是需要联网的，如果是线下赛请确认主办方允许联网使用
@@ -174,3 +175,18 @@ class ThreatBook:
                 tagss = "空"
         """
         return q.json()
+
+    def threatbook_file_multiengines(self, file_path, file_name):
+        url = 'https://api.threatbook.cn/v3/file/upload';
+        fields = {
+            'apikey': self.api_key,
+            'sandbox_type': 'win7_sp1_enx64_office2013',
+            'run_time': 60
+        }
+        file_dir = file_path
+        file_name = file_name
+        files = {
+            'file': (file_name, open(os.path.join(file_dir, file_name), 'rb'))
+        }
+        response = requests.post(url, data=fields, files=files)
+        return response.json()
