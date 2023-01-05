@@ -144,7 +144,7 @@ def search_flag(text, flag_prefix='flag|qsnctf|ctf'):
     :return: flag{xxxxxxx}
     """
     # pattern = f'({flag_prefix})' + r'\{[\w]+\}'
-    pattern = r'(flag|qsnctf|ctf)\{.+\}'
+    pattern = r'(' + flag_prefix + ')\{.+\}'
     match = re.search(pattern, text)
     if match:
         result = match.group(0)
