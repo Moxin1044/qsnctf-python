@@ -1893,6 +1893,35 @@ b = rot18('dfapgs7577')
 print(b) # qsnctf2022
 ```
 
+#### 八卦密码
+
+##### eight_diagrams_encrypt
+
+|       **函数名**       | **返回类型** |   **位置**   |    **说明**    |
+| :--------------------: | :----------: | :----------: | :------------: |
+| eight_diagrams_encrypt |    string    |  crypto.py   |  八卦密码加密  |
+|       **参数名**       | **是否可空** | **传参类型** |    **说明**    |
+|          text          |    False     |    string    | 需要加密的内容 |
+
+##### eight_diagrams_decrypt
+
+|       **函数名**       | **返回类型** |   **位置**   |    **说明**    |
+| :--------------------: | :----------: | :----------: | :------------: |
+| eight_diagrams_decrypt |    string    |  crypto.py   |  八卦密码解密  |
+|       **参数名**       | **是否可空** | **传参类型** |    **说明**    |
+|          text          |    False     |    string    | 需要解密的内容 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+a = eight_diagrams_encrypt('qsnctf')
+print(a)  # 正巽震~正巽兑~正离巽~正艮兑~正巽艮~正艮巽~
+a = eight_diagrams_decrypt('正巽震~正巽兑~正离巽~正艮兑~正巽艮~正艮巽~')
+print(a)  # qsnctf
+```
+
 ## Hash.py
 
 ### Hash

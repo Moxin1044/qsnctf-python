@@ -142,6 +142,60 @@ def rot18(text):
     return encrypted_text
 
 
+def eight_diagrams_encrypt(text):
+    # 八卦加密 仅支持ASCII码支持的字符
+    codelist = []
+    fuxi = ['坤', '震', '坎', '兑', '艮', '离', '巽', '乾']
+    strlist = text
+    for character in strlist:
+        if len(bin(ord(character)).replace('0b', '')) == 7:
+            codelist.append(str(bin(ord(character)).replace('0b', '')))
+        else:
+            codelist.append('0' + str(bin(ord(character)).replace('0b', '')))
+    r = ''
+    for code in codelist:
+        code3 = []
+        code2 = list(code)
+        if code2[0] == '0':
+            cncode0 = '逆'
+        else:
+            cncode0 = '正'
+        cncode1 = str(fuxi[int(str(code2[1] + code2[2] + code2[3]), 2)])
+        cncode2 = str(fuxi[int(str(code2[4] + code2[5] + code2[6]), 2)])
+        cncode = cncode0 + cncode1 + cncode2
+        r += cncode + "~"
+    return r
+
+def eight_diagrams_decrypt(text):
+    fuxi = ['坤', '震', '坎', '兑', '艮', '离', '巽', '乾']
+    string = text
+    cncodelist = string.split('~')
+    del cncodelist[-1]
+    r = ''
+    for cncode in cncodelist:
+        cncodesplit = list(cncode)
+        if cncodesplit[0] == '逆':
+            code1 = '0'
+        else:
+            code1 = '1'
+        if len(str(bin(fuxi.index(cncodesplit[1])).replace('0b', ''))) == 3:
+            code2 = str(bin(fuxi.index(cncodesplit[1])).replace('0b', ''))
+        elif len(str(bin(fuxi.index(cncodesplit[1])).replace('0b', ''))) == 2:
+            code2 = '0' + str(bin(fuxi.index(cncodesplit[1])).replace('0b', ''))
+        else:
+            code2 = '00' + str(bin(fuxi.index(cncodesplit[1])).replace('0b', ''))
+        if len(str(bin(fuxi.index(cncodesplit[2])).replace('0b', ''))) == 3:
+            code3 = str(bin(fuxi.index(cncodesplit[2])).replace('0b', ''))
+        elif len(str(bin(fuxi.index(cncodesplit[2])).replace('0b', ''))) == 2:
+            code3 = '0' + str(bin(fuxi.index(cncodesplit[2])).replace('0b', ''))
+        else:
+            code3 = '00' + str(bin(fuxi.index(cncodesplit[2])).replace('0b', ''))
+        code = code1 + code2 + code3
+        character = chr(int(code, 2))
+        r += character
+    return r
+
+
 # def vigenere_encrypt(text,key):
 #     return vigenere.encrypt(text, key, base64=False)
 #
