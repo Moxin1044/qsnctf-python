@@ -583,6 +583,63 @@ from qsnctf import *
 DingTalk('青少年CTF', '你好，我是末心', 'xxxx-xxxxx-xxxx-xxxx-xxxxx')
 ```
 
+### 微步在线
+
+#### class-ThreatBook
+
+##### ThreatBook
+
+| **函数名** | **返回类型** |   **位置**   |    **说明**     |
+| :--------: | :----------: | :----------: | :-------------: |
+| ThreatBook |    object    |    api.py    |    微步在线     |
+| **参数名** | **是否可空** | **传参类型** |    **说明**     |
+|  api_key   |    False     |    string    | 微步在线API Key |
+
+API Key 获取地址：https://x.threatbook.com/v5/myApi
+
+**说明：此功能需要连接网络，请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+tb = ThreatBook('***') # 主要是配合下面的调用返回的一个对象
+```
+
+#### 微步-IP信誉
+
+##### ThreatBook
+
+|  **函数名**   | **返回类型** |   **位置**   |     **说明**     |
+| :-----------: | :----------: | :----------: | :--------------: |
+| ip_reputation |     json     |    api.py    |  微步在线IP信誉  |
+|  **参数名**   | **是否可空** | **传参类型** |     **说明**     |
+|      ip       |    False     |    string    | 需要查询的IP地址 |
+
+API Key 获取地址：https://x.threatbook.com/v5/myApi
+
+**说明：此功能需要连接网络，请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+tb = ThreatBook('***')
+a = tb.ip_reputation('127.0.0.1')
+print(a)
+```
+
+```json
+{'data': {'127.0.0.1': {'severity': '无威胁', 'judgments': ['白名单', '保留地址'], 'tags_classes': [], 'basic': {'carrier': '', 'location': {'country': '', 'province': '', 'city': '', 'lng': '', 'lat': '', 'country_code': 'B1'}}, 'asn': {}, 'scene': '', 'confidence_level': '高', 'is_malicious': False, 'update_time': '2023-01-05 18:41:54'}}, 'response_code': 0, 'verbose_msg': '成功'}
+
+```
+
+#### IP信誉查询
+
+#### 文件上传分析
+
 ## Base.py
 
 ### Base家族

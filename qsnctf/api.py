@@ -124,3 +124,53 @@ class DingTalk:
         }
         data = json.dumps(data, ensure_ascii=True).encode("utf-8")
         requests.post(self.url, data=data, headers=self.headers)
+
+
+class ThreatBook:
+    def __init__(self, api_key):
+        self.key = api_key
+
+    def ip_reputation(self, ip):
+        api = "https://api.threatbook.cn/v3/scene/ip_reputation"
+        data = {
+            'apikey': self.key,
+            'resource': ip,
+            'lang': 'zh'
+        }
+        q = requests.post(url=api, data=data)
+        """ 引用
+        q_data = json.loads(q.text)
+        if q_data['response_code'] == 0:
+            data = q_data['data']
+            IP_info = data[IP]
+            severity = IP_info['severity']  # 威胁等级
+            IP_judg = IP_info['judgments']
+            if len(IP_judg) != 1:
+                tags = ""
+                for tag in IP_judg:
+                    tags = tags+tag+","
+                tags = tags[:-1]
+            else:
+                tags = IP_judg[0]  # IP标签
+            basic = IP_info['basic']
+            carrier = basic['carrier'] # 运营商
+            location = basic['location']
+            country = location['country']  # 国家
+            province = location['province']  # 省
+            city = location['city']  # 城市
+            lng = location['lng']  # 经度
+            lat = location['lat']  # 纬度
+            scene = IP_info['scene']  # 应用场景
+            confidence_level = IP_info['confidence_level']  # 可信度
+            is_malicious = IP_info['is_malicious']  # 是否为恶意
+            update_time = IP_info['update_time']  # 更新时间
+            tags_classes = IP_info['tags_classes']
+            if len(tags_classes) != 1:
+                tagss = ""
+                for tagsss in tags_classes:
+                    tagss = tagss + tagsss + ","
+                tagss = tagss[:-1]  # 团伙标签
+            else:
+                tagss = "空"
+        """
+        return q.json()

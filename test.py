@@ -1,5 +1,5 @@
 from qsnctf import *
 
-
-a = WebShellCracking('http://localhost/shell.php', threadline=50,mode="GET")
-print(a.results)
+tb = ThreatBook('***')
+a = tb.ip_reputation('127.0.0.1')
+print(a)
