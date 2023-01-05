@@ -115,18 +115,19 @@ FUNCTIONS
 
 | Core values Encryption and decryption | Text reverses | URL encryption and decryption | Bit XOR | Text Reverse (Step 2) |
 | :-----------------------------------: | :-----------: | :---------------------------: | :-----: | --------------------- |
-|    Text Reverse (custom step size)    | Get the UUID  |                               |         |                       |
+|    Text Reverse (custom step size)    | Get the UUID  | ord to string|      String to ord   |    String splitting                   |
 
 ### API
 
 | Quipqiup word frequency analysis | Feishu Webhook | DingTalk |
 | :------------------------------: | -------------- | -------- |
 
+
 ### WEB
 
-| Directory scanning | Website survival detection |
-| :----------------: | -------------------------- |
-
+|   Directory scanning   | Website survival detection |   Take the title of the website    | Subdomain scanning | Take the site description |
+| :----------: | :----------: | :-------------: | :--------: | :--------: |
+| Take the website keyword |  Take the website ICP   | Take the address of the website A label | Take the site comment |            |
 
 
 # Specific use
