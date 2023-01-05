@@ -52,7 +52,7 @@ def string_reverse_step(string, step):
     lst = [c for c in string]
     result = ''
     for i in range(0, len(lst), step):
-        result += ''.join(lst[i:i+step][::-1])
+        result += ''.join(lst[i:i + step][::-1])
     return result
 
 
@@ -133,5 +133,21 @@ def chr_str_to_ord_str(chr_str):
     r_text = ''
     char = string_split(chr_str)
     for chars in char:
-        r_text += str(chr_to_ord(chars))+","
+        r_text += str(chr_to_ord(chars)) + ","
     return r_text[:-1]
+
+
+def search_flag(text, flag_prefix='flag|qsnctf|ctf'):
+    """
+    :param text: search string
+    :param flag_prefix: flag prefix eg: flag|qsnctf|ctf
+    :return: flag{xxxxxxx}
+    """
+    # pattern = f'({flag_prefix})' + r'\{[\w]+\}'
+    pattern = r'(flag|qsnctf|ctf)\{.+\}'
+    match = re.search(pattern, text)
+    if match:
+        result = match.group(0)
+        return result
+    else:
+        return False

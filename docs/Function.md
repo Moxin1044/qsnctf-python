@@ -982,6 +982,25 @@ a = ord_str_to_str('abc')
 print(a)  # 97,98,99
 ```
 
+##### search_flag
+
+| **函数名**  | **返回类型** |   **位置**   |            **说明**             |
+| :---------: | :----------: | :----------: | :-----------------------------: |
+| search_flag |    string    |   misc.py    |        通过正则查找flag         |
+| **参数名**  | **是否可空** | **传参类型** |            **说明**             |
+|    text     |    False     |    string    |       疑似包含flag的内容        |
+| flag_prefix |     True     |    string    | Flag前缀，格式flag\|qsnctf\|ctf |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+
+a = search_flag('hello, i will give you flag flag{qsnctf-12345}')
+print(a) # flag{qsnctf-12345}
+```
+
 ## Crypto.py
 
 ### 密码学
