@@ -9,8 +9,9 @@ from bs4 import BeautifulSoup
 from qsnctf.auxiliary import read_file_to_list, is_http_or_https_url, normalize_url
 
 
-def get_url_title(url):
+def get_url_title(url, cookies=''):
     """
+    :param cookies: cookies
     :param url: get url
     :return:  url title
     """
@@ -18,7 +19,7 @@ def get_url_title(url):
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0",
         "Accept": "*/*", "Accept-Language": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
         "Accept-Encoding": "gzip, deflate", "Content-Type": "application/x-www-form-urlencoded",
-        "Referer": f"{url}",
+        "Referer": f"{url}", "Cookie": f"{cookies}",
         "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
         "Te": "trailers", "Connection": "close"}
     requests.packages.urllib3.disable_warnings()
@@ -36,8 +37,9 @@ def get_url_title(url):
     return title
 
 
-def get_url_description(url):
+def get_url_description(url, cookies=''):
     """
+    :param cookies: cookie
     :param url: get url
     :return:  url description
     """
@@ -45,7 +47,7 @@ def get_url_description(url):
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0",
         "Accept": "*/*", "Accept-Language": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
         "Accept-Encoding": "gzip, deflate", "Content-Type": "application/x-www-form-urlencoded",
-        "Referer": f"{url}",
+        "Referer": f"{url}", "Cookie": f"{cookies}",
         "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
         "Te": "trailers", "Connection": "close"}
     requests.packages.urllib3.disable_warnings()
@@ -62,8 +64,9 @@ def get_url_description(url):
     return description
 
 
-def get_url_keywords(url):
+def get_url_keywords(url, cookies=''):
     """
+    :param cookies: cookie
     :param url: get url
     :return:  url keywords
     """
@@ -71,7 +74,7 @@ def get_url_keywords(url):
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0",
         "Accept": "*/*", "Accept-Language": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
         "Accept-Encoding": "gzip, deflate", "Content-Type": "application/x-www-form-urlencoded",
-        "Referer": f"{url}",
+        "Referer": f"{url}", "Cookie": f"{cookies}",
         "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
         "Te": "trailers", "Connection": "close"}
     requests.packages.urllib3.disable_warnings()
@@ -88,8 +91,9 @@ def get_url_keywords(url):
     return keywords
 
 
-def get_url_ICP(url):
+def get_url_ICP(url, cookies=""):
     """
+    :param cookies: cookie
     :param url: get url
     :return:  url ICP
     """
@@ -97,7 +101,7 @@ def get_url_ICP(url):
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0",
         "Accept": "*/*", "Accept-Language": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
         "Accept-Encoding": "gzip, deflate", "Content-Type": "application/x-www-form-urlencoded",
-        "Referer": f"{url}",
+        "Referer": f"{url}", "Cookie": f"{cookies}",
         "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
         "Te": "trailers", "Connection": "close"}
     requests.packages.urllib3.disable_warnings()
@@ -114,8 +118,9 @@ def get_url_ICP(url):
     return icp.lstrip()
 
 
-def get_url_a_href(url):
+def get_url_a_href(url, cookies=""):
     """
+    :param cookies: cookie
     :param url: get url
     :return:  url a_href list
     """
@@ -123,7 +128,7 @@ def get_url_a_href(url):
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0",
         "Accept": "*/*", "Accept-Language": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
         "Accept-Encoding": "gzip, deflate", "Content-Type": "application/x-www-form-urlencoded",
-        "Referer": f"{url}",
+        "Referer": f"{url}", "Cookie": f"{cookies}",
         "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
         "Te": "trailers", "Connection": "close"}
     requests.packages.urllib3.disable_warnings()
@@ -146,7 +151,7 @@ def get_url_a_href(url):
 
 
 class DirScan:
-    def __init__(self, url, threadline=10, sleep_time=0, dirlist=None, return_code=None, echo=False, wait=True):
+    def __init__(self, url, threadline=10, sleep_time=0, dirlist=None, return_code=None, echo=False, wait=True, cookies=''):
         """
         :param url: Sans URL
         :param threadline: Thread line
@@ -155,7 +160,9 @@ class DirScan:
         :param return_code: return code
         :param echo: print scan result
         :param wait: Whether to wait for the process to end
+        :param cookies: cookie
         """
+        self.cookies = cookies
         self.q = None
         self.print_list = echo
         self.wait = wait
@@ -193,7 +200,7 @@ class DirScan:
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0",
                 "Accept": "*/*", "Accept-Language": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
                 "Accept-Encoding": "gzip, deflate", "Content-Type": "application/x-www-form-urlencoded",
-                "Referer": f"{self.url}{path}",
+                "Referer": f"{self.url}{path}", "Cookie": f"{self.cookies}",
                 "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
                 "Te": "trailers", "Connection": "close"}
             response = requests.get(self.url + path, headers=browser, verify=False)
@@ -222,7 +229,7 @@ class DirScan:
 
 class UrlScan:
     # 网页存活扫描
-    def __init__(self, url_list, threadline=10, sleep_time=0, return_code=None, echo=False, wait=True):
+    def __init__(self, url_list, threadline=10, sleep_time=0, return_code=None, echo=False, wait=True, cookies=''):
         """
         :param url_list: Sans URL
         :param threadline: Thread line
@@ -230,7 +237,9 @@ class UrlScan:
         :param return_code: return code
         :param echo: print scan result
         :param wait: Whether to wait for the process to end
+        :param cookies: cookie
         """
+        self.cookies = cookies
         self.q = None
         self.print_list = echo
         self.wait = wait
@@ -255,7 +264,7 @@ class UrlScan:
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0",
                 "Accept": "*/*", "Accept-Language": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
                 "Accept-Encoding": "gzip, deflate", "Content-Type": "application/x-www-form-urlencoded",
-                "Referer": f"{url}",
+                "Referer": f"{url}", "Cookie": f"{self.cookies}",
                 "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
                 "Te": "trailers", "Connection": "close"}
             response = requests.get(url, headers=browser, verify=False)
