@@ -369,6 +369,9 @@ class GoCQHttp:
         self.auth = auth
         self.Authorization = authorization
         if auth:
-            pass
+            self.headers = {
+                "Authorization": self.Authorization
+            }
         else:
-            pass
+            self.headers = ""
+            
