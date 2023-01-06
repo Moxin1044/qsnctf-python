@@ -120,7 +120,7 @@ FUNCTIONS
 
 ### API
 
-| Quipqiup word frequency analysis | Feishu Webhook | DingTalk || 微步在线 | FOFA |
+| Quipqiup word frequency analysis | Feishu Webhook | DingTalk | 微步在线 | FOFA |
 | :--------------: | :---------: | -------- | -------- | ---- |
 |    大圣云沙箱    |  零零信安   |          |          |      |
 
