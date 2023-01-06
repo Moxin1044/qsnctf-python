@@ -363,3 +363,12 @@ class ZeroZeon:
         return response.json()
 
 
+class GoCQHttp:
+    def __init__(self, url, auth=False, authorization=''):
+        self.url = url
+        self.auth = auth
+        self.Authorization = authorization
+        if auth:
+            pass
+        else:
+            pass
