@@ -2172,6 +2172,107 @@ b = rot18('dfapgs7577')
 print(b) # qsnctf2022
 ```
 
+
+#### Gossip password
+
+##### eight_diagrams_encrypt
+
+|   **Function name**    |   **Return type**   |    **location**    |           **illustrate**           |
+| :--------------------: | :-----------------: | :----------------: | :--------------------------------: |
+| eight_diagrams_encrypt |       string        |     crypto.py      |     Gossip password encryption     |
+| **The parameter name** | **Nullable or not** | **Parameter type** |           **illustrate**           |
+|          text          |        False        |       string       | Content that needs to be encrypted |
+
+##### eight_diagrams_decrypt
+
+|   **Function name**    |   **Return type**   |    **location**    |       **illustrate**       |
+| :--------------------: | :-----------------: | :----------------: | :------------------------: |
+| eight_diagrams_decrypt |       string        |     crypto.py      | Gossip password decryption |
+| **The parameter name** | **Nullable or not** | **Parameter type** |       **illustrate**       |
+|          text          |        False        |       string       | What needs to be decrypted |
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+a = eight_diagrams_encrypt('qsnctf')
+print(a)  # 正巽震~正巽兑~正离巽~正艮兑~正巽艮~正艮巽~
+a = eight_diagrams_decrypt('正巽震~正巽兑~正离巽~正艮兑~正巽艮~正艮巽~')
+print(a)  # qsnctf
+```
+
+#### Etbash code
+
+##### atbash_cipher
+
+|   **Function name**    |   **Return type**   |    **location**    |                 **illustrate**                  |
+| :--------------------: | :-----------------: | :----------------: | :---------------------------------------------: |
+|     atbash_cipher      |       string        |     crypto.py      |                   Etbash code                   |
+| **The parameter name** | **Nullable or not** | **Parameter type** |                 **illustrate**                  |
+|          text          |        False        |       string       | Content that needs to be encrypted or decrypted |
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+
+a = atbash_cipher('qsnctf.com')
+print(a) # jhmxgu.xln
+a = atbash_cipher('jhmxgu.xln')
+print(a) # qsnctf.com
+
+```
+
+#### Morse cipher encryption
+
+##### morse_encrypt
+
+|   **Function name**    |   **Return type**   |    **location**    |                      **illustrate**                      |
+| :--------------------: | :-----------------: | :----------------: | :------------------------------------------------------: |
+|     morse_encrypt      |       string        |     crypto.py      |                 Morse cipher encryption                  |
+| **The parameter name** | **Nullable or not** | **Parameter type** |                      **illustrate**                      |
+|        message         |        False        |       string       |            Content that needs to be encrypted            |
+|         split          |        True         |       string       | The delimiter (the default is a space) can be set to "/" |
+|         point          |        True         |       string       |        Click the "" used to replace Morse code."         |
+|          bar           |        True         |       string       |  horizontal "-" used as a replacement for Morse cipher   |
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+a = morse_encrypt('QSNCTF','/')
+print(a) # --.-/.../-./-.-./-/..-.
+```
+
+#### Morse code decryption
+
+##### morse_decrypt
+
+|   **Function name**    |   **Return type**   |    **location**    |                      **illustrate**                      |
+| :--------------------: | :-----------------: | :----------------: | :------------------------------------------------------: |
+|     morse_decrypt      |       string        |     crypto.py      |                  Morse code decryption                   |
+| **The parameter name** | **Nullable or not** | **Parameter type** |                      **illustrate**                      |
+|         cipher         |        False        |       string       |                What needs to be decrypted                |
+|         split          |        True         |       string       | The delimiter (the default is a space) can be set to "/" |
+|         point          |        True         |       string       |        Click the "" used to replace Morse code."         |
+|          bar           |        True         |       string       |  horizontal "-" used as a replacement for Morse cipher   |
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+b = morse_decrypt('..-./---/.-/.-.-/./--.-','/', '-', '.')
+print(b) # QSNCTF
+```
+
+
+
+
+
 ### Hash
 
 #### MD5
