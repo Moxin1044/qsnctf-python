@@ -1577,7 +1577,41 @@ a = qwerty_decode('qwer')
 print(a) # abcd
 ```
 
+#### HTML编码
 
+##### html_encode
+
+| **函数名**  | **返回类型** |   **位置**   |    **说明**    |
+| :---------: | :----------: | :----------: | :------------: |
+| html_encode |    string    |  crypto.py   |    HTML编码    |
+| **参数名**  | **是否可空** | **传参类型** |    **说明**    |
+|   string    |    False     |    string    | 需要加密的内容 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+a = html_encode('<script>')
+print(a)
+```
+
+##### html_decode
+
+| **函数名**  | **返回类型** |   **位置**   |    **说明**    |
+| :---------: | :----------: | :----------: | :------------: |
+| html_decode |    string    |  crypto.py   |    HTML编码    |
+| **参数名**  | **是否可空** | **传参类型** |    **说明**    |
+|   string    |    False     |    string    | 需要解密的内容 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+b = html_decode('&lt;script&gt;')
+print(b)
+```
 
 ### 字符串操作
 

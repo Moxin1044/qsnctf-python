@@ -8,6 +8,7 @@ import execjs  # PyExecJS
 from qsnctf.auxiliary import js_from_file
 import urllib.parse
 import re
+import html
 import uuid
 
 
@@ -243,3 +244,11 @@ def qwerty_decode(source_text):
     except Exception as e:
         return '解码失败'
     return result_text.strip()
+
+
+def html_encode(string):
+    return html.escape(string)
+
+
+def html_decode(string):
+    return html.unescape(string)

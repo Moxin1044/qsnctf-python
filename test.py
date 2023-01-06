@@ -1,6 +1,6 @@
 from qsnctf import *
 
-a = baijiaxing_encode('abcde')
+a = html_encode('<script>')
 print(a)
-b = baijiaxing_decode('褚卫蒋沈韩')
+b = html_decode('&lt;script&gt;')
 print(b)
