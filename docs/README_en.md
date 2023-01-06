@@ -1414,6 +1414,41 @@ a = base85_decode('>7A10u#x4tv_n)z')
 print(a) # 青少年CTF
 ```
 
+#### Custom Base64
+
+##### base64_encode_custom
+
+|   **Function name**    |   **Return type**   |    **location**    |                        **illustrate**                        |
+| :--------------------: | :-----------------: | :----------------: | :----------------------------------------------------------: |
+|  base64_encode_custom  |       string        |      base.py       |             Base64 encoding (supported Chinese)              |
+| **The parameter name** | **Nullable or not** | **Parameter type** |                        **illustrate**                        |
+|          text          |        False        |       string       |                   What needs to be encoded                   |
+|      custom_table      |        False        |       string       |                        Encoding table                        |
+|        encoding        |        True         |       string       | The encoding when decoding text, the default value is UTF-8  |
+|        decoding        |        True         |       string       | The encoding when exporting text, the default value is UTF-8 |
+
+##### base64_decode_custom
+
+|   **Function name**    |   **Return type**   |    **location**    |                        **illustrate**                        |
+| :--------------------: | :-----------------: | :----------------: | :----------------------------------------------------------: |
+|  base64_decode_custom  |       string        |      base.py       |                       Base64 decoding                        |
+| **The parameter name** | **Nullable or not** | **Parameter type** |                        **illustrate**                        |
+|          text          |        False        |       string       |                   What needs to be decoded                   |
+|      custom_table      |        False        |       string       |                        Encoding table                        |
+|        encoding        |        True         |       string       | The encoding when decoding text, the default value is UTF-8  |
+|        decoding        |        True         |       string       | The encoding when exporting text, the default value is UTF-8 |
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+data = 'SGVsbG8sIFdvcmxkIQ=='
+custom_table = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-'
+a = base64_encode_custom(data, custom_table)
+print(a)
+```
+
 #### Base64
 
 ##### base64_encode
@@ -1671,7 +1706,71 @@ print(a) # %E9%9D%92%E5%B0%91%E5%B9%B4CTF%3D%E4%B8%AD%E5%AD%A6%E7%94%9FCTF
 a = url_decode('%E9%9D%92%E5%B0%91%E5%B9%B4CTF%3D%E4%B8%AD%E5%AD%A6%E7%94%9FCTF')
 print(a) # 青少年CTF=中学生CTF
 ```
- 
+ #### Hundred family name code
+
+##### baijiaxing_encode
+
+|   **Function name**    |   **Return type**   |    **location**    |      **illustrate**      |
+| :--------------------: | :-----------------: | :----------------: | :----------------------: |
+|   baijiaxing_encode    |       string        |      misc.py       | Hundred family name code |
+| **The parameter name** | **Nullable or not** | **Parameter type** |      **illustrate**      |
+|      source_text       |        False        |       string       | What needs to be encoded |
+
+##### baijiaxing_decode
+
+|   **Function name**    |   **Return type**   |    **location**    |        **illustrate**        |
+| :--------------------: | :-----------------: | :----------------: | :--------------------------: |
+|   baijiaxing_decode    |       string        |      misc.py       | Hundred family names decoded |
+| **The parameter name** | **Nullable or not** | **Parameter type** |        **illustrate**        |
+|      source_text       |        False        |       string       |   What needs to be decoded   |
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+a = baijiaxing_encode('abcde')
+print(a) # 褚卫蒋沈韩
+b = baijiaxing_decode('褚卫蒋沈韩')
+print(b) # abcde
+```
+
+#### Qwerty coded
+
+##### qwerty_encode
+
+|   **Function name**    |   **Return type**   |    **location**    |           **illustrate**           |
+| :--------------------: | :-----------------: | :----------------: | :--------------------------------: |
+|     qwerty_encode      |       string        |     crypto.py      |          Qwerty password           |
+| **The parameter name** | **Nullable or not** | **Parameter type** |           **illustrate**           |
+|      source_text       |        False        |       string       | Content that needs to be encrypted |
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+a = qwerty_encode('abcd')
+print(a) # qwer
+```
+
+##### qwerty_decode
+
+|   **Function name**    |   **Return type**   |    **location**    |       **illustrate**       |
+| :--------------------: | :-----------------: | :----------------: | :------------------------: |
+|     qwerty_decode      |       string        |     crypto.py      |      Qwerty password       |
+| **The parameter name** | **Nullable or not** | **Parameter type** |       **illustrate**       |
+|      source_text       |        False        |       string       | What needs to be decrypted |
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+a = qwerty_decode('qwer')
+print(a) # abcd
+```
+
 
 ### String operations
 
