@@ -268,3 +268,19 @@ def jsfuck_decode(source_text):
     file_path = os.path.join(package_path, 'plugin', 'js', 'jsfuck_decode.js')
     content = execjs.compile(js_from_file(file_path))
     return content.call("decode", source_text)
+
+
+def aaencode(source_text):
+    # aaencode
+    package_path = os.path.abspath(os.path.dirname(__file__))
+    file_path = os.path.join(package_path, 'plugin', 'js', 'aaencode.js')
+    content = execjs.compile(js_from_file(file_path))
+    return content.call("aaencode", source_text)
+
+
+def aadecode(source_text):
+    # aadecode
+    package_path = os.path.abspath(os.path.dirname(__file__))
+    file_path = os.path.join(package_path, 'plugin', 'js', 'aaencode.js')
+    content = execjs.compile(js_from_file(file_path))
+    return content.call("aadecode", source_text)
