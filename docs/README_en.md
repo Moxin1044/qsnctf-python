@@ -120,7 +120,9 @@ FUNCTIONS
 
 ### API
 
-| Quipqiup word frequency analysis | Feishu Webhook | DingTalk |
+| Quipqiup word frequency analysis | Feishu Webhook | DingTalk || 微步在线 | FOFA |
+| :--------------: | :---------: | -------- | -------- | ---- |
+|    大圣云沙箱    |  零零信安   |          |          |      |
 | :------------------------------: | -------------- | -------- |
 
 
@@ -128,7 +130,9 @@ FUNCTIONS
 
 |   Directory scanning   | Website survival detection |   Take the title of the website    | Subdomain scanning | Take the site description |
 | :----------: | :----------: | :-------------: | :--------: | :--------: |
-| Take the website keyword |  Take the website ICP   | Take the address of the website A label | Take the site comment |            |
+| Take the website keyword |  Take the website ICP   | Take the address of the website A label | Take the site comment |     Take the website response time       |
+|  Take the website ICO   | POST Webshell |  GET Webshell   | exec-shell |   eval-shell   |
+| WebShell blast |               |                 |            |                |
 
 
 # Specific use
