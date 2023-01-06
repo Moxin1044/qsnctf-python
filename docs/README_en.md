@@ -485,6 +485,224 @@ print(a)  # ['baidutongji']
 
 **illustrate：No comment is a comment node found in the HTML page**
 
+
+#### Take the website response time
+
+##### get_url_time
+
+|   **Function name**    |   **Return type**   |    **location**    |         **illustrate**         |
+| :--------------------: | :-----------------: | :----------------: | :----------------------------: |
+|      get_url_time      |       string        |       web.py       | Take the website response time |
+| **The parameter name** | **Nullable or not** | **Parameter type** |         **illustrate**         |
+|          url           |        False        |       string       |        Website address         |
+
+**illustrate：Please pay attention to the rules of the contest for use.**
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+
+a = get_url_time('https://www.qsnctf.com/')
+print(a)  # ['0.0155']
+```
+
+#### Take the ICO of the website
+
+##### get_url_ico
+
+|   **Function name**    |   **Return type**   |    **location**    |       **illustrate**        |
+| :--------------------: | :-----------------: | :----------------: | :-------------------------: |
+|      get_url_ico       |       string        |       web.py       | Take the ICO of the website |
+| **The parameter name** | **Nullable or not** | **Parameter type** |       **illustrate**        |
+|          url           |        False        |       string       |       Website address       |
+
+**illustrate：Please pay attention to the rules of the contest for use.**
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+
+a = get_url_ico('https://www.qsnctf.com/')
+print(a)  # ['/ico.ico']
+```
+
+### WebShell operations
+
+**This feature is for CTF and its own website use only and should not be used illegally.**
+
+#### POST to test the WebShell password
+
+##### get_webshell_post
+
+|   **Function name**    |   **Return type**   |    **location**    | **illustrate** |
+| :--------------------: | :-----------------: | :----------------: | :------------: |
+|   get_webshell_post    |       string        |       web.py       | Test Webshell  |
+| **The parameter name** | **Nullable or not** | **Parameter type** | **illustrate** |
+|          url           |        False        |       string       | Shell address  |
+|          key           |        False        |       string       |      key       |
+
+**illustrate：Please pay attention to the rules of the contest for use.**
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+
+a = get_webshell_post('http://localhost/shell.php', 'cmd')
+print(a) # True
+```
+
+#### GET method to test WebShell password
+
+##### get_webshell_get
+
+|   **Function name**    |   **Return type**   |    **location**    | **illustrate** |
+| :--------------------: | :-----------------: | :----------------: | :------------: |
+|    get_webshell_get    |       string        |       web.py       | Test Webshell  |
+| **The parameter name** | **Nullable or not** | **Parameter type** | **illustrate** |
+|          url           |        False        |       string       | Shell address  |
+|          key           |        False        |       string       |      key       |
+
+**illustrate：Please pay attention to the rules of the contest for use.**
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+
+a = get_webshell_get('http://localhost/shell.php', 'cmd')
+print(a) # True
+```
+
+#### exec-webshell command execution (POST)
+
+##### get_exec_webshell_post
+
+|   **Function name**    |   **Return type**   |    **location**    |        **illustrate**        |
+| :--------------------: | :-----------------: | :----------------: | :--------------------------: |
+| get_exec_webshell_post |       string        |       web.py       | The exec command is executed |
+| **The parameter name** | **Nullable or not** | **Parameter type** |        **illustrate**        |
+|          url           |        False        |       string       |        Shell address         |
+|          key           |        False        |       string       |             key              |
+|         shell          |        Fasle        |       string       |     The command executed     |
+
+**illustrate：Please pay attention to the rules of the contest for use.**
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+
+a = get_exec_webshell_post('http://localhost/shell.php', 'cmd', 'whoami')
+print(a) # root
+```
+
+#### exec-webshell command execution (get)
+
+##### get_exec_webshell_get
+
+|   **Function name**    |   **Return type**   |    **location**    |        **illustrate**        |
+| :--------------------: | :-----------------: | :----------------: | :--------------------------: |
+| get_exec_webshell_get  |       string        |       web.py       | The exec command is executed |
+| **The parameter name** | **Nullable or not** | **Parameter type** |        **illustrate**        |
+|          url           |        False        |       string       |        Shell address         |
+|          key           |        False        |       string       |             key              |
+|         shell          |        Fasle        |       string       |     The command executed     |
+
+**illustrate：Please pay attention to the rules of the contest for use.**
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+
+a = get_exec_webshell_get('http://localhost/shell.php', 'cmd', 'whoami')
+print(a) # root
+```
+
+#### eval-webshell code execution (get)
+
+##### get_eval_webshell_get
+
+|   **Function name**    |   **Return type**   |    **location**    |   **illustrate**    |
+| :--------------------: | :-----------------: | :----------------: | :-----------------: |
+| get_eval_webshell_get  |       string        |       web.py       | EVAL code execution |
+| **The parameter name** | **Nullable or not** | **Parameter type** |   **illustrate**    |
+|          url           |        False        |       string       |    Shell address    |
+|          key           |        False        |       string       |         key         |
+|         shell          |        Fasle        |       string       |  The executed code  |
+
+**illustrate：Please pay attention to the rules of the contest for use.**
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+
+a = get_eval_webshell_get('http://localhost/shell.php', 'cmd', 'print("123");')
+print(a) # 123
+```
+
+#### Eval-Webshell Code Execution (POST)
+
+##### get_eval_webshell_post
+
+|   **Function name**    |   **Return type**   |    **location**    |   **illustrate**    |
+| :--------------------: | :-----------------: | :----------------: | :-----------------: |
+| get_eval_webshell_post |       string        |       web.py       | EVAL code execution |
+| **The parameter name** | **Nullable or not** | **Parameter type** |   **illustrate**    |
+|          url           |        False        |       string       |    Shell address    |
+|          key           |        False        |       string       |         key         |
+|         shell          |        Fasle        |       string       |  The executed code  |
+
+**illustrate：Please pay attention to the rules of the contest for use.**
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+
+a = get_eval_webshell_post('http://localhost/shell.php', 'cmd', 'print("123");')
+print(a) # 123
+```
+
+#### WebShell blast
+
+##### WebShellCracking
+
+|   **Function name**    |   **Return type**   |    **location**    |        **illustrate**        |
+| :--------------------: | :-----------------: | :----------------: | :--------------------------: |
+|    WebShellCracking    |       string        |       web.py       |  WebShell password blasting  |
+| **The parameter name** | **Nullable or not** | **Parameter type** |        **illustrate**        |
+|          url           |        False        |       string       |        Shell address         |
+|       threadline       |        False        |        int         |    The number of threads     |
+|       sleep_time       |        Fasle        |        int         |        Access latency        |
+|        passlist        |        False        |        list        | A list of possible passwords |
+|          mode          |        False        |       string       | Gate Auster defaults to Post |
+
+**illustrate：Please pay attention to the rules of the contest for use.**
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+
+a = WebShellCracking('http://localhost/shell.php', threadline=50,mode="GET")
+print(a.results) # cmd
+```
+
+
 ## API.py
 
 ### quipqiup
