@@ -1,0 +1,10 @@
+# default ignore
+.lightly
+.c_bin
+.classes
+logs
+*.log
+node_modules
+dist
+dist-ssr
+*.local
