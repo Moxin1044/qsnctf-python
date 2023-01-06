@@ -686,4 +686,3 @@ class WebShellCracking:
         self.q.join()  # Wait for thread to finish
         # 如果不等待，也可以直接获取对象中的results、results_code属性
 
-

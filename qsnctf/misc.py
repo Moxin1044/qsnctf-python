@@ -218,7 +218,7 @@ def qwerty_encode(source_text):
             else:
                 result_text = result_text + ' '
         else:
-            return 'Qwerty只能对字母加密!'
+            return 'Qwerty只能对字母编码!'
     return result_text
 
 
