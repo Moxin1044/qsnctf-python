@@ -95,12 +95,13 @@ FUNCTIONS
 | base16 | base32 | base36 | base58 | base62  |
 | :----: | :----: | :----: | :----: | :-----: |
 | base64 | base85 | base91 | base92 | base100 |
+| Custom base64 |        |        |        |         |
 
 ### CRYPTO
 
 | Caesar Code | Caesar blasts | Bacon password | ROT5 | ROT13 |
 | :---------: | :-----------: | :------------: | :--: | :---: |
-|    ROT18    |               |                |      |       |
+|    ROT18    |      Gossip password         |    Etbash code            |   Morse Code (customizable)   |    Qwerty password   |
 
 ### MD5
 
@@ -116,13 +117,13 @@ FUNCTIONS
 | Core values Encryption and decryption | Text reverses | URL encryption and decryption | Bit XOR | Text Reverse (Step 2) |
 | :-----------------------------------: | :-----------: | :---------------------------: | :-----: | --------------------- |
 |    Text Reverse (custom step size)    | Get the UUID  | ord to string|      String to ord   |    String splitting                   |
-| Flag looking |  | |  |  |
+| Flag looking |  Hundred family name code| Qwerty coded|  |  |
 
 ### API
 
-| Quipqiup word frequency analysis | Feishu Webhook | DingTalk | 微步在线 | FOFA |
+| Quipqiup word frequency analysis | Feishu Webhook | DingTalk | Microstep online | FOFA |
 | :--------------: | :---------: | -------- | -------- | ---- |
-|    大圣云沙箱    |  零零信安   |          |          |      |
+|    Great Saint Cloud Sandbox    |  Zero Zero Trust   |          |          |      |
 
 ### WEB
 
