@@ -1,6 +1,0 @@
-PyExecJS
-pybase62
-base58
-requests
-bs4
-urllib3
