@@ -8,3 +8,6 @@ class Ui_Main(object):
         Main.setMaximumSize(QtCore.QSize(16777215, 16777215))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("favicon.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        Main.setWindowIcon(icon)
+        Main.setStyleSheet("")
+        Main.setIconSize(QtCore.QSize(30, 30))
