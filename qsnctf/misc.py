@@ -252,3 +252,19 @@ def html_encode(string):
 
 def html_decode(string):
     return html.unescape(string)
+
+
+def jsfuck_encode(source_text):
+    # jsfuck_encode
+    package_path = os.path.abspath(os.path.dirname(__file__))
+    file_path = os.path.join(package_path, 'plugin', 'js', 'jsfuck_encode.js')
+    content = execjs.compile(js_from_file(file_path))
+    return content.call("JSFuck", source_text)
+
+
+def jsfuck_decode(source_text):
+    # jsfuck_decode
+    package_path = os.path.abspath(os.path.dirname(__file__))
+    file_path = os.path.join(package_path, 'plugin', 'js', 'jsfuck_decode.js')
+    content = execjs.compile(js_from_file(file_path))
+    return content.call("decode", source_text)
