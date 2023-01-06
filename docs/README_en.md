@@ -780,6 +780,508 @@ from qsnctf import *
 DingTalk('青少年CTF', '你好，我是末心', 'xxxx-xxxxx-xxxx-xxxx-xxxxx')
 ```
 
+### Microstep online
+
+#### class-ThreatBook
+
+##### ThreatBook
+
+|   **Function name**    |   **Return type**   |    **location**    |        **illustrate**        |
+| :--------------------: | :-----------------: | :----------------: | :--------------------------: |
+|       ThreatBook       |       object        |       api.py       |       Microstep online       |
+| **The parameter name** | **Nullable or not** | **Parameter type** |        **illustrate**        |
+|        api_key         |        False        |       string       | Microstepping online API Key |
+
+API Key gets the address：https://x.threatbook.com/v5/myApi
+
+**illustrate：This feature requires a network connection，Please pay attention to the rules of the contest for use.**
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+tb = ThreatBook('***') # 主要是配合下面的调用返回的一个对象
+```
+
+#### Microstep - IP reputation
+
+##### ip_reputation
+
+|   **Function name**    |   **Return type**   |    **location**    |             **illustrate**              |
+| :--------------------: | :-----------------: | :----------------: | :-------------------------------------: |
+|     ip_reputation      |        json         |       api.py       |        Microstep - IP reputation        |
+| **The parameter name** | **Nullable or not** | **Parameter type** |             **illustrate**              |
+|           ip           |        False        |       string       | The IP address that needs to be queried |
+
+**illustrate：This feature requires a network connection，Please pay attention to the rules of the contest for use.**
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+tb = ThreatBook('***')
+a = tb.ip_reputation('127.0.0.1')
+print(a)
+```
+
+```json
+{'data': {'127.0.0.1': {'severity': '无威胁', 'judgments': ['白名单', '保留地址'], 'tags_classes': [], 'basic': {'carrier': '', 'location': {'country': '', 'province': '', 'city': '', 'lng': '', 'lat': '', 'country_code': 'B1'}}, 'asn': {}, 'scene': '', 'confidence_level': '高', 'is_malicious': False, 'update_time': '2023-01-05 18:41:54'}}, 'response_code': 0, 'verbose_msg': '成功'}
+
+```
+
+#### File upload analysis
+
+##### file_upload
+
+|   **Function name**    |   **Return type**   |    **location**    |                      **illustrate**                       |
+| :--------------------: | :-----------------: | :----------------: | :-------------------------------------------------------: |
+|      file_upload       |        json         |       api.py       |     Microstep File Anti-Virus Engine detection report     |
+| **The parameter name** | **Nullable or not** | **Parameter type** |                      **illustrate**                       |
+|       file_path        |        False        |       string       |                  The path to the upload                   |
+|       file_name        |        False        |       string       |          The file name that needs to be uploaded          |
+|      sandbox_type      |        True         |       string       | Sandbox environment, win7_sp1_enx64_office2013 by default |
+
+Sandbox running environment: Users can specify the sandbox running environment of the file, optional environments include:
+
+- **Windows** 
+  - win7_sp1_enx64_office2013 
+  - win7_sp1_enx86_office2013 
+  - win7_sp1_enx86_office2010 
+  - win7_sp1_enx86_office2007 
+  - win7_sp1_enx86_office2003
+- **Linux** 
+  - ubuntu_1704_x64 
+  - centos_7_x64
+
+**illustrate：This feature requires a network connection，Please pay attention to the rules of the contest for use.**
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+tb = ThreatBook('***')
+a = tb.file_upload('./','1.exe')
+print(a)
+# {'data': {'sha256': '***', 'permalink': 'https://s.threatbook.cn/search?query=***&type=sha256'}, 'response_code': 0, 'verbose_msg': 'OK'}
+```
+
+#### Microstep File Anti-Virus Engine detection report
+
+##### file_report_multiengines
+
+|    **Function name**     |   **Return type**   |    **location**    |                  **illustrate**                   |
+| :----------------------: | :-----------------: | :----------------: | :-----------------------------------------------: |
+| file_report_multiengines |        json         |       api.py       | Microstep File Anti-Virus Engine detection report |
+|  **The parameter name**  | **Nullable or not** | **Parameter type** |                  **illustrate**                   |
+|          sha256          |        False        |       string       |                    File sha256                    |
+
+**illustrate：This feature requires a network connection，Please pay attention to the rules of the contest for use.**
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+tb = ThreatBook('***')
+a = tb.file_report_multiengines('******')
+print(a)
+# {'data': {'multiengines': {'threat_level': 'clean', 'total': 22, 'is_white': False, 'total2': 22, 'positives': 0, 'scan_date': '2023-01-05 19:04:42', 'scans': {'IKARUS': 'safe', 'vbwebshell': 'safe', 'Avast': 'safe', 'Avira': 'safe', 'Sophos': 'safe', 'K7': 'safe', 'Rising': 'safe', 'Kaspersky': 'safe', 'Panda': 'safe', 'Baidu-China': 'safe', 'NANO': 'safe', 'Antiy': 'safe', 'AVG': 'safe', 'Baidu': 'safe', 'DrWeb': 'safe', 'GDATA': 'safe', 'Microsoft': 'safe', 'Qihu360': 'safe', 'ESET': 'safe', 'ClamAV': 'safe', 'JiangMin': 'safe', 'Trustlook': 'safe'}}}, 'response_code': 0, 'verbose_msg': 'OK'}
+```
+
+#### Microstep file reports
+
+##### file_report
+
+|   **Function name**    |   **Return type**   |    **location**    |                      **illustrate**                       |
+| :--------------------: | :-----------------: | :----------------: | :-------------------------------------------------------: |
+|      file_report       |        json         |       api.py       |                  Microstep file reports                   |
+| **The parameter name** | **Nullable or not** | **Parameter type** |                      **illustrate**                       |
+|         sha256         |        False        |       string       |                        File sha256                        |
+|      sandbox_type      |        True         |       string       | Sandbox environment, win7_sp1_enx64_office2013 by default |
+
+ Sandbox running environment: Users can specify the sandbox running environment of the file, optional environments include:
+
+- **Windows** 
+  - win7_sp1_enx64_office2013 
+  - win7_sp1_enx86_office2013 
+  - win7_sp1_enx86_office2010 
+  - win7_sp1_enx86_office2007 
+  - win7_sp1_enx86_office2003
+- **Linux** 
+  - ubuntu_1704_x64 
+  - centos_7_x64
+
+**illustrate：This feature requires a network connection，Please pay attention to the rules of the contest for use.**
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+tb = ThreatBook('***')
+a = tb.file_report('******')
+print(a)
+
+```
+
+### FOFA
+
+#### class-FOFA
+
+##### FOFA
+
+|   **Function name**    |   **Return type**   |    **location**    |                   **illustrate**                    |
+| :--------------------: | :-----------------: | :----------------: | :-------------------------------------------------: |
+|          FOFA          |       object        |       api.py       | [FOFA_SDK](https://github.com/Moxin1044/pythonfofa) |
+| **The parameter name** | **Nullable or not** | **Parameter type** |                   **illustrate**                    |
+|         email          |        False        |       string       |                     FOFA Email                      |
+|          key           |        False        |       string       |                      FOFA Key                       |
+
+Key gets the address：https://fofa.info/
+
+**illustrate：This feature requires a network connection，Please pay attention to the rules of the contest for use.**
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+fofa = FOFA('***','xxxx') # 主要是配合下面的调用返回的一个对象
+```
+
+#### FOFA User Information
+
+##### userinfo
+
+|   **Function name**    |   **Return type**   |    **location**    | **illustrate** |
+| :--------------------: | :-----------------: | :----------------: | :------------: |
+|        userinfo        |        json         |       api.py       | FOFA 用户信息  |
+| **The parameter name** | **Nullable or not** | **Parameter type** | **illustrate** |
+
+**illustrate：This feature requires a network connection，Please pay attention to the rules of the contest for use.**
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+fofa = FOFA('***','xxxx')
+print(fofa.userinfo())
+```
+
+```json
+{
+  "error": false,
+  "email": "****@qq.com",
+  "username": "***",
+  "fcoin": 48,
+  "isvip": true,
+  "vip_level": 2,
+  "is_verified": false,
+  "avatar": "https://i.nosec.org/avatar/system/****",
+  "message": "",
+  "fofacli_ver": "4.0.3",
+  "fofa_server": true
+}
+```
+
+
+
+#### FOFA queries
+
+##### search
+
+|   **Function name**    |   **Return type**   |    **location**    |                        **illustrate**                        |
+| :--------------------: | :-----------------: | :----------------: | :----------------------------------------------------------: |
+|         search         |        json         |       api.py       |              The FOFA query interface is called              |
+| **The parameter name** | **Nullable or not** | **Parameter type** |                        **illustrate**                        |
+|       query_text       |        False        |       string       |             Support for FOFA advanced statements             |
+|         field          |        True         |       string       |                    Default host, ip, port                    |
+|          page          |        True         |        int         |                            Pages                             |
+|          size          |        True         |        int         |                  Number of queries per page                  |
+|          full          |        True         |      Boolean       | The default search is data within one year, and if you specify true, you can search all data |
+
+**illustrate：This feature requires a network connection，Please pay attention to the rules of the contest for use.**
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+fofa = FOFA('***','xxxx')
+print(fofa.search('title="bing"'))
+# field =  ['ip','port','title','icp']
+# fofa.search('domain="qq.com"',field=field,size=10)
+```
+
+```json
+{
+  "error": false,
+  "size": 8683,
+  "page": 1,
+  "mode": "extended",
+  "query": "title\u003d\"bing\"",
+  "results": [
+    [
+      "46.101.204.107",
+      "hotel-bing.hotels-rimini-it.com",
+      "80"
+    ],
+    [
+      "104.21.32.129",
+      "https://peapix.com",
+      "443"
+    ],
+    [
+      "193.8.37.83",
+      "https://www.thorsmindecamping.dk",
+      "443"
+    ]
+  ]
+}
+```
+
+#### FOFA statistical aggregation
+
+##### search_stats
+
+|   **Function name**    |   **Return type**   |    **location**    |                        **illustrate**                        |
+| :--------------------: | :-----------------: | :----------------: | :----------------------------------------------------------: |
+|      search_stats      |        json         |       api.py       |                 FOFA statistical aggregation                 |
+| **The parameter name** | **Nullable or not** | **Parameter type** |                        **illustrate**                        |
+|       query_text       |        False        |       string       | The statement that needs to be queried, that is, the query content entered |
+|         field          |        True         |       string       | Optional fields, default title, see Details[Appendix 2](https://fofa.info/api/stats/statistical) |
+
+**illustrate：This feature requires a network connection，Please pay attention to the rules of the contest for use.**
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+fofa = FOFA('***','xxxx')
+print(fofa.search_stats('ip="103.35.168.38"'))
+# field =  ['ip','port','title','icp']
+# fofa.search('domain="qq.com"',field=field,size=10)
+```
+
+```json
+{
+  "error": false,
+  "distinct": {
+    "ip": 1,
+    "title": 1
+  },
+  "aggs": {
+    "countries": [],
+    "title": [
+      {
+        "count": 1,
+        "name": "RouterOS router configuration page"
+      }
+    ]
+  },
+  "lastupdatetime": "2022-06-11 07:00:00"
+}
+```
+
+#### FOFA HOST aggregation
+
+##### search_host
+
+|   **Function name**    |   **Return type**   |    **location**    |      **illustrate**       |
+| :--------------------: | :-----------------: | :----------------: | :-----------------------: |
+|      search_host       |        json         |       api.py       |   FOFA HOST aggregation   |
+| **The parameter name** | **Nullable or not** | **Parameter type** |      **illustrate**       |
+|          host          |        False        |       string       |   Host name, usually IP   |
+|         detail         |        True         |      Boolean       | Displays the port details |
+
+**illustrate：This feature requires a network connection，Please pay attention to the rules of the contest for use.**
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+fofa = FOFA('***','xxxx')
+print(fofa.search_host('78.48.50.249'))
+```
+
+```json
+{
+  "error": false,
+  "host": "78.48.50.249",
+  "ip": "78.48.50.249",
+  "asn": 6805,
+  "org": "Telefonica Germany",
+  "country_name": "Germany",
+  "country_code": "DE",
+  "protocol": [
+    "http",
+    "sip",
+    "https"
+  ],
+  "port": [
+    8089,
+    5060,
+    7170,
+    80,
+    443
+  ],
+  "category": [
+    "CMS"
+  ],
+  "product": [
+    "Synology-WebStation"
+  ],
+  "update_time": "2022-12-29 05:00:00"
+}
+```
+
+### Great Saint Cloud Sandbox
+
+#### class-DaSheng
+
+##### DaSheng
+
+|   **Function name**    |   **Return type**   |    **location**    |                        **illustrate**                        |
+| :--------------------: | :-----------------: | :----------------: | :----------------------------------------------------------: |
+|        DaSheng         |       object        |       api.py       | [Great Saint Cloud Sandbox](https://sandbox.freebuf.com/cloudApi) |
+| **The parameter name** | **Nullable or not** | **Parameter type** |                        **illustrate**                        |
+|           id           |        False        |       string       |                          Client ID                           |
+|          key           |        False        |       string       |                        Client secret                         |
+
+Key gets the address：https://sandbox.freebuf.com/cloudApi
+
+**illustrate：This feature requires a network connection，Please pay attention to the rules of the contest for use.**
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+ds = DaSheng('***','xxxx') # 主要是配合下面的调用返回的一个对象
+```
+
+#### Token acquisition
+
+##### token
+
+|   **Function name**    |   **Return type**   |    **location**    |                        **illustrate**                        |
+| :--------------------: | :-----------------: | :----------------: | :----------------------------------------------------------: |
+|         token          |       string        |       api.py       | [Great Saint Cloud Sandbox](https://sandbox.freebuf.com/cloudApi)Token |
+| **The parameter name** | **Nullable or not** | **Parameter type** |                        **illustrate**                        |
+
+**Generally, not writing operations may not be useful**
+
+**illustrate：This feature requires a network connection，Please pay attention to the rules of the contest for use.**
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+ds = DaSheng('***','xxxx')
+print(ds.token())
+```
+
+#### File upload
+
+##### upload
+
+|   **Function name**    |   **Return type**   |    **location**    | **illustrate** |
+| :--------------------: | :-----------------: | :----------------: | :------------: |
+|         upload         |       object        |       api.py       | Sample upload  |
+| **The parameter name** | **Nullable or not** | **Parameter type** | **illustrate** |
+|        file_dir        |        False        |       string       |      path      |
+|       file_name        |        False        |       string       |    filename    |
+
+**Generally, not writing operations may not be useful**
+
+**illustrate：This feature requires a network connection，Please pay attention to the rules of the contest for use.**
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+ds = DaSheng('***','xxxx')
+print(ds.upload('路径','文件名'))
+```
+
+#### File upload
+
+##### upload
+
+|   **Function name**    |   **Return type**   |    **location**    | **illustrate** |
+| :--------------------: | :-----------------: | :----------------: | :------------: |
+|         upload         |       object        |       api.py       | Sample queries |
+| **The parameter name** | **Nullable or not** | **Parameter type** | **illustrate** |
+|          sha1          |        False        |       string       |   File sha1    |
+
+**Generally, not writing operations may not be useful**
+
+**illustrate：This feature requires a network connection，Please pay attention to the rules of the contest for use.**
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+ds = DaSheng('***','xxxx')
+print(ds.search('sha1'))
+```
+
+### Zero Zero Trust
+
+#### class-ZeroZeon
+
+##### ZeroZeon
+
+|   **Function name**    |   **Return type**   |    **location**    |           **illustrate**           |
+| :--------------------: | :-----------------: | :----------------: | :--------------------------------: |
+|        ZeroZeon        |       object        |       api.py       | [Zero Zero Trust](https://0.zone/) |
+| **The parameter name** | **Nullable or not** | **Parameter type** |           **illustrate**           |
+|          key           |        False        |       string       |              api_key               |
+
+Key gets the address：https://0.zone/plug-in-unit
+
+**illustrate：This feature requires a network connection，Please pay attention to the rules of the contest for use.**
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+zero = ZeroZeon('xxxx') # 主要是配合下面的调用返回的一个对象
+```
+
+#### Zero Zero Information Inquiry
+
+##### search
+
+|   **Function name**    |   **Return type**   |    **location**    |                        **illustrate**                        |
+| :--------------------: | :-----------------: | :----------------: | :----------------------------------------------------------: |
+|         search         |        json         |       api.py       | [Great Saint Cloud Sandbox](https://sandbox.freebuf.com/cloudApi)Token |
+| **The parameter name** | **Nullable or not** | **Parameter type** |                        **illustrate**                        |
+|         title          |        False        |       string       |       Query statements, which support advanced search        |
+
+**Generally, not writing operations may not be useful**
+
+**illustrate：This feature requires a network connection，Please pay attention to the rules of the contest for use.**
+
+##### Use examples
+
+```python
+from qsnctf import *
+
+zero = ZeroZeon('xxxx') # 主要是配合下面的调用返回的一个对象
+print(zero.search('title==零零信安'))
+```
+
 
 
 ### The Base family
