@@ -374,4 +374,10 @@ class GoCQHttp:
             }
         else:
             self.headers = ""
-            
+    
+    def send_privte_message(self):
+        data = {
+            "user_id": "",
+            "group_id": "",
+            "message": ""
+        }
