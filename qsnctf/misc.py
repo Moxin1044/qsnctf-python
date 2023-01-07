@@ -9,7 +9,9 @@ from qsnctf.auxiliary import js_from_file
 import urllib.parse
 import re
 import html
+import zipfile
 import uuid
+from qsnctf.auxiliary import read_file_to_list, is_http_or_https_url, normalize_url
 
 
 def get_uuid():
@@ -287,5 +289,27 @@ def aadecode(source_text):
 
 
 class ZipPasswordCracking:
-    def __init__(self):
+    def __init__(self, zip_file, pass_list):
+        self.zip_file = zip_file
+        self.pass_list = pass_list
+
+    def read_pass(self):
+        if self.pass_list:
+            pass  # 如果使用自定义的pass_list,这里不用读取
+        else:
+            package_path = os.path.abspath(os.path.dirname(__file__))
+            file_path = os.path.join(package_path, 'plugin', 'txt', 'dirs.txt')
+            self.pass_list = read_file_to_list(file_path)
+
+    def check_zip_is_passed(self):
+        if zipfile.is_zipfile(self.zip_file):
+            with zipfile.ZipFile(self.zip_file) as zip_file:
+                try:
+                    zip_file.printdir()
+                except Exception as e:
+                    if isinstance(e, zipfile.BadZipfile):
+                        print("Zip file is password protected")
+    def crack_password(self, password):
         pass
+
+
