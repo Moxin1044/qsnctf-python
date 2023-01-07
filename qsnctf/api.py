@@ -374,9 +374,19 @@ class GoCQHttp:
             }
         else:
             self.headers = ""
-    
-    def send_privte_message(self, user_id, message):
+
+    def send_private_msg(self, user_id, message):
         data = {
             "user_id": user_id,
             "message": message
         }
+        q = requests.post(self.url + "/send_private_msg", data=data, headers=self.headers)
+        return q.json()
+
+    def send_group_msg(self, group_id, message):
+        data = {
+            "group_id": group_id,
+            "message": message
+        }
+        q = requests.post(self.url + "/send_group_msg", data=data, headers=self.headers)
+        return q.json()
