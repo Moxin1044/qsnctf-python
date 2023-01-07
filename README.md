@@ -22,7 +22,7 @@
 python setup.py install
 ```
 
-或者也可以直接使用pip来进行安装**(由于本Python库仍在开发，所以pip可能不是最新版，如果您有较高的需求，可以直接clone本仓库进行安装)**
+或者也可以直接使用pip来进行安装**（由于本Python库仍在开发，所以pip可能不是最新版，如果您有较高的需求，可以直接clone本仓库进行安装）**
 
 ```bash
 pip install qsnctf
