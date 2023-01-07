@@ -376,6 +376,11 @@ class GoCQHttp:
             self.headers = ""
 
     def send_private_msg(self, user_id, message):
+        """
+        :param user_id: QQ
+        :param message: message text
+        :return:
+        """
         data = {
             "user_id": user_id,
             "message": message
@@ -384,6 +389,11 @@ class GoCQHttp:
         return q.json()
 
     def send_group_msg(self, group_id, message):
+        """
+        :param group_id: QQ group ID
+        :param message: message text
+        :return:
+        """
         data = {
             "group_id": group_id,
             "message": message

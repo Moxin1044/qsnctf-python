@@ -284,3 +284,8 @@ def aadecode(source_text):
     file_path = os.path.join(package_path, 'plugin', 'js', 'aaencode.js')
     content = execjs.compile(js_from_file(file_path))
     return content.call("aadecode", source_text)
+
+
+class ZipPasswordCracking:
+    def __init__(self):
+        pass
