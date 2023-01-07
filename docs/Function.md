@@ -730,6 +730,76 @@ print(a)
 
 ```
 
+### GO-CQ-HTTP
+
+#### class-GoCQHttp
+
+##### GoCQHttp
+
+|  **函数名**   | **返回类型** |   **位置**   |                  **说明**                   |
+| :-----------: | :----------: | :----------: | :-----------------------------------------: |
+|   GoCQHttp    |    object    |    api.py    |   [GoCQHttp](https://docs.go-cqhttp.org/)   |
+|  **参数名**   | **是否可空** | **传参类型** |                  **说明**                   |
+|      url      |    False     |    string    | Go-CQ-HTTP URL 如 http://www.baidu.com:1700 |
+|     auth      |     True     |   Boolean    |           是否启用了authorization           |
+| authorization |     True     |    string    |               authorization值               |
+
+Key 获取地址：https://fofa.info/
+
+**说明：此功能需要连接网络，请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+cq = GoCQHttp('http://www.baidu.com:1700', True, "check me") # 主要是配合下面的调用返回的一个对象
+```
+
+#### 发送私聊消息
+
+##### send_private_msg
+
+|    **函数名**    | **返回类型** |   **位置**   |                      **说明**                       |
+| :--------------: | :----------: | :----------: | :-------------------------------------------------: |
+| send_private_msg |    object    |    api.py    | [GoCQHttp](https://docs.go-cqhttp.org/)发送私聊消息 |
+|    **参数名**    | **是否可空** | **传参类型** |                      **说明**                       |
+|      userid      |    False     |     int      |                   接收消息的QQ号                    |
+|     message      |    False     |    string    |                     发送的内容                      |
+
+**说明：此功能需要连接网络，请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+cq = GoCQHttp('http://www.baidu.com:1700', True, "check me") # 主要是配合下面的调用返回的一个对象
+cq.send_private_msg(1044631097, '早上该起床啦！')
+```
+
+#### 发送群消息
+
+##### send_group_msg
+
+|   **函数名**   | **返回类型** |   **位置**   |                      **说明**                       |
+| :------------: | :----------: | :----------: | :-------------------------------------------------: |
+| send_group_msg |    object    |    api.py    | [GoCQHttp](https://docs.go-cqhttp.org/)发送群聊消息 |
+|   **参数名**   | **是否可空** | **传参类型** |                      **说明**                       |
+|    group_id    |    False     |     int      |                   接收消息的群号                    |
+|    message     |    False     |    string    |                     发送的内容                      |
+
+**说明：此功能需要连接网络，请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+cq = GoCQHttp('http://www.baidu.com:1700', True, "check me") # 主要是配合下面的调用返回的一个对象
+cq.send_group_msg(797842833, '大家好哦！')
+```
+
 ### FOFA
 
 #### class-FOFA
