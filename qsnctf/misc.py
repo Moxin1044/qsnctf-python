@@ -288,6 +288,22 @@ def aadecode(source_text):
     return content.call("aadecode", source_text)
 
 
+def str_to_hex(string, encoding='utf-8', byteorder='big'):
+    b = string.encode(encoding)
+    b = int.from_bytes(b, byteorder)
+    x = hex(b)
+    return x
+
+
+def hex_to_str(hex_int, decoding='utf-8'):
+    if type(hex_int) == str:
+        hex_int = int(hex_int, 16)  # 防呆（防止输入了个字符串）
+    h = hex(hex_int)
+    if '0x' in str(h):
+        return bytes.fromhex(h[2:]).decode(decoding)
+    return bytes.fromhex(h).decode(decoding)
+
+
 class ZipPasswordCracking:
     def __init__(self, zip_file, pass_list):
         self.zip_file = zip_file
