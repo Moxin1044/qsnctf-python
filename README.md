@@ -132,7 +132,7 @@ FUNCTIONS
 | :--------------------: | :--------: | :---------: | :---------: | :---------------: |
 | 文本逆向（自定义步长） |  获取uuid  | ord转字符串 | 字符串转ord |    字符串分割     |
 |        flag寻找        | 百家姓编码 | Qwerty编码  |   HTM编码   |      JSFUCK       |
-|        AAencode        |  str2hex   |   hex2str   |             |                   |
+|        AAencode        |  str2hex   |   hex2str   | ZIP密码爆破 | ZIP解压缩（高级） |
 
 ### API
 
