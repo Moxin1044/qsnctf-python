@@ -2025,6 +2025,8 @@ print(a) # flag{qsnctf-12345}
 |      pass_list      |     True     |     list     |         自定义密码列表         |
 |        path         |     True     |    string    |          解压缩的目录          |
 
+**说明：这里支持伪加密压缩包了哦！**
+
 ##### 使用示例
 
 ```python
@@ -2039,8 +2041,6 @@ zip = ZipPasswordCracking("pass.zip", threadline=100, pass_list=plist, path="fil
 
 print(zip.results) # 123123
 ```
-
-#### 压缩包操作
 
 ##### zip_unzip
 
