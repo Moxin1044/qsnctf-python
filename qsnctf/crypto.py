@@ -293,25 +293,25 @@ def morse_decrypt(cipher, split=" ", point='.', bar='-'):
     return message
 
 
-def qsnctf_decrypt(text):
-    # 修改版的ROT5，只替换映射表
-    mapping = {
-        '青': '5', '少': '6', '年': '7', 'C': '8', 'T': '9',
-        'F': '0', '训': '1', '练': '2', '平': '3', '台': '4',
-    }
-    # 加/解密文本
-    encrypted_text = ''
-    for char in text:
-        if char in mapping:
-            encrypted_text += mapping[char]
-        else:
-            encrypted_text += char
-
-    return encrypted_text
-
-
-
-    return encrypted_text
+# def qsnctf_decrypt(text):
+#     # 修改版的ROT5，只替换映射表
+#     mapping = {
+#         '青': '5', '少': '6', '年': '7', 'C': '8', 'T': '9',
+#         'F': '0', '训': '1', '练': '2', '平': '3', '台': '4',
+#     }
+#     # 加/解密文本
+#     encrypted_text = ''
+#     for char in text:
+#         if char in mapping:
+#             encrypted_text += mapping[char]
+#         else:
+#             encrypted_text += char
+#
+#     return encrypted_text
+#
+#
+#
+#     return encrypted_text
 
 # def vigenere_encrypt(text,key):
 #     return vigenere.encrypt(text, key, base64=False)

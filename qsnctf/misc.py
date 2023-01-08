@@ -325,6 +325,7 @@ class ZipPasswordCracking:
                 except Exception as e:
                     if isinstance(e, zipfile.BadZipfile):
                         print("Zip file is password protected")
+
     def crack_password(self, password):
         pass
 
