@@ -10,6 +10,9 @@ import urllib.parse
 import re
 import html
 import zipfile
+import queue
+import time
+import threading
 import uuid
 from qsnctf.auxiliary import read_file_to_list, is_http_or_https_url, normalize_url
 
@@ -303,30 +306,117 @@ def hex_to_str(hex_int, decoding='utf-8'):
         return bytes.fromhex(h[2:]).decode(decoding)
     return bytes.fromhex(h).decode(decoding)
 
+    """
+    import zipfile
+
+    # 打开 ZIP 文件
+    with zipfile.ZipFile("myfile.zip") as zip_file:
+        # 解压缩 ZIP 文件中的 file1.txt 和 file2.txt 文件
+        zip_file.extractall(members=["file1.txt", "file2.txt"])
+    """
+
+
+def zip_unzip(filename, password=None, members=None, path=None):
+    """
+    :param filename: zip file path and name
+    :param password: zip password, format is string!!!
+    :param members: Specify the list of files to decompress
+    :param path: unzip path
+    :return:
+    """
+    if zipfile.is_zipfile(filename):
+        if password:
+            with zipfile.ZipFile(filename) as zip_file:
+                # 如果密码被填充，则首先尝试文件是否需要密码
+                try:
+                    zip_file.testzip() # 验证ZIP是否需要密码
+                except Exception as e:
+                    # 如果密码不正确，则会引发 RunTimeError 异常
+                    if isinstance(e, RuntimeError):
+                        zip_file.extractall(pwd=bytes(password, "utf-8"), members=members, path=path)
+                    else:
+                        # 如果不需要密码，直接在下面进行解密。
+                        zip_file.extractall(members=members, path=path)
+                        return True
+        else:
+            with zipfile.ZipFile(filename) as zip_file:
+                # 测试 ZIP 文件的所有文件是否可以成功解压缩
+                try:
+                    zip_file.testzip()
+                except Exception as e:
+                    # 如果密码不正确，则会引发 RunTimeError 异常
+                    if isinstance(e, RuntimeError):
+                        return False  # 因为没有密码，所以无法尝试解压缩操作
+                    else:
+                        zip_file.extractall(members=members, path=path)
+                        return True
+
 
 class ZipPasswordCracking:
-    def __init__(self, zip_file, pass_list):
-        self.zip_file = zip_file
+    def __init__(self, filename, threadline=10, sleep_time=0, pass_list=None, path=None):
+        self.results = None  # 存储结果
+        self.zip_file = filename
         self.pass_list = pass_list
+        self.threadline = threadline
+        self.sleep_time = sleep_time
+        self.path = path
+        self.main()
 
     def read_pass(self):
         if self.pass_list:
             pass  # 如果使用自定义的pass_list,这里不用读取
         else:
             package_path = os.path.abspath(os.path.dirname(__file__))
-            file_path = os.path.join(package_path, 'plugin', 'txt', 'dirs.txt')
+            file_path = os.path.join(package_path, 'plugin', 'txt', 'zippass.txt')
             self.pass_list = read_file_to_list(file_path)
 
     def check_zip_is_passed(self):
+        # 如果zip需要密码，则返回True，如果不需要，则返回False
         if zipfile.is_zipfile(self.zip_file):
             with zipfile.ZipFile(self.zip_file) as zip_file:
+                # 测试 ZIP 文件的所有文件是否可以成功解压缩
                 try:
-                    zip_file.printdir()
+                    zip_file.testzip()
+                    return False
                 except Exception as e:
-                    if isinstance(e, zipfile.BadZipfile):
-                        print("Zip file is password protected")
+                    # 如果密码不正确，则会引发 RunTimeError 异常
+                    if isinstance(e, RuntimeError):
+                        return True
 
     def crack_password(self, password):
-        pass
+        # 打开 ZIP 文件
+        with zipfile.ZipFile(self.zip_file) as zip_file:
+            # 尝试解压缩文件
+            try:
+                zip_file.extractall(pwd=bytes(password, "utf-8"), path=self.path)
+                return True  # 密码正确
+            except Exception as e:
+                # 如果密码不正确，则会引发 RunTimeError 异常
+                if isinstance(e, RuntimeError):
+                    return False  # 密码错误
 
+    def crack(self):
+        while not self.q.empty():
+            # 从队列中取出密码
+            key = self.q.get()
+            if self.crack_password(key):
+                self.results = key
+            time.sleep(self.sleep_time)
+            self.q.task_done()
 
+    def main(self):
+        # 该函数作用是防止浪费线程所以进行的判断
+        if self.check_zip_is_passed():
+            self.run()
+        else:
+            self.results = "No password is required to decompress this package."
+
+    def run(self):
+        self.read_pass()
+        self.q = queue.Queue()
+        for password in self.pass_list:
+            self.q.put(password)
+        for i in range(self.threadline):
+            thread = threading.Thread(target=self.crack)
+            thread.start()
+        self.q.join()  # Wait for thread to finish

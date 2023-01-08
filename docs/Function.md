@@ -2011,6 +2011,56 @@ a = search_flag('hello, i will give you flag flag{qsnctf-12345}')
 print(a) # flag{qsnctf-12345}
 ```
 
+#### 压缩包操作
+
+##### class-ZipPasswordCracking
+
+|     **函数名**      | **返回类型** |   **位置**   |            **说明**            |
+| :-----------------: | :----------: | :----------: | :----------------------------: |
+| ZipPasswordCracking |    string    |   misc.py    |       ZIP压缩包密码爆破        |
+|     **参数名**      | **是否可空** | **传参类型** |            **说明**            |
+|      filename       |    False     |    string    |         zip的文件位置          |
+|     threadline      |     True     |     int      |             线程数             |
+|     sleep_time      |     True     |     int      | 等待时间（非网络操作一般不用） |
+|      pass_list      |     True     |     list     |         自定义密码列表         |
+|        path         |     True     |    string    |          解压缩的目录          |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+zip = ZipPasswordCracking("pass.zip")
+
+print(zip.results)
+
+plist = ['1234','test','123123']
+zip = ZipPasswordCracking("pass.zip", threadline=100, pass_list=plist, path="file")
+
+print(zip.results) # 123123
+```
+
+#### 压缩包操作
+
+##### zip_unzip
+
+| **函数名** | **返回类型** |   **位置**   |              **说明**              |
+| :--------: | :----------: | :----------: | :--------------------------------: |
+| zip_unzip  |   Boolean    |   misc.py    |             ZIP解压缩              |
+| **参数名** | **是否可空** | **传参类型** |              **说明**              |
+|  filename  |    False     |    string    |           zip的文件位置            |
+|  password  |     True     |    string    | 这里是string类型，如果没有密码留空 |
+|  members   |     True     |     list     |           需要解压的文件           |
+|    path    |     True     |    string    |            解压缩的目录            |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+zip_unzip("pass.zip")
+```
+
 ## Crypto.py
 
 ### 密码学
