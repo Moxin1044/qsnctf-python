@@ -6,6 +6,12 @@
 
 [（本仓库）](https://github.com/Moxin1044/qsnctf-python)qsnctf是青少年CTF训练平台进行编写的一个Python包程序，意图在Python中为大家快速使用一些CTF常用功能开发的开源包。这里有很多CTF常用功能，如Base编码、hash加密，甚至少见的社会主义核心价值观编码、quipqiup等都在其中。
 
+注意：2023年01月09日发布的Ver:0.0.8.7已经支持了压缩包密码破解和下面的所有功能，Function的文档准备迁移至：https://docs.qsnctf.com/
+
+首次发布时间预计于2022年01月10日，敬请期待。
+
+如果您有好的想法和建议，欢迎与我取得联系：QQ：1044631097。
+
 ## 文档
 
 其他语种：[English](https://github.com/Moxin1044/qsnctf-python/blob/master/docs/README_en.md)
@@ -126,6 +132,7 @@ FUNCTIONS
 | :--------------------: | :--------: | :---------: | :---------: | :---------------: |
 | 文本逆向（自定义步长） |  获取uuid  | ord转字符串 | 字符串转ord |    字符串分割     |
 |        flag寻找        | 百家姓编码 | Qwerty编码  |   HTM编码   |      JSFUCK       |
+|        AAencode        |  str2hex   |   hex2str   |             |                   |
 
 ### API
 

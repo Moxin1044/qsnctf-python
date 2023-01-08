@@ -4,8 +4,6 @@ import re
 import time
 import queue
 import threading
-import dns.resolver
-from urllib.parse import urljoin
 import requests
 from bs4 import BeautifulSoup,Comment
 from qsnctf.auxiliary import read_file_to_list, is_http_or_https_url, normalize_url
@@ -661,6 +659,7 @@ class WebShellCracking:
             key = self.q.get()
             if get_webshell_post(self.url, key):
                 self.results = key
+            time.sleep(self.sleep_time)
             self.q.task_done()
 
     def Cracking_webshell_GET(self):
@@ -669,6 +668,7 @@ class WebShellCracking:
             key = self.q.get()
             if get_webshell_get(self.url, key):
                 self.results = key
+            time.sleep(self.sleep_time)
             self.q.task_done()
 
     def run(self):

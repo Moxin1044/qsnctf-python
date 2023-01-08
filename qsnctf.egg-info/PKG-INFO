@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: qsnctf
-Version: 0.0.8.6
+Version: 0.0.8.7
 Summary: 青少年CTF训练平台提供的Python软件包
 Home-page: https://github.com/Moxin1044/qsnctf-python
 Author: Moxin
@@ -15,6 +15,12 @@ Description-Content-Type: text/markdown
 <div align=center><img src="https://bbs.qsnctf.com/template/laidian_yx_a3/laid_src/logo.png"></div>
 
 [（本仓库）](https://github.com/Moxin1044/qsnctf-python)qsnctf是青少年CTF训练平台进行编写的一个Python包程序，意图在Python中为大家快速使用一些CTF常用功能开发的开源包。这里有很多CTF常用功能，如Base编码、hash加密，甚至少见的社会主义核心价值观编码、quipqiup等都在其中。
+
+注意：2023年01月09日发布的Ver:0.0.8.7已经支持了压缩包密码破解和下面的所有功能，Function的文档准备迁移至：https://docs.qsnctf.com/
+
+首次发布时间预计于2022年01月10日，敬请期待。
+
+如果您有好的想法和建议，欢迎与我取得联系：QQ：1044631097。
 
 ## 文档
 
@@ -117,9 +123,9 @@ FUNCTIONS
 
 ### CRYPTO
 
-| 凯撒密码 | 凯撒爆破 |  培根密码  |          ROT5          |   ROT13    |
-| :------: | :------: | :--------: | :--------------------: | :--------: |
-|  ROT18   | 八卦密码 | 埃特巴什码 | 摩斯密码（支持自定义） | qwerty密码 |
+| 凯撒密码 | 凯撒爆破 |  培根密码  |          ROT5          | ROT13 |
+| :------: | :------: | :--------: | :--------------------: | :---: |
+|  ROT18   | 八卦密码 | 埃特巴什码 | 摩斯密码（支持自定义） |       |
 
 ### MD5
 
@@ -139,9 +145,9 @@ FUNCTIONS
 
 ### API
 
-| quipqiup词频分析 | 飞书Webhook | 钉钉Talk | 微步在线 | FOFA |
-| :--------------: | :---------: | -------- | -------- | ---- |
-|    大圣云沙箱    |  零零信安   |          |          |      |
+| quipqiup词频分析 | 飞书Webhook |  钉钉Talk  | 微步在线 | FOFA |
+| :--------------: | :---------: | :--------: | :------: | :--: |
+|    大圣云沙箱    |  零零信安   | Go-CQ-HTTP |          |      |
 ### WEB
 
 |   目录扫描   | 网站存活检测  |   取网站标题    | 子域名扫描 |   取网站描述   |

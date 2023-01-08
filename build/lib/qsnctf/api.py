@@ -363,3 +363,40 @@ class ZeroZeon:
         return response.json()
 
 
+class GoCQHttp:
+    def __init__(self, url, auth=False, authorization=''):
+        self.url = url
+        self.auth = auth
+        self.Authorization = authorization
+        if auth:
+            self.headers = {
+                "Authorization": self.Authorization
+            }
+        else:
+            self.headers = ""
+
+    def send_private_msg(self, user_id, message):
+        """
+        :param user_id: QQ
+        :param message: message text
+        :return:
+        """
+        data = {
+            "user_id": user_id,
+            "message": message
+        }
+        q = requests.post(self.url + "/send_private_msg", data=data, headers=self.headers)
+        return q.json()
+
+    def send_group_msg(self, group_id, message):
+        """
+        :param group_id: QQ group ID
+        :param message: message text
+        :return:
+        """
+        data = {
+            "group_id": group_id,
+            "message": message
+        }
+        q = requests.post(self.url + "/send_group_msg", data=data, headers=self.headers)
+        return q.json()
