@@ -118,6 +118,7 @@ FUNCTIONS
 | :-----------------------------------: | :-----------: | :---------------------------: | :-----: | --------------------- |
 |    Text Reverse (custom step size)    | Get the UUID  | ord to string|      String to ord   |    String splitting                   |
 | Flag looking |  Hundred family name code| Qwerty coded| HTM code	 | JSFUCK |
+|        AAencode        |  str2hex   |   hex2str   | ZIP密码爆破 | ZIP解压缩（高级） |
 
 ### API
 
