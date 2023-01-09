@@ -154,53 +154,53 @@ FUNCTIONS
 第一步导入`qsnctf`库
 
 ```python
-import qsnctf
+from qsnctf import *
 ```
 
-例如需要使用`base64`加密
+例如需要使用`base64`编码
 
 ```python
-qsnctf.base.base64_encode("需要加密的")
+base64_encode("需要编码的")# 6ZyA6KaB57yW56CB55qE
 ```
 
-相同如果使用`base64`解密的话就是
+相同如果使用`base64`解码的话就是
 
 ```python
-qsnctf.base.base64_decode("需要解密的")
+ base64_decode("6ZyA6KaB57yW56CB55qE")# 需要编码的
 ```
 
-其他的加密加密类似
+其他的编码解码类似
 
 ------
 
 ## 编译器使用
 
-这里还是使用base64来演示，其他的加密解密类似。
+这里还是使用base64来演示，其他的编码解码类似。
 
 ```python
-import qsnctf
+from qsnctf import qsnctf
 
-a=qsnctf.base.base64_encode("需要加密的")
+a=base64_encode("需要编码的")
 print(a)
-b=qsnctf.base.base64_decode("6ZyA6KaB5Yqg5a+G55qE")
+b=base64_decode("6ZyA6KaB57yW56CB55qE")
 print(b)
 ```
 
 `返回信息`
-
+需要编码的
 ```
-6ZyA6KaB5Yqg5a+G55qE
-需要加密的
+6ZyA6KaB57yW56CB55qE
+
 ```
 
 **Base62的encode值应该是整数！**
 
 ```python
-import qsnctf
+from qsnctf import qsnctf
 
-a = qsnctf.base.base62_encode(34441886726)
+a = base62_encode(34441886726)
 print(a)
-b = qsnctf.base.base62_decode("base62")
+b = base62_decode("base62")
 print(b)
 ```
 
