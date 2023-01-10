@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: qsnctf
-Version: 0.0.8.7
+Version: 0.0.8.8
 Summary: 青少年CTF训练平台提供的Python软件包
 Home-page: https://github.com/Moxin1044/qsnctf-python
 Author: Moxin
@@ -26,7 +26,7 @@ Description-Content-Type: text/markdown
 
 其他语种：[English](https://github.com/Moxin1044/qsnctf-python/blob/master/docs/README_en.md)
 
-函数库：[Function.md](https://github.com/Moxin1044/qsnctf-python/blob/master/docs/Function.md)
+函数库：[使用说明](https://docs.qsnctf.com/qsnctf/41250.html)
 
 ## 安装
 
@@ -142,6 +142,7 @@ FUNCTIONS
 | :--------------------: | :--------: | :---------: | :---------: | :---------------: |
 | 文本逆向（自定义步长） |  获取uuid  | ord转字符串 | 字符串转ord |    字符串分割     |
 |        flag寻找        | 百家姓编码 | Qwerty编码  |   HTM编码   |      JSFUCK       |
+|        AAencode        |  str2hex   |   hex2str   | ZIP密码爆破 | ZIP解压缩（高级） |
 
 ### API
 

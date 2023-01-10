@@ -1,5 +1,5 @@
 from qsnctf import *
 
-zip = ZipPasswordCracking("pass.zip", path="pass")
+zip = DomainScan("baiddu.com")
 
 print(zip.results)

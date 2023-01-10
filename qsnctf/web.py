@@ -276,12 +276,15 @@ def get_webshell_post(url, key):
         "Referer": f"{url}",
         "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
         "Te": "trailers", "Connection": "close"}
-    requests.packages.urllib3.disable_warnings()
-    shell = "print('test_a_shell');"
-    post_data = f"{key}={shell}"
-    response = requests.post(url, headers=browser, data=post_data, verify=False)
-    if "test_a_shell" in response.text:
-        return True
+    try:
+        requests.packages.urllib3.disable_warnings()
+        shell = "print('test_a_shell');"
+        post_data = f"{key}={shell}"
+        response = requests.post(url, headers=browser, data=post_data, verify=False)
+        if "test_a_shell" in response.text:
+            return True
+    except:
+        return False
     return False
 
 
@@ -298,12 +301,15 @@ def get_webshell_get(url, key):
         "Referer": f"{url}",
         "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
         "Te": "trailers", "Connection": "close"}
-    requests.packages.urllib3.disable_warnings()
-    shell = "print('test_a_shell');"
-    params = f"{key}={shell}"
-    response = requests.get(url, headers=browser, params=params, verify=False)
-    if "test_a_shell" in response.text:
-        return True
+    try:
+        requests.packages.urllib3.disable_warnings()
+        shell = "print('test_a_shell');"
+        params = f"{key}={shell}"
+        response = requests.get(url, headers=browser, params=params, verify=False)
+        if "test_a_shell" in response.text:
+            return True
+    except:
+        return False
     return False
 
 
@@ -444,14 +450,17 @@ class DirScan:
                 "Referer": f"{self.url}{path}", "Cookie": f"{self.cookies}",
                 "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
                 "Te": "trailers", "Connection": "close"}
-            response = requests.get(self.url + path, headers=browser, verify=False)
-            time.sleep(self.sleep_time)
-            # 将符合条件的扫描结果添加到results列表
-            if response.status_code in self.return_code:
-                self.results.append(f"{self.url}{path}")
-                self.results_code.append(f"{self.url}{path} {response.status_code}")
-                if self.print_list:
-                    print(f"{self.url}{path} {response.status_code}")  # print response
+            try:
+                response = requests.get(self.url + path, headers=browser, verify=False)
+                time.sleep(self.sleep_time)
+                # 将符合条件的扫描结果添加到results列表
+                if response.status_code in self.return_code:
+                    self.results.append(f"{self.url}{path}")
+                    self.results_code.append(f"{self.url}{path} {response.status_code}")
+                    if self.print_list:
+                        print(f"{self.url}{path} {response.status_code}")  # print response
+            except:
+                pass
             # 完成之后将任务标记为完成
             self.q.task_done()
 
@@ -508,25 +517,28 @@ class UrlScan:
                 "Referer": f"{url}", "Cookie": f"{self.cookies}",
                 "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
                 "Te": "trailers", "Connection": "close"}
-            response = requests.get(url, headers=browser, verify=False)
-            time.sleep(self.sleep_time)
-            # 将符合条件的扫描结果添加到results列表
-            if response.status_code in self.return_code:
-                self.results.append(f"{url}")
-                self.results_code.append(f"{url} {response.status_code}")
-                if response.status_code == 200:
-                    soup = BeautifulSoup(response.text, "html.parser")
-                    title = soup.find("title")
-                    title = re.search(r"<title>(.+?)</title>", str(title))
-                    if title:
-                        title = title.group(1)
-                    else:
-                        title = "No Title"
-                    self.results_title.append(f"{url} {title}")
-                if self.print_list and response.status_code == 200:
-                    print(f"{url} {response.status_code} {title}")  # print response
-                elif self.print_list and response.status_code != 200:
-                    print(f"{url} {response.status_code}")
+            try:
+                response = requests.get(url, headers=browser, verify=False)
+                time.sleep(self.sleep_time)
+                # 将符合条件的扫描结果添加到results列表
+                if response.status_code in self.return_code:
+                    self.results.append(f"{url}")
+                    self.results_code.append(f"{url} {response.status_code}")
+                    if response.status_code == 200:
+                        soup = BeautifulSoup(response.text, "html.parser")
+                        title = soup.find("title")
+                        title = re.search(r"<title>(.+?)</title>", str(title))
+                        if title:
+                            title = title.group(1)
+                        else:
+                            title = "No Title"
+                        self.results_title.append(f"{url} {title}")
+                    if self.print_list and response.status_code == 200:
+                        print(f"{url} {response.status_code} {title}")  # print response
+                    elif self.print_list and response.status_code != 200:
+                        print(f"{url} {response.status_code}")
+            except:
+                pass
             # 完成之后将任务标记为完成
             self.q.task_done()
 
@@ -590,26 +602,29 @@ class DomainScan:
                 "Referer": f"http://{domain}.{self.domain}/",
                 "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
                 "Te": "trailers", "Connection": "close"}
-            response = requests.get(f"http://{domain}.{self.domain}/", headers=browser, verify=False)
-            time.sleep(self.sleep_time)
-            # 将符合条件的扫描结果添加到results列表
-            if response.status_code in self.return_code:
-                self.results.append(f"http://{domain}.{self.domain}/")
-                self.results_code.append(f"http://{domain}.{self.domain}/")
-                if response.status_code == 200:
-                    soup = BeautifulSoup(response.text, "html.parser")
-                    title = soup.find("title")
-                    title = re.search(r"<title>(.+?)</title>", str(title))
-                    if title:
-                        title = title.group(1)
-                    else:
-                        title = "No Title"
-                    self.results_title.append(f"http://{domain}.{self.domain}/ {title}")
-                if self.print_list and response.status_code == 200:
-                    print(f"http://{domain}.{self.domain}/ {response.status_code} {title}")  # print response
-                elif self.print_list and response.status_code != 200:
-                    print(f"http://{domain}.{self.domain}/ {response.status_code}")
-                # 完成之后将任务标记为完成
+            try:
+                response = requests.get(f"http://{domain}.{self.domain}/", headers=browser, verify=False)
+                time.sleep(self.sleep_time)
+                # 将符合条件的扫描结果添加到results列表
+                if response.status_code in self.return_code:
+                    self.results.append(f"http://{domain}.{self.domain}/")
+                    self.results_code.append(f"http://{domain}.{self.domain}/")
+                    if response.status_code == 200:
+                        soup = BeautifulSoup(response.text, "html.parser")
+                        title = soup.find("title")
+                        title = re.search(r"<title>(.+?)</title>", str(title))
+                        if title:
+                            title = title.group(1)
+                        else:
+                            title = "No Title"
+                        self.results_title.append(f"http://{domain}.{self.domain}/ {title}")
+                    if self.print_list and response.status_code == 200:
+                        print(f"http://{domain}.{self.domain}/ {response.status_code} {title}")  # print response
+                    elif self.print_list and response.status_code != 200:
+                        print(f"http://{domain}.{self.domain}/ {response.status_code}")
+                    # 完成之后将任务标记为完成
+            except:
+                pass
             self.q.task_done()
 
     def run(self):
