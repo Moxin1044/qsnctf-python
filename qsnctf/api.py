@@ -407,12 +407,18 @@ class Shodan:
         self.api_url = "https://api.shodan.io"
         self.key = key
 
+    def api_info(self):
+        url = self.api_url + "/api-info" + f"?key={self.key}"
+        response = requests.get(url).json()
+        return response
+
+
     def host(self, ip):
         """
         :param ip: search ip
         :return: request json
         """
-        url = "/shodan/host/"+ip + f"?key={self.key}"
+        url = self.api_url + "/shodan/host/"+ip + f"?key={self.key}"
         response = requests.get(url).json()
         return response
 
