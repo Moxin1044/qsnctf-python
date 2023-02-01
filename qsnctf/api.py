@@ -400,3 +400,19 @@ class GoCQHttp:
         }
         q = requests.post(self.url + "/send_group_msg", data=data, headers=self.headers)
         return q.json()
+
+
+class Shodan:
+    def __init__(self, key):
+        self.api_url = "https://api.shodan.io"
+        self.key = key
+
+    def host(self, ip):
+        """
+        :param ip: search ip
+        :return: request json
+        """
+        url = "/shodan/host/"+ip + f"?key={self.key}"
+        response = requests.get(url).json()
+        return response
+
