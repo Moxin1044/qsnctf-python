@@ -12,6 +12,8 @@
 
 如果您有好的想法和建议，欢迎与我取得联系：QQ：1044631097。
 
+![Alt](https://repobeats.axiom.co/api/embed/351178f679198f07b9f9715948c6c3e011834759.svg "Repobeats analytics image")
+
 ## 文档
 
 其他语种：[English](https://github.com/Moxin1044/qsnctf-python/blob/master/docs/README_en.md)
