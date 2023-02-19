@@ -421,3 +421,4 @@ class Shodan:
         url = self.api_url + f"/shodan/host/{ip}?key={self.key}"
         response = requests.get(url).json()
         return response
+
