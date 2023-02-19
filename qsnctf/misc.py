@@ -425,8 +425,9 @@ class ZipPasswordCracking:
 
 class RarPasswordCracking:
     def __init__(self, filename, threadline=10, sleep_time=0, pass_list=None, path=None):
+        self.rar = None
         self.results = None  # 存储结果
-        self.zip_file = filename
+        self.rar_file = filename
         self.pass_list = pass_list
         self.threadline = threadline
         self.sleep_time = sleep_time
@@ -442,10 +443,15 @@ class RarPasswordCracking:
             self.pass_list = read_file_to_list(file_path)
 
     def check_rar_is_passed(self):
-        pass
+        self.rar = rarfile.RarFile(self.rar_file)
 
     def crack_password(self, password):
-        pass
+        try:
+            self.rar.extract(self.rar_file, path=None, pwd=password.encode())
+            print("[+] Password found:", password)
+            return password
+        except:
+            pass
 
     def crack(self):
         while not self.q.empty():
