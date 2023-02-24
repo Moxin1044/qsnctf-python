@@ -364,42 +364,429 @@ class ZeroZeon:
 
 
 class GoCQHttp:
-    def __init__(self, url, auth=False, authorization=''):
-        self.url = url
+    def __init__(self, go_cq_ip, auth="", proxy=""):
+        self.ip = go_cq_ip
         self.auth = auth
-        self.Authorization = authorization
-        if auth:
-            self.headers = {
-                "Authorization": self.Authorization
-            }
-        else:
-            self.headers = ""
+        self.proxy = proxy
 
-    def send_private_msg(self, user_id, message):
-        """
-        :param user_id: QQ
-        :param message: message text
-        :return:
-        """
+    def send_private_msg(self, user_id, text):
+        body = {
+            "Authorization": self.auth
+        }
         data = {
             "user_id": user_id,
-            "message": message
+            "message": text
         }
-        q = requests.post(self.url + "/send_private_msg", data=data, headers=self.headers)
-        return q.json()
+        return requests.post("http://" + self.ip + "/send_private_msg", data=data, headers=body, proxies=self.proxy)
 
-    def send_group_msg(self, group_id, message):
-        """
-        :param group_id: QQ group ID
-        :param message: message text
-        :return:
-        """
+    def send_group_msg(self, qq_group_id, text):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "group_id": qq_group_id,
+            "message": text
+        }
+        return requests.post("http://" + self.ip + "/send_group_msg", data=data, headers=body, proxies=self.proxy)
+
+    def send_msg(self, message_type, user_id, group_id, message, auto_escape):
+        body = {
+            "Authorization": self.auth
+        }
+        if message_type == "private":
+            data = {
+                "message_type": message_type,
+                "user_id": user_id,
+                "message": message,
+                "auto_escape": auto_escape
+            }
+        else:
+            data = {
+                "message_type": message_type,
+                "group_id": group_id,
+                "message": message,
+                "auto_escape": auto_escape
+            }
+        return requests.post("http://" + self.ip + "/send_group_msg", data=data, headers=body, proxies=self.proxy)
+
+    def delete_msg(self, message_id):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "message_id": message_id
+        }
+        return requests.post("http://" + self.ip + "/delete_msg", data=data, headers=body, proxies=self.proxy)
+
+    def set_group_kick(self, group_id, user_id, reject_add_request):
+        body = {
+            "Authorization": self.auth
+        }
         data = {
             "group_id": group_id,
-            "message": message
+            "user_id": user_id,
+            "reject_add_request": reject_add_request
         }
-        q = requests.post(self.url + "/send_group_msg", data=data, headers=self.headers)
-        return q.json()
+        return requests.post("http://" + self.ip + "/set_group_kick", data=data, headers=body, proxies=self.proxy)
+
+    def set_group_ban(self, group_id, user_id, duration):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "group_id": group_id,
+            "user_id": user_id,
+            "duration": duration
+        }
+        return requests.post("http://" + self.ip + "/set_group_ban", data=data, headers=body, proxies=self.proxy)
+
+    def set_group_whole_ban(self, group_id, enable):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "group_id": group_id,
+            "enable": enable
+        }
+        return requests.post("http://" + self.ip + "/set_group_whole_ban", data=data, headers=body, proxies=self.proxy)
+
+    def set_group_card(self, group_id, user_id, card):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "group_id": group_id,
+            "user_id": user_id,
+            "card": card
+        }
+        return requests.post("http://" + self.ip + "/set_group_card", data=data, headers=body, proxies=self.proxy)
+
+    def set_group_leave(self, group_id, is_dismiss):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "group_id": group_id,
+            "is_dismiss": is_dismiss
+        }
+        return requests.post("http://" + self.ip + "/set_group_leave", data=data, headers=body, proxies=self.proxy)
+
+    def send_group_sign(self, group_id):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "group_id": group_id,
+        }
+        return requests.post("http://" + self.ip + "/send_group_sign", data=data, headers=body, proxies=self.proxy)
+
+    def set_friend_add_request(self, flag, approve, remark):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "flag": flag,
+            "sub_type": approve,
+            "remark": remark
+        }
+        return requests.post("http://" + self.ip + "/set_friend_add_request", data=data, headers=body,
+                             proxies=self.proxy)
+
+    def set_group_add_request(self, flag, sub_type, approve, reason):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "flag": flag,
+            "sub_type": sub_type,
+            "approve": approve,
+            "reason": reason
+        }
+        return requests.post("http://" + self.ip + "/set_group_add_request", data=data, headers=body,
+                             proxies=self.proxy)
+
+    def get_login_info(self):
+        body = {
+            "Authorization": self.auth
+        }
+        return requests.post("http://" + self.ip + "/get_login_info", headers=body, proxies=self.proxy)
+
+    def get_stranger_info(self, user_id):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "user_id": user_id,
+            "no_cache": True
+        }
+        return requests.post("http://" + self.ip + "/get_stranger_info", data=data, headers=body, proxies=self.proxy)
+
+    def set_group_special_title(self, group_id, user_id, special_title, duration):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "group_id": group_id,
+            "user_id": user_id,
+            "special_title": special_title,
+            "duration": duration
+        }
+        return requests.post("http://" + self.ip + "/set_group_special_title", data=data, headers=body,
+                             proxies=self.proxy)
+
+    def set_qq_profile(self, nickname, company, email, college, personal_note):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "nickname": nickname,
+            "company": company,
+            "email": email,
+            "college": college,
+            "personal_note": personal_note
+        }
+        return requests.post("http://" + self.ip + "/set_qq_profile", data=data, headers=body, proxies=self.proxy)
+
+    def get_friend_list(self):
+        body = {
+            "Authorization": self.auth
+        }
+        return requests.post("http://" + self.ip + "/get_friend_list", headers=body, proxies=self.proxy)
+
+    def get_unidirectional_friend_list(self):
+        body = {
+            "Authorization": self.auth
+        }
+        return requests.post("http://" + self.ip + "/get_unidirectional_friend_list", headers=body, proxies=self.proxy)
+
+    def delete_friend(self, user_id):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "user_id": user_id
+        }
+        return requests.post("http://" + self.ip + "/delete_friend", data=data, headers=body, proxies=self.proxy)
+
+    def get_group_info(self, group_id):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "group_id": group_id,
+            "no_cache": True
+        }
+        return requests.post("http://" + self.ip + "/get_group_info", data=data, headers=body, proxies=self.proxy)
+
+    def get_group_list(self):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "no_cache": True
+        }
+        return requests.post("http://" + self.ip + "/get_group_list", data=data, headers=body, proxies=self.proxy)
+
+    def get_group_member_info(self, group_id, user_id):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "group_id": group_id,
+            "user_id": user_id,
+            "no_cache": True
+        }
+        return requests.post("http://" + self.ip + "/get_group_member_info", data=data, headers=body,
+                             proxies=self.proxy)
+
+    def get_group_member_list(self, group_id):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "group_id": group_id,
+            "no_cache": True
+        }
+        return requests.post("http://" + self.ip + "/get_group_member_list", data=data, headers=body,
+                             proxies=self.proxy)
+
+    def get_group_honor_info(self, group_id, types):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "group_id": group_id,
+            "type": types
+        }
+        return requests.post("http://" + self.ip + "/get_group_honor_info", data=data, headers=body, proxies=self.proxy)
+
+    def set_group_portrait(self, group_id, file):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "group_id": group_id,
+            "file": file,
+            "cache": 0
+        }
+        return requests.post("http://" + self.ip + "/get_group_honor_info", data=data, headers=body, proxies=self.proxy)
+
+    def upload_private_file(self, user_id, file, name):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "user_id": user_id,
+            "file": file,
+            "name": name
+        }
+        return requests.post("http://" + self.ip + "/upload_private_file", data=data, headers=body, proxies=self.proxy)
+
+    def upload_group_file(self, group_id, file, name, folder=""):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "group_id": group_id,
+            "file": file,
+            "name": name,
+            "folder": folder
+        }
+        return requests.post("http://" + self.ip + "/upload_group_file", data=data, headers=body, proxies=self.proxy)
+
+    def get_group_file_system_info(self, group_id):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "group_id": group_id
+        }
+        return requests.post("http://" + self.ip + "/get_group_file_system_info", data=data, headers=body,
+                             proxies=self.proxy)
+
+    def get_group_root_files(self, group_id):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "group_id": group_id
+        }
+        return requests.post("http://" + self.ip + "/get_group_root_files", data=data, headers=body, proxies=self.proxy)
+
+    def get_group_files_by_folder(self, group_id, folder_id):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "group_id": group_id,
+            "folder_id": folder_id
+        }
+        return requests.post("http://" + self.ip + "/get_group_files_by_folder", data=data, headers=body,
+                             proxies=self.proxy)
+
+    def create_group_file_folder(self, group_id, name, parent_id="/"):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "group_id": group_id,
+            "name": name,
+            "parent_id": parent_id
+        }
+        return requests.post("http://" + self.ip + "/create_group_file_folder", data=data, headers=body,
+                             proxies=self.proxy)
+
+    def delete_group_folder(self, group_id, folder_id):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "group_id": group_id,
+            "folder_id": folder_id
+        }
+        return requests.post("http://" + self.ip + "/delete_group_folder", data=data, headers=body, proxies=self.proxy)
+
+    def delete_group_file(self, group_id, file_id, busid):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "group_id": group_id,
+            "file_id": file_id,
+            "busid": busid
+        }
+        return requests.post("http://" + self.ip + "/delete_group_file", data=data, headers=body, proxies=self.proxy)
+
+    def get_group_file_url(self, group_id, file_id, busid):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "group_id": group_id,
+            "file_id": file_id,
+            "busid": busid
+        }
+        return requests.post("http://" + self.ip + "/get_group_file_url", data=data, headers=body, proxies=self.proxy)
+
+    def _send_group_notice(self, group_id, content, image=""):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "group_id": group_id,
+            "content": content,
+            "image": image
+        }
+        return requests.post("http://" + self.ip + "/_send_group_notice", data=data, headers=body, proxies=self.proxy)
+
+    def _get_group_notice(self, group_id):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "group_id": group_id
+        }
+        return requests.post("http://" + self.ip + "/_get_group_notice", data=data, headers=body, proxies=self.proxy)
+
+    def set_essence_msg(self, message_id):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "message_id": message_id
+        }
+        return requests.post("http://" + self.ip + "/set_essence_msg", data=data, headers=body, proxies=self.proxy)
+
+    def delete_essence_msg(self, message_id):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "message_id": message_id
+        }
+        return requests.post("http://" + self.ip + "/delete_essence_msg", data=data, headers=body, proxies=self.proxy)
+
+    def get_essence_msg_list(self, group_id):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "group_id": group_id
+        }
+        return requests.post("http://" + self.ip + "/get_essence_msg_list", data=data, headers=body, proxies=self.proxy)
+
+    def set_group_name(self, group_id, group_name):
+        body = {
+            "Authorization": self.auth
+        }
+        data = {
+            "group_id": group_id,
+            "group_name": group_name
+        }
+        return requests.post("http://" + self.ip + "/get_essence_msg_list", data=data, headers=body, proxies=self.proxy)
+
+    def send_reply(self, message, message_id, user_id, group_id):
+        self.send_group_msg(group_id, f"[CQ:reply,id={message_id}][CQ:at,qq={user_id}] {message}")
 
 
 class Shodan:
