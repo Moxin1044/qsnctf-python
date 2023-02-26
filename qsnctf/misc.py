@@ -15,6 +15,7 @@ import time
 import threading
 import uuid
 from qsnctf.auxiliary import read_file_to_list, is_http_or_https_url, normalize_url
+import rarfile
 
 
 def get_uuid():
@@ -407,6 +408,63 @@ class ZipPasswordCracking:
     def main(self):
         # 该函数作用是防止浪费线程所以进行的判断
         if self.check_zip_is_passed():
+            self.run()
+        else:
+            self.results = "No password is required to decompress this package."
+
+    def run(self):
+        self.read_pass()
+        self.q = queue.Queue()
+        for password in self.pass_list:
+            self.q.put(password)
+        for i in range(self.threadline):
+            thread = threading.Thread(target=self.crack)
+            thread.start()
+        self.q.join()  # Wait for thread to finish
+
+
+class RarPasswordCracking:
+    def __init__(self, filename, threadline=10, sleep_time=0, pass_list=None, path=None):
+        self.rar = None
+        self.results = None  # 存储结果
+        self.rar_file = filename
+        self.pass_list = pass_list
+        self.threadline = threadline
+        self.sleep_time = sleep_time
+        self.path = path
+        self.main()
+
+    def read_pass(self):
+        if self.pass_list:
+            pass  # 如果使用自定义的pass_list,这里不用读取
+        else:
+            package_path = os.path.abspath(os.path.dirname(__file__))
+            file_path = os.path.join(package_path, 'plugin', 'txt', 'zippass.txt')
+            self.pass_list = read_file_to_list(file_path)
+
+    def check_rar_is_passed(self):
+        self.rar = rarfile.RarFile(self.rar_file)
+
+    def crack_password(self, password):
+        try:
+            self.rar.extract(self.rar_file, path=None, pwd=password.encode())
+            print("[+] Password found:", password)
+            return password
+        except:
+            pass
+
+    def crack(self):
+        while not self.q.empty():
+            # 从队列中取出密码
+            key = self.q.get()
+            if self.crack_password(key):
+                self.results = key
+            time.sleep(self.sleep_time)
+            self.q.task_done()
+
+    def main(self):
+        # 该函数作用是防止浪费线程所以进行的判断
+        if self.check_rar_is_passed():
             self.run()
         else:
             self.results = "No password is required to decompress this package."

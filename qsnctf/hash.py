@@ -11,6 +11,15 @@ def md5(input_string):
     return m.hexdigest()
 
 
+def md5_sgin(sgin, input_string):
+    # MD5
+    m = hashlib.md5()
+    # 将输入字符串转换为字节并计算散列值
+    m.update((sgin + input_string).encode())
+    # 输出散列值
+    return m.hexdigest()
+
+
 def sha512(input_string):
     # SHA256
     m = hashlib.sha512()
