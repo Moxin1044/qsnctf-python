@@ -263,7 +263,7 @@ def get_url_ico(url):
         return False
 
 
-def get_webshell_post(url, key):
+def get_webshell_post(url, key, timeout=5):
     """
     :param url: url
     :param key: key
@@ -280,7 +280,7 @@ def get_webshell_post(url, key):
         requests.packages.urllib3.disable_warnings()
         shell = "print('test_a_shell');"
         post_data = f"{key}={shell}"
-        response = requests.post(url, headers=browser, data=post_data, verify=False)
+        response = requests.post(url, headers=browser, data=post_data, verify=False, timeout=timeout)
         if "test_a_shell" in response.text:
             return True
     except:
@@ -288,7 +288,7 @@ def get_webshell_post(url, key):
     return False
 
 
-def get_webshell_get(url, key):
+def get_webshell_get(url, key, timeout=5):
     """
     :param url: url
     :param key: key
@@ -305,7 +305,7 @@ def get_webshell_get(url, key):
         requests.packages.urllib3.disable_warnings()
         shell = "print('test_a_shell');"
         params = f"{key}={shell}"
-        response = requests.get(url, headers=browser, params=params, verify=False)
+        response = requests.get(url, headers=browser, params=params, verify=False, timeout=timeout)
         if "test_a_shell" in response.text:
             return True
     except:
@@ -398,7 +398,7 @@ def get_eval_webshell_post(url, key, shell):
 
 
 class DirScan:
-    def __init__(self, url, threadline=10, sleep_time=0, dirlist=None, return_code=None, echo=False, wait=True, cookies=''):
+    def __init__(self, url, threadline=10, sleep_time=0, dirlist=None, return_code=None, echo=False, wait=True, cookies='', timeout=1):
         """
         :param url: Sans URL
         :param threadline: Thread line
@@ -414,6 +414,7 @@ class DirScan:
         self.print_list = echo
         self.wait = wait
         self.url = url
+        self.timeout = timeout
         self.threadline = threadline
         self.sleep_time = sleep_time
         self.results = []
@@ -451,7 +452,7 @@ class DirScan:
                 "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
                 "Te": "trailers", "Connection": "close"}
             try:
-                response = requests.get(self.url + path, headers=browser, verify=False)
+                response = requests.get(self.url + path, headers=browser, verify=False, timeout=self.timeout)
                 time.sleep(self.sleep_time)
                 # 将符合条件的扫描结果添加到results列表
                 if response.status_code in self.return_code:
@@ -479,7 +480,7 @@ class DirScan:
 
 class UrlScan:
     # 网页存活扫描
-    def __init__(self, url_list, threadline=10, sleep_time=0, return_code=None, echo=False, wait=True, cookies=''):
+    def __init__(self, url_list, threadline=10, sleep_time=0, return_code=None, echo=False, wait=True, timeout=1, cookies=''):
         """
         :param url_list: Sans URL
         :param threadline: Thread line
@@ -495,6 +496,7 @@ class UrlScan:
         self.wait = wait
         self.url_list = url_list
         self.threadline = threadline
+        self.timeout = timeout
         self.sleep_time = sleep_time
         self.results = []
         self.results_code = []
@@ -518,7 +520,7 @@ class UrlScan:
                 "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
                 "Te": "trailers", "Connection": "close"}
             try:
-                response = requests.get(url, headers=browser, verify=False)
+                response = requests.get(url, headers=browser, verify=False, timeout=self.timeout)
                 time.sleep(self.sleep_time)
                 # 将符合条件的扫描结果添加到results列表
                 if response.status_code in self.return_code:
@@ -555,7 +557,7 @@ class UrlScan:
 
 
 class DomainScan:
-    def __init__(self, domain, threadline=10, sleep_time=0, domainlist=None, return_code=None, echo=False, wait=True):
+    def __init__(self, domain, threadline=10, sleep_time=0, domainlist=None, return_code=None, echo=False, wait=True, timeout = 1):
         """
         :param domain: Sans domain
         :param threadline: Thread line
@@ -567,6 +569,7 @@ class DomainScan:
         """
         self.results_title = []
         self.q = None
+        self.timeout = timeout
         self.print_list = echo
         self.wait = wait
         self.domain = domain
@@ -603,7 +606,7 @@ class DomainScan:
                 "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
                 "Te": "trailers", "Connection": "close"}
             try:
-                response = requests.get(f"http://{domain}.{self.domain}/", headers=browser, verify=False)
+                response = requests.get(f"http://{domain}.{self.domain}/", headers=browser, verify=False, timeout=self.timeout)
                 time.sleep(self.sleep_time)
                 # 将符合条件的扫描结果添加到results列表
                 if response.status_code in self.return_code:
