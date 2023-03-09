@@ -2,8 +2,6 @@
 
 [青少年CTF训练平台](https://www.qsnctf.com/)是一个公益、免费、供给全国青少年学习、训练的CTF在线平台。
 
-<div align=center><img src="https://bbs.qsnctf.com/template/laidian_yx_a3/laid_src/logo.png"></div>
-
 [（本仓库）](https://github.com/Moxin1044/qsnctf-python)qsnctf是青少年CTF训练平台进行编写的一个Python包程序，意图在Python中为大家快速使用一些CTF常用功能开发的开源包。这里有很多CTF常用功能，如Base编码、hash加密，甚至少见的社会主义核心价值观编码、quipqiup等都在其中。
 
 注意：2023年01月09日发布的Ver:0.0.8.7已经支持了压缩包密码破解和下面的所有功能，Function的文档准备迁移至：https://docs.qsnctf.com/
