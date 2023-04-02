@@ -55,4 +55,21 @@ def calculate_discounted_value(future_value, growth_rate):
     基期计算 基期量=现期量/（1+增长率）
     """
     current_value = future_value / (1 + growth_rate)
-    return str(current_value)
+    return current_value
+
+
+def differential_sequence_ask_n_value(a1, d, n):
+    """
+    求等差数列第n项
+    """
+    an = a1 + (n - 1) * d
+    return {an}
+
+
+def differential_sequence_ask_n_sum(a1, d, n):
+    """
+    求等差数列n项和
+    """
+    an = a1 + (n - 1) * d
+    Sn = n / 2 * (a1 + an)
+    return Sn
