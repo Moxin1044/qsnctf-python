@@ -4,3 +4,4 @@ from .misc import *
 from .crypto import *
 from .api import *
 from .web import *
+from .math import *
