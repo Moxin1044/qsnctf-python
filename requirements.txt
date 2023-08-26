@@ -1,4 +1,4 @@
-PyExecJS
+PyExecJS2
 pybase62
 base58
 requests
