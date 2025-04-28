@@ -16,6 +16,7 @@ import threading
 import uuid
 from qsnctf.auxiliary import read_file_to_list, is_http_or_https_url, normalize_url
 import rarfile
+from qsnctf.cvecodepy import encode,decode
 
 
 def get_uuid():
@@ -24,18 +25,12 @@ def get_uuid():
 
 def Chinese_socialism_encode(string):
     # 社会主义核心价值观编码
-    package_path = os.path.abspath(os.path.dirname(__file__))
-    file_path = os.path.join(package_path, 'plugin', 'js', 'cvencode.js')
-    content = execjs.compile(js_from_file(file_path))
-    return str(content.call('encode', string))
+    return encode(string)
 
 
 def Chinese_socialism_decode(string):
     # 社会主义核心价值观解码
-    package_path = os.path.abspath(os.path.dirname(__file__))
-    file_path = os.path.join(package_path, 'plugin', 'js', 'cvencode.js')
-    content = execjs.compile(js_from_file(file_path))
-    return str(content.call('decode', string))
+    return decode(string)
 
 
 def string_reverse(string):
