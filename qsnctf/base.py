@@ -4,7 +4,6 @@
 import base64
 import qsnctf.plugin.python.python3base92
 import struct
-import base62
 import base58
 
 
@@ -153,12 +152,32 @@ def base64_decode_custom(source_text, custom_table, encoding="utf-8", decoding="
         return str(e)
 
 
-def base62_encode(ints):
-    return base62.encode(ints)
+def base62_encode(n):
+    """Encode an integer to a base62 string."""
+    CHARSET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+    BASE = 62
+    if not isinstance(n, int):
+        raise TypeError("Expected int object, not {}".format(type(n).__name__))
+    if n == 0:
+        return CHARSET[0]
+    result = []
+    while n > 0:
+        n, rem = divmod(n, BASE)
+        result.append(CHARSET[rem])
+    return ''.join(reversed(result))
 
-
-def base62_decode(text):
-    return base62.decode(text)
+def base62_decode(s):
+    """Decode a base62 string to an integer."""
+    CHARSET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+    BASE = 62
+    if not isinstance(s, str):
+        raise TypeError("Expected str object, not {}".format(type(s).__name__))
+    n = 0
+    for char in s:
+        if char not in CHARSET:
+            raise ValueError(f"Invalid character '{char}' in base62 string")
+        n = n * BASE + CHARSET.index(char)
+    return n
 
 
 def base58_encode(text, encoding="utf-8", decoding="utf-8"):
