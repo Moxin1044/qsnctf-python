@@ -2646,7 +2646,7 @@ print(a) # 95e2d7d428f1b4d007be25dfd454131796f6fa2162662ec34fe8a9aa52f463f5021d5
 
 ##### Development environment
 
-`Windows11 + Python3.11 + PyCharm 2022.3.1 (Professional Edition)`
+`Windows11 + Python3.11`
 
 ##### Usage environment
 

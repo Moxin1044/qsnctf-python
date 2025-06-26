@@ -212,7 +212,7 @@ print(b)
 
 ### 开发环境
 
-`Windows11 + Python3.11 + PyCharm 2022.3.1 (Professional Edition)`
+`Windows11 + Python3.11`
 
 ### 使用环境
 
