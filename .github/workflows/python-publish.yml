@@ -43,7 +43,7 @@ jobs:
             setup.py
 
       - name: Install build tools
-        run: python -m pip install --upgrade build twine
+        run: python -m pip install --upgrade build setuptools twine
 
       - name: Validate tag matches package version
         shell: bash
