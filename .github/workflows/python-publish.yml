@@ -95,6 +95,8 @@ jobs:
 
       - name: Publish distributions with Trusted Publishing
         uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          skip-existing: true
 
   github-release:
     name: Create GitHub Release
@@ -113,6 +115,7 @@ jobs:
       - name: Create release and upload distributions
         env:
           GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
         shell: bash
         run: |
           if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
