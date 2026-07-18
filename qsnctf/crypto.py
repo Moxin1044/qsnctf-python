@@ -202,7 +202,7 @@ def atbash_cipher(text):
     mapping.update({chr(i): chr(ord('a') + ord('z') - i) for i in range(ord('a'), ord('z') + 1)})
 
     # 加密
-    encrypted_text = ''.join(mapping[c] if c.isalpha() else c for c in text)
+    encrypted_text = ''.join(mapping.get(c, c) for c in text)
     return encrypted_text
 
 

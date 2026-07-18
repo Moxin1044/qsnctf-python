@@ -56,6 +56,19 @@ FILE
 
 然后使用help(qsnctf.PACKAGE CONTENTS)来查看具体的使用方法
 
+## 安全默认行为
+
+从当前版本开始，网络扫描、压缩包爆破和消息/API 客户端在构造对象时不会自动执行操作，需要显式调用对应方法：
+
+`python
+scanner = DirScan("https://example.com", dirlist=["/admin"])
+scanner.run()
+
+webhook = FeishuWebhook("标题", "内容", "token")
+webhook.send()
+`
+
+如需兼容原有的一行式调用，可传入 uto_run=True、uto_send=True、uto_solve=True 或 uto_validate=True。所有 HTTP 请求现在默认设置超时，Web 请求默认验证 TLS 证书。
 ## 演示
 
 查看`base`的使用方法

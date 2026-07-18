@@ -4,7 +4,10 @@
 import base64
 import qsnctf.plugin.python.python3base92
 import struct
-import base58
+try:
+    import base58
+except ImportError:  # Optional dependency: only Base58 needs it.
+    base58 = None
 
 
 # python3base92: https://github.com/Moxin1044/Python3Base92
@@ -145,8 +148,10 @@ def base64_decode_custom(source_text, custom_table, encoding="utf-8", decoding="
     try:
         STANDARD_ALPHABET = b'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
         CUSTOM_ALPHABET = custom_table.encode(encoding)
-        encode_typeTRANS = bytes.maketrans(STANDARD_ALPHABET, CUSTOM_ALPHABET)
-        result_text = base64.b64decode(source_text.encode(encoding)).translate(encode_typeTRANS).decode(decoding)
+        if len(CUSTOM_ALPHABET) != len(STANDARD_ALPHABET):
+            raise ValueError("custom_table must contain exactly 64 characters")
+        decode_translation = bytes.maketrans(CUSTOM_ALPHABET, STANDARD_ALPHABET)
+        result_text = base64.b64decode(source_text.encode(encoding).translate(decode_translation)).decode(decoding)
         return result_text
     except Exception as e:
         return str(e)
@@ -181,10 +186,14 @@ def base62_decode(s):
 
 
 def base58_encode(text, encoding="utf-8", decoding="utf-8"):
+    if base58 is None:
+        raise ImportError("base58_encode requires the optional 'base58' dependency")
     return base58.b58encode(text.encode(encoding)).decode(decoding)
 
 
 def base58_decode(text, encoding="utf-8", decoding="utf-8"):
+    if base58 is None:
+        raise ImportError("base58_decode requires the optional 'base58' dependency")
     return base58.b58decode(text.encode(encoding)).decode(decoding)
 
 

@@ -1,4 +1,12 @@
-import sympy  # 解方程需要
+try:
+    import sympy  # 解方程需要
+except ImportError:
+    sympy = None
+
+
+def _require_sympy():
+    if sympy is None:
+        raise ImportError("equation solving requires the optional 'sympy' dependency")
 
 
 def gcd(a, b):
@@ -22,6 +30,7 @@ def Solving_equations1(eq_str):
     解方程，需要用Python的数学方式传入方程表达式
     注意：需要用x设置未知数
     """
+    _require_sympy()
     x = sympy.symbols('x')
     lhs_str, rhs_str = eq_str.split("=")
     lhs_expr = sympy.sympify(lhs_str.strip())
@@ -36,6 +45,7 @@ def Solving_equations2(eq_str1, eq_str2):
     解方程，需要用Python的数学方式传入方程表达式(两个方程组，也就是二元一次)
     注意：需要用x和y设置未知数
     """
+    _require_sympy()
     x, y = sympy.symbols('x y')
     lhs_str1, rhs_str1 = eq_str1.split("=")
     lhs_str2, rhs_str2 = eq_str2.split("=")
@@ -63,7 +73,7 @@ def differential_sequence_ask_n_value(a1, d, n):
     求等差数列第n项
     """
     an = a1 + (n - 1) * d
-    return {an}
+    return an
 
 
 def differential_sequence_ask_n_sum(a1, d, n):

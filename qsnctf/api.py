@@ -1,14 +1,28 @@
 import qsnctf.plugin.python.operation
-import requests
+try:
+    import requests
+except ImportError:
+    requests = None
 import json
 import os
+
+DEFAULT_TIMEOUT = 10
+
+
+def _request(method, url, **kwargs):
+    if requests is None:
+        raise ImportError("API features require the optional 'requests' dependency")
+    kwargs.setdefault("timeout", DEFAULT_TIMEOUT)
+    response = requests.request(method, url, **kwargs)
+    response.raise_for_status()
+    return response
 
 
 # 这里的操作一般都是需要联网的，如果是线下赛请确认主办方允许联网使用
 
 
 class quipqiup:
-    def __init__(self, ciphertext, clues=''):
+    def __init__(self, ciphertext, clues='', auto_solve=False):
         self.json = None
         self.text = None
         self.list = None
@@ -23,19 +37,25 @@ class quipqiup:
         self.ciphertext = ciphertext
         self.clues = clues
         self.url = 'http://www.quipqiup.com/'
+        self.id = None
+        if auto_solve:
+            self.solve()
+
+    def solve(self):
         self.id = self.quipqiup_get_id()
         self.quipqiup_return()
+        return self
 
     def quipqiup_get_id(self):
         url = f"{self.url}solve"
         data = {"ciphertext": self.ciphertext, "clues": self.clues, "mode": "auto", "was_auto": True, "was_clue": False}
-        response = requests.post(url, headers=self.headers, json=data).json()
+        response = _request("POST", url, headers=self.headers, json=data).json()
         return response['id']
 
     def quipqiup_return(self):
         url = f"{self.url}status"
         data = {"id": int(self.id)}
-        response_data = requests.post(url, headers=self.headers, json=data).json()
+        response_data = _request("POST", url, headers=self.headers, json=data).json()
         self.json = response_data  # json 直接返回requests的response json
         return_list = []
         for response_list in response_data['solutions']:
@@ -46,7 +66,7 @@ class quipqiup:
 
 class FeishuWebhook:
     # 遵循CamelCase命名
-    def __init__(self, title, message, token, send_type='text'):
+    def __init__(self, title, message, token, send_type='text', auto_send=False):
         """
         :param title: send_title
         :param message: send_message
@@ -61,7 +81,8 @@ class FeishuWebhook:
             "charset": "utf-8"
         }
         self.send_type = send_type
-        self.send()
+        if auto_send:
+            self.send()
 
     def send(self):
         if self.send_type == 'text':
@@ -97,11 +118,11 @@ class FeishuWebhook:
         else:
             raise ValueError("Invalid send_type")
         data = json.dumps(data, ensure_ascii=True).encode("utf-8")
-        requests.post(self.url, data=data, headers=self.headers)
+        _request("POST", self.url, data=data, headers=self.headers)
 
 
 class DingTalk:
-    def __init__(self, title, message, token):
+    def __init__(self, title, message, token, auto_send=False):
         """
         :param title: send_title
         :param message: send_message
@@ -114,7 +135,8 @@ class DingTalk:
             "Content-Type": "application/json",
             "charset": "utf-8"
         }
-        self.send()
+        if auto_send:
+            self.send()
 
     def send(self):
         data = {
@@ -125,7 +147,7 @@ class DingTalk:
                 }
         }
         data = json.dumps(data, ensure_ascii=True).encode("utf-8")
-        requests.post(self.url, data=data, headers=self.headers)
+        _request("POST", self.url, data=data, headers=self.headers)
 
 
 class ThreatBook:
@@ -139,7 +161,7 @@ class ThreatBook:
             'resource': ip,
             'lang': 'zh'
         }
-        q = requests.post(url=api, data=data)
+        q = _request("POST", url=api, data=data)
         """ 引用
         q_data = json.loads(q.text)
         if q_data['response_code'] == 0:
@@ -189,7 +211,7 @@ class ThreatBook:
         files = {
             'file': (file_name, open(os.path.join(file_dir, file_name), 'rb'))
         }
-        response = requests.post(url, data=fields, files=files)
+        response = _request("POST", url, data=fields, files=files)
         return response.json()
 
     def file_report_multiengines(self, sha256):
@@ -208,7 +230,7 @@ class ThreatBook:
             'apikey': self.key,
             'sha256': sha256
         }
-        response = requests.get(url, params=params)
+        response = _request("GET", url, params=params)
         return response.json()
 
     def file_report(self, sha256, sandbox_type='win7_sp1_enx64_office2013'):
@@ -223,27 +245,28 @@ class ThreatBook:
             'sandbox_type': sandbox_type,
             'sha256': sha256
         }
-        response = requests.get(url, params=params)
+        response = _request("GET", url, params=params)
         return response.json()
 
 
 class FOFA:
-    def __init__(self, email, key, proxy=""):
+    def __init__(self, email, key, proxy="", auto_validate=False):
         self.username = None
         self.email_check = None
         self.email = email
         self.key = key
         self.url = 'https://fofa.info/api/v1'
         self.proxy = proxy
-        self.get_userinfo()
+        if auto_validate:
+            self.get_userinfo()
 
     def check_fofa_config(self):
-        return f"Email:{self.email} Key:{self.key} Proxy:{self.proxy}"
+        return f"Email:{self.email} Key configured:{bool(self.key)} Proxy:{self.proxy}"
 
     def get_userinfo(self):
         # Check Email and key
-        url = f"{self.url}/info/my?email={self.email}&key={self.key}"
-        response = qsnctf.plugin.python.operation.send_get_json(url, self.proxy)
+        url = f"{self.url}/info/my"
+        response = qsnctf.plugin.python.operation.send_get_json(url, self.proxy, params={"email": self.email, "key": self.key})
         if response['error']:
             return response['errmsg']
         else:
@@ -257,8 +280,8 @@ class FOFA:
 
     def userinfo(self):
         # Check Email and key
-        url = f"{self.url}/info/my?email={self.email_check}&key={self.key}"
-        response = qsnctf.plugin.python.operation.send_get_json(url, self.proxy)
+        url = f"{self.url}/info/my"
+        response = qsnctf.plugin.python.operation.send_get_json(url, self.proxy, params={"email": self.email_check, "key": self.key})
         if response['error']:
             return response['errmsg']
         else:
@@ -268,9 +291,9 @@ class FOFA:
         if field is None:
             field = ['ip', 'host', 'port']
         fields = ','.join(field)
-        query = qsnctf.plugin.python.operation.get_base64_url(query_text)
-        url = f"{self.url}/search/all?email={self.email_check}&key={self.key}&qbase64={query}&fields={fields}&page={page}&size={size}&full={full}"
-        response = qsnctf.plugin.python.operation.send_get_json(url, self.proxy)
+        query = qsnctf.plugin.python.operation.get_base64(query_text)
+        url = f"{self.url}/search/all"
+        response = qsnctf.plugin.python.operation.send_get_json(url, self.proxy, params={"email": self.email_check, "key": self.key, "qbase64": query, "fields": fields, "page": page, "size": size, "full": full})
         '''
             # 考虑到生产环境，所以不可以在这里直接返回errmsg，统一返回response即可。
             # 下同
@@ -285,14 +308,14 @@ class FOFA:
         if field is None:
             field = ['title']
         fields = ','.join(field)
-        query = qsnctf.plugin.python.operation.get_base64_url(query_text)
-        url = f"{self.url}/search/stats?fields={fields}&qbase64={query}&email={self.email_check}&key={self.key}"
-        response = qsnctf.plugin.python.operation.send_get_json(url, self.proxy)
+        query = qsnctf.plugin.python.operation.get_base64(query_text)
+        url = f"{self.url}/search/stats"
+        response = qsnctf.plugin.python.operation.send_get_json(url, self.proxy, params={"fields": fields, "qbase64": query, "email": self.email_check, "key": self.key})
         return response
 
     def search_host(self, host, detail=False):
-        url = f"{self.url}/host/{host}?detail={detail}&email={self.email_check}&key={self.key}"
-        response = qsnctf.plugin.python.operation.send_get_json(url, self.proxy)
+        url = f"{self.url}/host/{host}"
+        response = qsnctf.plugin.python.operation.send_get_json(url, self.proxy, params={"detail": detail, "email": self.email_check, "key": self.key})
         return response
 
 
@@ -313,7 +336,7 @@ class DaSheng:
             'grant_type': 'client_credentials',
             'scope': 'openapi'
         }
-        q = requests.post(url=api, data=data)
+        q = _request("POST", url=api, data=data)
         data = q.json()
         access_token = data['access_token']
         return access_token
@@ -326,8 +349,8 @@ class DaSheng:
         files = {
             'file': (open(os.path.join(file_dir, file_name), 'rb'))
         }
-        response = requests.post(api, headers=headers, files=files)
-        # q = requests.post(url=api, headers=headers)
+        response = _request("POST", api, headers=headers, files=files)
+        # q = _request("POST", url=api, headers=headers)
         return response.json()
 
     def search(self, sha1):
@@ -335,7 +358,7 @@ class DaSheng:
         headers = {
             'Authorization': 'Bearer ' + self.token()
         }
-        response = requests.get(api, headers=headers)
+        response = _request("GET", api, headers=headers)
         return response.json()
 
 
@@ -359,7 +382,7 @@ class ZeroZeon:
             'Host': '0.zone',
             'Connection': 'keep-alive'
         }
-        response = requests.request("POST", url, headers=headers, data=payload)
+        response = _request("POST", url, headers=headers, data=payload)
         return response.json()
 
 
@@ -377,7 +400,7 @@ class GoCQHttp:
             "user_id": user_id,
             "message": text
         }
-        return requests.post("http://" + self.ip + "/send_private_msg", data=data, headers=body, proxies=self.proxy)
+        return _request("POST", "http://" + self.ip + "/send_private_msg", data=data, headers=body, proxies=self.proxy)
 
     def send_group_msg(self, qq_group_id, text):
         body = {
@@ -387,7 +410,7 @@ class GoCQHttp:
             "group_id": qq_group_id,
             "message": text
         }
-        return requests.post("http://" + self.ip + "/send_group_msg", data=data, headers=body, proxies=self.proxy)
+        return _request("POST", "http://" + self.ip + "/send_group_msg", data=data, headers=body, proxies=self.proxy)
 
     def send_msg(self, message_type, user_id, group_id, message, auto_escape):
         body = {
@@ -407,7 +430,7 @@ class GoCQHttp:
                 "message": message,
                 "auto_escape": auto_escape
             }
-        return requests.post("http://" + self.ip + "/send_group_msg", data=data, headers=body, proxies=self.proxy)
+        return _request("POST", "http://" + self.ip + "/send_group_msg", data=data, headers=body, proxies=self.proxy)
 
     def delete_msg(self, message_id):
         body = {
@@ -416,7 +439,7 @@ class GoCQHttp:
         data = {
             "message_id": message_id
         }
-        return requests.post("http://" + self.ip + "/delete_msg", data=data, headers=body, proxies=self.proxy)
+        return _request("POST", "http://" + self.ip + "/delete_msg", data=data, headers=body, proxies=self.proxy)
 
     def set_group_kick(self, group_id, user_id, reject_add_request):
         body = {
@@ -427,7 +450,7 @@ class GoCQHttp:
             "user_id": user_id,
             "reject_add_request": reject_add_request
         }
-        return requests.post("http://" + self.ip + "/set_group_kick", data=data, headers=body, proxies=self.proxy)
+        return _request("POST", "http://" + self.ip + "/set_group_kick", data=data, headers=body, proxies=self.proxy)
 
     def set_group_ban(self, group_id, user_id, duration):
         body = {
@@ -438,7 +461,7 @@ class GoCQHttp:
             "user_id": user_id,
             "duration": duration
         }
-        return requests.post("http://" + self.ip + "/set_group_ban", data=data, headers=body, proxies=self.proxy)
+        return _request("POST", "http://" + self.ip + "/set_group_ban", data=data, headers=body, proxies=self.proxy)
 
     def set_group_whole_ban(self, group_id, enable):
         body = {
@@ -448,7 +471,7 @@ class GoCQHttp:
             "group_id": group_id,
             "enable": enable
         }
-        return requests.post("http://" + self.ip + "/set_group_whole_ban", data=data, headers=body, proxies=self.proxy)
+        return _request("POST", "http://" + self.ip + "/set_group_whole_ban", data=data, headers=body, proxies=self.proxy)
 
     def set_group_card(self, group_id, user_id, card):
         body = {
@@ -459,7 +482,7 @@ class GoCQHttp:
             "user_id": user_id,
             "card": card
         }
-        return requests.post("http://" + self.ip + "/set_group_card", data=data, headers=body, proxies=self.proxy)
+        return _request("POST", "http://" + self.ip + "/set_group_card", data=data, headers=body, proxies=self.proxy)
 
     def set_group_leave(self, group_id, is_dismiss):
         body = {
@@ -469,7 +492,7 @@ class GoCQHttp:
             "group_id": group_id,
             "is_dismiss": is_dismiss
         }
-        return requests.post("http://" + self.ip + "/set_group_leave", data=data, headers=body, proxies=self.proxy)
+        return _request("POST", "http://" + self.ip + "/set_group_leave", data=data, headers=body, proxies=self.proxy)
 
     def send_group_sign(self, group_id):
         body = {
@@ -478,7 +501,7 @@ class GoCQHttp:
         data = {
             "group_id": group_id,
         }
-        return requests.post("http://" + self.ip + "/send_group_sign", data=data, headers=body, proxies=self.proxy)
+        return _request("POST", "http://" + self.ip + "/send_group_sign", data=data, headers=body, proxies=self.proxy)
 
     def set_friend_add_request(self, flag, approve, remark):
         body = {
@@ -489,7 +512,7 @@ class GoCQHttp:
             "sub_type": approve,
             "remark": remark
         }
-        return requests.post("http://" + self.ip + "/set_friend_add_request", data=data, headers=body,
+        return _request("POST", "http://" + self.ip + "/set_friend_add_request", data=data, headers=body,
                              proxies=self.proxy)
 
     def set_group_add_request(self, flag, sub_type, approve, reason):
@@ -502,14 +525,14 @@ class GoCQHttp:
             "approve": approve,
             "reason": reason
         }
-        return requests.post("http://" + self.ip + "/set_group_add_request", data=data, headers=body,
+        return _request("POST", "http://" + self.ip + "/set_group_add_request", data=data, headers=body,
                              proxies=self.proxy)
 
     def get_login_info(self):
         body = {
             "Authorization": self.auth
         }
-        return requests.post("http://" + self.ip + "/get_login_info", headers=body, proxies=self.proxy)
+        return _request("POST", "http://" + self.ip + "/get_login_info", headers=body, proxies=self.proxy)
 
     def get_stranger_info(self, user_id):
         body = {
@@ -519,7 +542,7 @@ class GoCQHttp:
             "user_id": user_id,
             "no_cache": True
         }
-        return requests.post("http://" + self.ip + "/get_stranger_info", data=data, headers=body, proxies=self.proxy)
+        return _request("POST", "http://" + self.ip + "/get_stranger_info", data=data, headers=body, proxies=self.proxy)
 
     def set_group_special_title(self, group_id, user_id, special_title, duration):
         body = {
@@ -531,7 +554,7 @@ class GoCQHttp:
             "special_title": special_title,
             "duration": duration
         }
-        return requests.post("http://" + self.ip + "/set_group_special_title", data=data, headers=body,
+        return _request("POST", "http://" + self.ip + "/set_group_special_title", data=data, headers=body,
                              proxies=self.proxy)
 
     def set_qq_profile(self, nickname, company, email, college, personal_note):
@@ -545,19 +568,19 @@ class GoCQHttp:
             "college": college,
             "personal_note": personal_note
         }
-        return requests.post("http://" + self.ip + "/set_qq_profile", data=data, headers=body, proxies=self.proxy)
+        return _request("POST", "http://" + self.ip + "/set_qq_profile", data=data, headers=body, proxies=self.proxy)
 
     def get_friend_list(self):
         body = {
             "Authorization": self.auth
         }
-        return requests.post("http://" + self.ip + "/get_friend_list", headers=body, proxies=self.proxy)
+        return _request("POST", "http://" + self.ip + "/get_friend_list", headers=body, proxies=self.proxy)
 
     def get_unidirectional_friend_list(self):
         body = {
             "Authorization": self.auth
         }
-        return requests.post("http://" + self.ip + "/get_unidirectional_friend_list", headers=body, proxies=self.proxy)
+        return _request("POST", "http://" + self.ip + "/get_unidirectional_friend_list", headers=body, proxies=self.proxy)
 
     def delete_friend(self, user_id):
         body = {
@@ -566,7 +589,7 @@ class GoCQHttp:
         data = {
             "user_id": user_id
         }
-        return requests.post("http://" + self.ip + "/delete_friend", data=data, headers=body, proxies=self.proxy)
+        return _request("POST", "http://" + self.ip + "/delete_friend", data=data, headers=body, proxies=self.proxy)
 
     def get_group_info(self, group_id):
         body = {
@@ -576,7 +599,7 @@ class GoCQHttp:
             "group_id": group_id,
             "no_cache": True
         }
-        return requests.post("http://" + self.ip + "/get_group_info", data=data, headers=body, proxies=self.proxy)
+        return _request("POST", "http://" + self.ip + "/get_group_info", data=data, headers=body, proxies=self.proxy)
 
     def get_group_list(self):
         body = {
@@ -585,7 +608,7 @@ class GoCQHttp:
         data = {
             "no_cache": True
         }
-        return requests.post("http://" + self.ip + "/get_group_list", data=data, headers=body, proxies=self.proxy)
+        return _request("POST", "http://" + self.ip + "/get_group_list", data=data, headers=body, proxies=self.proxy)
 
     def get_group_member_info(self, group_id, user_id):
         body = {
@@ -596,7 +619,7 @@ class GoCQHttp:
             "user_id": user_id,
             "no_cache": True
         }
-        return requests.post("http://" + self.ip + "/get_group_member_info", data=data, headers=body,
+        return _request("POST", "http://" + self.ip + "/get_group_member_info", data=data, headers=body,
                              proxies=self.proxy)
 
     def get_group_member_list(self, group_id):
@@ -607,7 +630,7 @@ class GoCQHttp:
             "group_id": group_id,
             "no_cache": True
         }
-        return requests.post("http://" + self.ip + "/get_group_member_list", data=data, headers=body,
+        return _request("POST", "http://" + self.ip + "/get_group_member_list", data=data, headers=body,
                              proxies=self.proxy)
 
     def get_group_honor_info(self, group_id, types):
@@ -618,7 +641,7 @@ class GoCQHttp:
             "group_id": group_id,
             "type": types
         }
-        return requests.post("http://" + self.ip + "/get_group_honor_info", data=data, headers=body, proxies=self.proxy)
+        return _request("POST", "http://" + self.ip + "/get_group_honor_info", data=data, headers=body, proxies=self.proxy)
 
     def set_group_portrait(self, group_id, file):
         body = {
@@ -629,7 +652,7 @@ class GoCQHttp:
             "file": file,
             "cache": 0
         }
-        return requests.post("http://" + self.ip + "/get_group_honor_info", data=data, headers=body, proxies=self.proxy)
+        return _request("POST", "http://" + self.ip + "/get_group_honor_info", data=data, headers=body, proxies=self.proxy)
 
     def upload_private_file(self, user_id, file, name):
         body = {
@@ -640,7 +663,7 @@ class GoCQHttp:
             "file": file,
             "name": name
         }
-        return requests.post("http://" + self.ip + "/upload_private_file", data=data, headers=body, proxies=self.proxy)
+        return _request("POST", "http://" + self.ip + "/upload_private_file", data=data, headers=body, proxies=self.proxy)
 
     def upload_group_file(self, group_id, file, name, folder=""):
         body = {
@@ -652,7 +675,7 @@ class GoCQHttp:
             "name": name,
             "folder": folder
         }
-        return requests.post("http://" + self.ip + "/upload_group_file", data=data, headers=body, proxies=self.proxy)
+        return _request("POST", "http://" + self.ip + "/upload_group_file", data=data, headers=body, proxies=self.proxy)
 
     def get_group_file_system_info(self, group_id):
         body = {
@@ -661,7 +684,7 @@ class GoCQHttp:
         data = {
             "group_id": group_id
         }
-        return requests.post("http://" + self.ip + "/get_group_file_system_info", data=data, headers=body,
+        return _request("POST", "http://" + self.ip + "/get_group_file_system_info", data=data, headers=body,
                              proxies=self.proxy)
 
     def get_group_root_files(self, group_id):
@@ -671,7 +694,7 @@ class GoCQHttp:
         data = {
             "group_id": group_id
         }
-        return requests.post("http://" + self.ip + "/get_group_root_files", data=data, headers=body, proxies=self.proxy)
+        return _request("POST", "http://" + self.ip + "/get_group_root_files", data=data, headers=body, proxies=self.proxy)
 
     def get_group_files_by_folder(self, group_id, folder_id):
         body = {
@@ -681,7 +704,7 @@ class GoCQHttp:
             "group_id": group_id,
             "folder_id": folder_id
         }
-        return requests.post("http://" + self.ip + "/get_group_files_by_folder", data=data, headers=body,
+        return _request("POST", "http://" + self.ip + "/get_group_files_by_folder", data=data, headers=body,
                              proxies=self.proxy)
 
     def create_group_file_folder(self, group_id, name, parent_id="/"):
@@ -693,7 +716,7 @@ class GoCQHttp:
             "name": name,
             "parent_id": parent_id
         }
-        return requests.post("http://" + self.ip + "/create_group_file_folder", data=data, headers=body,
+        return _request("POST", "http://" + self.ip + "/create_group_file_folder", data=data, headers=body,
                              proxies=self.proxy)
 
     def delete_group_folder(self, group_id, folder_id):
@@ -704,7 +727,7 @@ class GoCQHttp:
             "group_id": group_id,
             "folder_id": folder_id
         }
-        return requests.post("http://" + self.ip + "/delete_group_folder", data=data, headers=body, proxies=self.proxy)
+        return _request("POST", "http://" + self.ip + "/delete_group_folder", data=data, headers=body, proxies=self.proxy)
 
     def delete_group_file(self, group_id, file_id, busid):
         body = {
@@ -715,7 +738,7 @@ class GoCQHttp:
             "file_id": file_id,
             "busid": busid
         }
-        return requests.post("http://" + self.ip + "/delete_group_file", data=data, headers=body, proxies=self.proxy)
+        return _request("POST", "http://" + self.ip + "/delete_group_file", data=data, headers=body, proxies=self.proxy)
 
     def get_group_file_url(self, group_id, file_id, busid):
         body = {
@@ -726,7 +749,7 @@ class GoCQHttp:
             "file_id": file_id,
             "busid": busid
         }
-        return requests.post("http://" + self.ip + "/get_group_file_url", data=data, headers=body, proxies=self.proxy)
+        return _request("POST", "http://" + self.ip + "/get_group_file_url", data=data, headers=body, proxies=self.proxy)
 
     def _send_group_notice(self, group_id, content, image=""):
         body = {
@@ -737,7 +760,7 @@ class GoCQHttp:
             "content": content,
             "image": image
         }
-        return requests.post("http://" + self.ip + "/_send_group_notice", data=data, headers=body, proxies=self.proxy)
+        return _request("POST", "http://" + self.ip + "/_send_group_notice", data=data, headers=body, proxies=self.proxy)
 
     def _get_group_notice(self, group_id):
         body = {
@@ -746,7 +769,7 @@ class GoCQHttp:
         data = {
             "group_id": group_id
         }
-        return requests.post("http://" + self.ip + "/_get_group_notice", data=data, headers=body, proxies=self.proxy)
+        return _request("POST", "http://" + self.ip + "/_get_group_notice", data=data, headers=body, proxies=self.proxy)
 
     def set_essence_msg(self, message_id):
         body = {
@@ -755,7 +778,7 @@ class GoCQHttp:
         data = {
             "message_id": message_id
         }
-        return requests.post("http://" + self.ip + "/set_essence_msg", data=data, headers=body, proxies=self.proxy)
+        return _request("POST", "http://" + self.ip + "/set_essence_msg", data=data, headers=body, proxies=self.proxy)
 
     def delete_essence_msg(self, message_id):
         body = {
@@ -764,7 +787,7 @@ class GoCQHttp:
         data = {
             "message_id": message_id
         }
-        return requests.post("http://" + self.ip + "/delete_essence_msg", data=data, headers=body, proxies=self.proxy)
+        return _request("POST", "http://" + self.ip + "/delete_essence_msg", data=data, headers=body, proxies=self.proxy)
 
     def get_essence_msg_list(self, group_id):
         body = {
@@ -773,7 +796,7 @@ class GoCQHttp:
         data = {
             "group_id": group_id
         }
-        return requests.post("http://" + self.ip + "/get_essence_msg_list", data=data, headers=body, proxies=self.proxy)
+        return _request("POST", "http://" + self.ip + "/get_essence_msg_list", data=data, headers=body, proxies=self.proxy)
 
     def set_group_name(self, group_id, group_name):
         body = {
@@ -783,7 +806,7 @@ class GoCQHttp:
             "group_id": group_id,
             "group_name": group_name
         }
-        return requests.post("http://" + self.ip + "/get_essence_msg_list", data=data, headers=body, proxies=self.proxy)
+        return _request("POST", "http://" + self.ip + "/get_essence_msg_list", data=data, headers=body, proxies=self.proxy)
 
     def send_reply(self, message, message_id, user_id, group_id):
         self.send_group_msg(group_id, f"[CQ:reply,id={message_id}][CQ:at,qq={user_id}] {message}")
@@ -795,8 +818,8 @@ class Shodan:
         self.key = key
 
     def api_info(self):
-        url = self.api_url + "/api-info" + f"?key={self.key}"
-        response = requests.get(url).json()
+        url = self.api_url + "/api-info"
+        response = _request("GET", url, params={"key": self.key}).json()
         return response
 
 
@@ -805,7 +828,7 @@ class Shodan:
         :param ip: search ip
         :return: request json
         """
-        url = self.api_url + f"/shodan/host/{ip}?key={self.key}"
-        response = requests.get(url).json()
+        url = self.api_url + f"/shodan/host/{ip}"
+        response = _request("GET", url, params={"key": self.key}).json()
         return response
 

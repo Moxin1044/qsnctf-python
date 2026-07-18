@@ -4,7 +4,10 @@
 # 社会主义核心价值观编码
 # 需要将Python目录下>lib>subprocess.py的765行附近的encoding的默认None值修改为utf-8即可。
 import os
-import execjs  # PyExecJS
+try:
+    import execjs  # PyExecJS
+except ImportError:
+    execjs = None
 from qsnctf.auxiliary import js_from_file
 import urllib.parse
 import re
@@ -15,8 +18,29 @@ import time
 import threading
 import uuid
 from qsnctf.auxiliary import read_file_to_list, is_http_or_https_url, normalize_url
-import rarfile
+try:
+    import rarfile
+except ImportError:
+    rarfile = None
 from qsnctf.cvecodepy import encode,decode
+
+
+def _require_execjs():
+    if execjs is None:
+        raise ImportError("JavaScript codecs require the optional 'PyExecJS2' dependency")
+
+
+def _require_rarfile():
+    if rarfile is None:
+        raise ImportError("RAR handling requires the optional 'rarfile' dependency")
+
+
+def _queue_items(work_queue):
+    while True:
+        try:
+            yield work_queue.get_nowait()
+        except queue.Empty:
+            return
 
 
 def get_uuid():
@@ -256,6 +280,7 @@ def html_decode(string):
 
 
 def jsfuck_encode(source_text):
+    _require_execjs()
     # jsfuck_encode
     package_path = os.path.abspath(os.path.dirname(__file__))
     file_path = os.path.join(package_path, 'plugin', 'js', 'jsfuck_encode.js')
@@ -264,6 +289,7 @@ def jsfuck_encode(source_text):
 
 
 def jsfuck_decode(source_text):
+    _require_execjs()
     # jsfuck_decode
     package_path = os.path.abspath(os.path.dirname(__file__))
     file_path = os.path.join(package_path, 'plugin', 'js', 'jsfuck_decode.js')
@@ -272,6 +298,7 @@ def jsfuck_decode(source_text):
 
 
 def aaencode(source_text):
+    _require_execjs()
     # aaencode
     package_path = os.path.abspath(os.path.dirname(__file__))
     file_path = os.path.join(package_path, 'plugin', 'js', 'aaencode.js')
@@ -280,6 +307,7 @@ def aaencode(source_text):
 
 
 def aadecode(source_text):
+    _require_execjs()
     # aadecode
     package_path = os.path.abspath(os.path.dirname(__file__))
     file_path = os.path.join(package_path, 'plugin', 'js', 'aaencode.js')
@@ -349,14 +377,15 @@ def zip_unzip(filename, password=None, members=None, path=None):
 
 
 class ZipPasswordCracking:
-    def __init__(self, filename, threadline=10, sleep_time=0, pass_list=None, path=None):
+    def __init__(self, filename, threadline=10, sleep_time=0, pass_list=None, path=None, auto_run=False):
         self.results = None  # 存储结果
         self.zip_file = filename
         self.pass_list = pass_list
         self.threadline = threadline
         self.sleep_time = sleep_time
         self.path = path
-        self.main()
+        if auto_run:
+            self.main()
 
     def read_pass(self):
         if self.pass_list:
@@ -392,9 +421,7 @@ class ZipPasswordCracking:
                     return False  # 密码错误
 
     def crack(self):
-        while not self.q.empty():
-            # 从队列中取出密码
-            key = self.q.get()
+        for key in _queue_items(self.q):
             if self.crack_password(key):
                 self.results = key
             time.sleep(self.sleep_time)
@@ -419,7 +446,7 @@ class ZipPasswordCracking:
 
 
 class RarPasswordCracking:
-    def __init__(self, filename, threadline=10, sleep_time=0, pass_list=None, path=None):
+    def __init__(self, filename, threadline=10, sleep_time=0, pass_list=None, path=None, auto_run=False):
         self.rar = None
         self.results = None  # 存储结果
         self.rar_file = filename
@@ -427,7 +454,8 @@ class RarPasswordCracking:
         self.threadline = threadline
         self.sleep_time = sleep_time
         self.path = path
-        self.main()
+        if auto_run:
+            self.main()
 
     def read_pass(self):
         if self.pass_list:
@@ -438,20 +466,21 @@ class RarPasswordCracking:
             self.pass_list = read_file_to_list(file_path)
 
     def check_rar_is_passed(self):
+        _require_rarfile()
         self.rar = rarfile.RarFile(self.rar_file)
+        return self.rar.needs_password()
 
     def crack_password(self, password):
+        if self.rar is None:
+            self.check_rar_is_passed()
         try:
-            self.rar.extract(self.rar_file, path=None, pwd=password.encode())
-            print("[+] Password found:", password)
-            return password
-        except:
-            pass
+            self.rar.extractall(path=self.path, pwd=password)
+            return True
+        except (rarfile.Error, OSError):
+            return False
 
     def crack(self):
-        while not self.q.empty():
-            # 从队列中取出密码
-            key = self.q.get()
+        for key in _queue_items(self.q):
             if self.crack_password(key):
                 self.results = key
             time.sleep(self.sleep_time)
