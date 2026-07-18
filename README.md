@@ -4,19 +4,11 @@
 
 [（本仓库）](https://github.com/Moxin1044/qsnctf-python)qsnctf是青少年CTF训练平台进行编写的一个Python包程序，意图在Python中为大家快速使用一些CTF常用功能开发的开源包。这里有很多CTF常用功能，如Base编码、hash加密，甚至少见的社会主义核心价值观编码、quipqiup等都在其中。
 
-注意：2023年01月09日发布的Ver:0.0.8.7已经支持了压缩包密码破解和下面的所有功能，Function的文档准备迁移至：https://docs.qsnctf.com/
-
-首次发布时间预计于2022年01月10日，敬请期待。
+当前项目将长期更新
 
 如果您有好的想法和建议，欢迎与我取得联系：QQ：1044631097。
 
 ![Alt](https://repobeats.axiom.co/api/embed/351178f679198f07b9f9715948c6c3e011834759.svg "Repobeats analytics image")
-
-## 文档
-
-其他语种：[English](https://github.com/Moxin1044/qsnctf-python/blob/master/docs/README_en.md)
-
-函数库：[使用说明](https://docs.qsnctf.com/qsnctf/41250.html)
 
 ## 安装
 
@@ -33,10 +25,6 @@ python setup.py install
 ```bash
 pip install qsnctf
 ```
-
-安装成功会显示
-
-`Successfully installed PyExecJS-1.5.1 qsnctf-0.0.4`
 
 也可以使用以下命令来更新此库
 
