@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup, find_namespace_packages
 import io
 
 with io.open('README.md', encoding='utf-8') as f:
@@ -7,8 +7,9 @@ with io.open('README.md', encoding='utf-8') as f:
 setup(
     name='qsnctf',
     version='0.0.9.3',
+    python_requires='>=3.9',
     install_requires=['PyExecJS2', 'base58', 'requests', 'bs4', 'urllib3', 'rarfile', 'sympy'],
-    packages=find_packages(),
+    packages=find_namespace_packages(include=['qsnctf', 'qsnctf.*']),
     include_package_data=True,
     package_data={'qsnctf': ['plugin/*']},
     url='https://github.com/Moxin1044/qsnctf-python',

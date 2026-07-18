@@ -1,1 +1,3 @@
-recursive-include qsnctf/plugin *
+recursive-include qsnctf/plugin *.js *.py *.txt
+global-exclude *.py[cod]
+global-exclude __pycache__

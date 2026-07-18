@@ -13,3 +13,8 @@ dist-ssr
 __pycache__/
 *.py[cod]
 .pytest_cache/
+
+# Python build and local CI tools
+build/
+*.egg-info/
+.ci-tools/
