@@ -8,7 +8,7 @@ setup(
     name='qsnctf',
     version='0.0.9.3',
     python_requires='>=3.9',
-    install_requires=['PyExecJS2', 'base58', 'requests', 'bs4', 'urllib3', 'rarfile', 'sympy'],
+    install_requires=['exejs', 'base58', 'requests', 'bs4', 'urllib3', 'rarfile', 'sympy'],
     packages=find_namespace_packages(include=['qsnctf', 'qsnctf.*']),
     include_package_data=True,
     package_data={'qsnctf': ['plugin/*']},

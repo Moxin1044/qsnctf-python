@@ -5,7 +5,7 @@
 # 需要将Python目录下>lib>subprocess.py的765行附近的encoding的默认None值修改为utf-8即可。
 import os
 try:
-    import execjs  # PyExecJS
+    import exejs as execjs  # exejs (原 PyExecJS2/PyExecJS 已停止维护, 由 UlionTse/exejs 替代)
 except ImportError:
     execjs = None
 from qsnctf.auxiliary import js_from_file
@@ -27,7 +27,7 @@ from qsnctf.cvecodepy import encode,decode
 
 def _require_execjs():
     if execjs is None:
-        raise ImportError("JavaScript codecs require the optional 'PyExecJS2' dependency")
+        raise ImportError("JavaScript codecs require the optional 'exejs' dependency (pip install exejs)")
 
 
 def _require_rarfile():
