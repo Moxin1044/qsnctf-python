@@ -18,6 +18,7 @@ import time
 import threading
 import uuid
 from qsnctf.auxiliary import read_file_to_list, is_http_or_https_url, normalize_url
+from qsnctf import js_codecs as _js_codecs
 try:
     import rarfile
 except ImportError:
@@ -280,17 +281,15 @@ def html_decode(string):
 
 
 def jsfuck_encode(source_text):
-    _require_execjs()
-    # jsfuck_encode
-    package_path = os.path.abspath(os.path.dirname(__file__))
-    file_path = os.path.join(package_path, 'plugin', 'js', 'jsfuck_encode.js')
-    content = execjs.compile(js_from_file(file_path))
-    return content.call("JSFuck", source_text)
+    # 纯 Python 实现 (jsfuck_py), 无需 JS 引擎
+    # 输出与原 jsfuck_encode.js 逐字节一致 (已交叉验证)
+    return _js_codecs.jsfuck_encode(source_text)
 
 
 def jsfuck_decode(source_text):
     _require_execjs()
-    # jsfuck_decode
+    # jsfuck_decode (需要 JS eval, 无法纯 Python 实现)
+    # 注意: 原 decode 逻辑存在 bug, 对正常 JSFuck 输入亦返回 None
     package_path = os.path.abspath(os.path.dirname(__file__))
     file_path = os.path.join(package_path, 'plugin', 'js', 'jsfuck_decode.js')
     content = execjs.compile(js_from_file(file_path))
@@ -298,21 +297,14 @@ def jsfuck_decode(source_text):
 
 
 def aaencode(source_text):
-    _require_execjs()
-    # aaencode
-    package_path = os.path.abspath(os.path.dirname(__file__))
-    file_path = os.path.join(package_path, 'plugin', 'js', 'aaencode.js')
-    content = execjs.compile(js_from_file(file_path))
-    return content.call("aaencode", source_text)
+    # 纯 Python 实现 (js_codecs), 无需 JS 引擎
+    # 输出与原 aaencode.js 逐字节一致 (已交叉验证)
+    return _js_codecs.aaencode(source_text)
 
 
 def aadecode(source_text):
-    _require_execjs()
-    # aadecode
-    package_path = os.path.abspath(os.path.dirname(__file__))
-    file_path = os.path.join(package_path, 'plugin', 'js', 'aaencode.js')
-    content = execjs.compile(js_from_file(file_path))
-    return content.call("aadecode", source_text)
+    # 纯 Python 实现 (js_codecs), 无需 JS 引擎
+    return _js_codecs.aadecode(source_text)
 
 
 def str_to_hex(string, encoding='utf-8', byteorder='big'):

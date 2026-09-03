@@ -6,9 +6,12 @@ with io.open('README.md', encoding='utf-8') as f:
 
 setup(
     name='qsnctf',
-    version='0.0.9.3',
+    version='0.0.10',
     python_requires='>=3.9',
-    install_requires=['exejs', 'base58', 'requests', 'bs4', 'urllib3', 'rarfile', 'sympy'],
+    install_requires=['base58', 'requests', 'bs4', 'urllib3', 'rarfile', 'sympy'],
+    extras_require={
+        'js': ['exejs'],  # 可选: jsfuck_decode 等需要 JS eval 的少数功能
+    },
     packages=find_namespace_packages(include=['qsnctf', 'qsnctf.*']),
     include_package_data=True,
     package_data={'qsnctf': ['plugin/*']},
