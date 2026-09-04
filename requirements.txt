@@ -1,7 +1,11 @@
-PyExecJS2
+# 运行时核心依赖 (与 setup.py install_requires 保持一致)
 base58
 requests
 bs4
 urllib3
 rarfile
 sympy
+
+# 可选: 少数需要 JS eval 的编解码器 (如 jsfuck_decode)
+# 安装: pip install qsnctf[js]  或 单独 pip install exejs
+# exejs
