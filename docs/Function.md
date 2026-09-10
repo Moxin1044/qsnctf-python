@@ -583,6 +583,57 @@ from qsnctf import *
 DingTalk('青少年CTF', '你好，我是末心', 'xxxx-xxxxx-xxxx-xxxx-xxxxx', auto_send=True)
 ```
 
+### SMTP邮件
+
+#### class-SMTPMail
+
+##### SMTPMail
+
+|   **函数名**   | **返回类型** | **位置** |                **说明**                |
+| :------------: | :----------: | :------: | :------------------------------------: |
+|    SMTPMail    |     None     |  api.py  | SMTP邮件发送（构造时不发送，需显式调用 send()） |
+|   **参数名**   | **是否可空** | **传参类型** |                **说明**                |
+|      host      |    False     |  string  |      SMTP服务器地址，如 smtp.qq.com      |
+|      port      |     True     |   int    | 端口，SSL常用465、STARTTLS常用587、明文常用25（默认465） |
+|    username    |     True     |  string  |          登录用户名，留空则不登录           |
+|    password    |     True     |  string  |    登录密码（QQ/163等邮箱需使用授权码）     |
+|    use_ssl     |     True     |   bool   |         是否使用SSL直连（默认True）         |
+|  use_starttls  |     True     |   bool   | 是否使用STARTTLS升级，优先级高于use_ssl（默认False） |
+|    timeout     |     True     |  float   |          连接与读写超时秒数（默认10）        |
+|     sender     |     True     |  string  |        发件人地址，留空则使用username        |
+
+##### send
+
+|   **函数名**   | **返回类型** | **位置** |         **说明**          |
+| :------------: | :----------: | :------: | :-----------------------: |
+|      send      |     bool     |  api.py  |    发送邮件，成功返回True    |
+|   **参数名**   | **是否可空** | **传参类型** |         **说明**          |
+|       to       |    False     | string/list | 收件人，支持逗号/分号分隔字符串或列表 |
+|    subject     |    False     |  string  |          邮件主题          |
+|    content     |    False     |  string  |          邮件正文          |
+|  content_type  |     True     |  string  | 正文类型：plain、html（默认plain） |
+|       cc       |     True     | string/list |           抄送            |
+|      bcc       |     True     | string/list |      密送（不写入邮件头）    |
+|     sender     |     True     |  string  |           发件人           |
+|  attachments   |     True     |    list  | 附件列表：文件路径 或 (文件名, bytes) |
+|    headers     |     True     |    dict  |         额外邮件头         |
+
+**说明：此功能需要连接网络/邮件服务器，请注意比赛规则进行使用。**
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+mail = SMTPMail('smtp.qq.com', 465, 'xxxxx@qq.com', '授权码')
+mail.send('to@example.com', '题目通知', '这是一封测试邮件', sender='xxxxx@qq.com')
+
+# 群发 + 抄送/密送 + HTML 正文 + 附件
+SMTPMail('smtp.qq.com', 465, 'xxxxx@qq.com', '授权码').send(
+    ['a@example.com', 'b@example.com'], '标题', '<b>HTML正文</b>',
+    content_type='html', cc='c@example.com', attachments=['report.pdf'])
+```
+
 ### 微步在线
 
 #### class-ThreatBook
@@ -2059,6 +2110,32 @@ print(zip.results) # 123123
 from qsnctf import *
 
 zip_unzip("pass.zip")
+```
+
+#### 词频统计
+
+##### word_freq
+
+|  **函数名**  | **返回类型** | **位置** |              **说明**               |
+| :----------: | :----------: | :------: | :---------------------------------: |
+|  word_freq   |     dict     | misc.py  | 英文单词词频统计（单词提取 + 频率统计），按出现次数降序返回 |
+|  **参数名**  | **是否可空** | **传参类型** |              **说明**               |
+|     text     |    False     |  string  |            待统计的文本             |
+|     top      |     True     |   int    | 仅返回出现次数最多的前N个，0表示全部（默认0） |
+|case_sensitive|     True     |   bool   |     是否区分大小写（默认False）      |
+|  min_length  |     True     |   int    | 单词最小长度，用于过滤单字母等噪声（默认1） |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+text = 'The fox jumps over the fox'
+print(word_freq(text, top=2))
+# {'fox': 2, 'the': 2}
+
+print(word_freq(text, min_length=5))
+# {'jumps': 1}
 ```
 
 ## Crypto.py

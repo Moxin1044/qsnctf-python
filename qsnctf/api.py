@@ -4,7 +4,11 @@ try:
 except ImportError:
     requests = None
 import json
+import mimetypes
 import os
+import re
+import smtplib
+from email.message import EmailMessage
 
 DEFAULT_TIMEOUT = 10
 
@@ -148,6 +152,137 @@ class DingTalk:
         }
         data = json.dumps(data, ensure_ascii=True).encode("utf-8")
         _request("POST", self.url, data=data, headers=self.headers)
+
+
+class SMTPMail:
+    """SMTP 邮件发送（遵循安全默认行为：构造时不发送，需显式调用 send()）
+
+    支持 SSL(465) / STARTTLS(587) / 明文(25) 三种连接方式，
+    可选登录、抄送/密送、纯文本或 HTML 正文、附件。
+    """
+
+    def __init__(self, host, port=465, username='', password='', use_ssl=True,
+                 use_starttls=False, timeout=DEFAULT_TIMEOUT, sender=None):
+        """
+        :param host: SMTP 服务器地址，如 smtp.qq.com
+        :param port: 端口，SSL 常用 465，STARTTLS 常用 587，明文常用 25
+        :param username: 登录用户名（留空则不登录，适用于无认证的中转服务器）
+        :param password: 登录密码（QQ/163 等邮箱需使用"授权码"而非登录密码）
+        :param use_ssl: 是否使用 SSL 直连（SMTPS）
+        :param use_starttls: 是否使用 STARTTLS 升级（优先级高于 use_ssl）
+        :param timeout: 连接与读写超时（秒）
+        :param sender: 发件人地址，留空则使用 username
+        """
+        self.host = host
+        self.port = port
+        self.username = username
+        self.password = password
+        self.use_ssl = bool(use_ssl)
+        self.use_starttls = bool(use_starttls)
+        self.timeout = timeout
+        self.sender = sender or username
+
+    @staticmethod
+    def _address_list(value):
+        """收件人参数（字符串/列表，逗号或分号分隔）→ 地址列表"""
+        if not value:
+            return []
+        if isinstance(value, str):
+            items = [value]
+        else:
+            items = list(value)
+        addresses = []
+        for item in items:
+            for part in re.split(r"[,;]", str(item)):
+                part = part.strip()
+                if part:
+                    addresses.append(part)
+        return addresses
+
+    @staticmethod
+    def _attach(message, attachment):
+        """附件：支持 文件路径 或 (文件名, bytes)"""
+        if isinstance(attachment, (str, os.PathLike)):
+            path = os.fspath(attachment)
+            with open(path, 'rb') as f:
+                data = f.read()
+            filename = os.path.basename(path)
+            guessed, _ = mimetypes.guess_type(filename)
+        else:
+            filename, data = attachment[0], attachment[1]
+            guessed, _ = mimetypes.guess_type(str(filename))
+        maintype, _, subtype = (guessed or 'application/octet-stream').partition('/')
+        message.add_attachment(data, maintype=maintype, subtype=subtype or 'octet-stream',
+                               filename=str(filename))
+
+    def send(self, to, subject, content, content_type='plain', cc=None, bcc=None,
+             sender=None, attachments=None, headers=None):
+        """发送邮件
+
+        :param to: 收件人，支持字符串（逗号/分号分隔）或列表
+        :param subject: 邮件主题
+        :param content: 邮件正文
+        :param content_type: 正文类型，'plain' 或 'html'
+        :param cc: 抄送，同 to
+        :param bcc: 密送，同 to（不会出现在邮件头中）
+        :param sender: 发件人，留空则使用构造时的 sender/username
+        :param attachments: 附件列表，元素为 文件路径 或 (文件名, bytes)
+        :param headers: 额外邮件头 {名称: 值}
+        :return: True
+        """
+        to_list = self._address_list(to)
+        cc_list = self._address_list(cc)
+        bcc_list = self._address_list(bcc)
+        recipients = to_list + cc_list + bcc_list
+        if not recipients:
+            raise ValueError("至少需要一个收件人（to/cc/bcc）")
+        from_addr = sender or self.sender
+        if not from_addr:
+            raise ValueError("缺少发件人地址（请传入 sender 或 username）")
+        if content_type not in ('plain', 'html'):
+            raise ValueError("content_type 仅支持 'plain' 或 'html'")
+
+        message = EmailMessage()
+        message['Subject'] = subject
+        message['From'] = from_addr
+        if to_list:
+            message['To'] = ', '.join(to_list)
+        if cc_list:
+            message['Cc'] = ', '.join(cc_list)
+        if bcc_list:
+            message['Bcc'] = ', '.join(bcc_list)
+        for name, value in (headers or {}).items():
+            message[name] = str(value)
+        message.set_content(content, subtype=content_type)
+        for attachment in (attachments or []):
+            self._attach(message, attachment)
+        # 密送地址不写入邮件头
+        if 'Bcc' in message:
+            del message['Bcc']
+
+        if self.use_starttls:
+            server = smtplib.SMTP(self.host, self.port, timeout=self.timeout)
+            try:
+                server.ehlo()
+                server.starttls()
+                server.ehlo()
+            except Exception:
+                server.close()
+                raise
+        elif self.use_ssl:
+            server = smtplib.SMTP_SSL(self.host, self.port, timeout=self.timeout)
+        else:
+            server = smtplib.SMTP(self.host, self.port, timeout=self.timeout)
+        try:
+            if self.username:
+                server.login(self.username, self.password)
+            server.send_message(message, from_addr=from_addr, to_addrs=recipients)
+        finally:
+            try:
+                server.quit()
+            except smtplib.SMTPException:
+                server.close()
+        return True
 
 
 class ThreatBook:

@@ -126,6 +126,30 @@ def string_split(s):
         return r_list
 
 
+def word_freq(text, top=0, case_sensitive=False, min_length=1):
+    """英文单词词频统计（单词提取 + 频率统计）
+
+    :param text: 待统计的文本
+    :param top: 仅返回出现次数最多的前 N 个单词（0 表示返回全部）
+    :param case_sensitive: 是否区分大小写（默认 False，统一按小写统计）
+    :param min_length: 单词最小长度，用于过滤单字母等噪声（默认 1）
+    :return: 按出现次数降序排列的字典 {单词: 次数}（次数相同按单词字典序）
+    """
+    if not text:
+        return {}
+    words = re.findall(r"[A-Za-z]+(?:['’][A-Za-z]+)*", str(text))
+    if not case_sensitive:
+        words = [word.lower() for word in words]
+    counter = {}
+    for word in words:
+        if len(word) >= min_length:
+            counter[word] = counter.get(word, 0) + 1
+    result = dict(sorted(counter.items(), key=lambda kv: (-kv[1], kv[0])))
+    if top and top > 0:
+        result = dict(list(result.items())[:top])
+    return result
+
+
 def ord_to_str(ord):
     return chr(int(ord))
 
@@ -171,7 +195,7 @@ def search_flag(text, flag_prefix='flag|qsnctf|ctf'):
     :return: flag{xxxxxxx}
     """
     # pattern = f'({flag_prefix})' + r'\{[\w]+\}'
-    pattern = r'(' + flag_prefix + ')\{.+\}'
+    pattern = r'(' + flag_prefix + r')\{.+.\}'
     match = re.search(pattern, text)
     if match:
         result = match.group(0)
