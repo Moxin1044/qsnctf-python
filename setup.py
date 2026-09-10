@@ -6,7 +6,7 @@ with io.open('README.md', encoding='utf-8') as f:
 
 setup(
     name='qsnctf',
-    version='0.0.10',
+    version='0.0.11',
     python_requires='>=3.9',
     install_requires=['base58', 'requests', 'bs4', 'urllib3', 'rarfile', 'sympy'],
     extras_require={
