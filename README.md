@@ -32,6 +32,15 @@ pip install qsnctf
 pip install --upgrade qsnctf
 ```
 
+### 可选依赖
+
+核心功能开箱即用，以下功能需要额外安装可选依赖：
+
+```bash
+pip install qsnctf[js]   # jsfuck_decode（需要 JS 引擎执行）
+pip install Pillow       # EXIF 读取等图片功能
+```
+
 如果你想知道具体怎么使用可以导入这个包，然后使用`help(qsnctf)`查看库的用法
 
 ```bash
@@ -135,12 +144,13 @@ FUNCTIONS
 | 文本逆向（自定义步长） |  获取uuid  | ord转字符串 | 字符串转ord |    字符串分割     |
 |        flag寻找        | 百家姓编码 | Qwerty编码  |   HTM编码   |      JSFUCK       |
 |        AAencode        |  str2hex   |   hex2str   | ZIP密码爆破 | ZIP解压缩（高级） |
+|        词频统计        | 时间戳转换 |   IP转换    |             |                   |
 
 ### API
 
 | quipqiup词频分析 | 飞书Webhook |  钉钉Talk  | 微步在线 | FOFA |
 | :--------------: | :---------: | :--------: | :------: | :--: |
-|    大圣云沙箱    |  零零信安   | Go-CQ-HTTP |          |      |
+|    大圣云沙箱    |  零零信安   | Go-CQ-HTTP | SMTP邮件 |      |
 
 ### WEB
 
@@ -149,6 +159,101 @@ FUNCTIONS
 | 取网站关键字 |   取网站ICP   | 取网站a标签地址 | 取网站注释 | 取网站响应时间 |
 |  取网站ICO   | POST Webshell |  GET Webshell   | exec-shell |   eval-shell   |
 | WebShell爆破 |               |                 |            |                |
+
+### RSA
+
+| RSA加解密 | 已知因子解密 |   dp泄漏攻击   |  小指数攻击  |   共模攻击   |
+| :-------: | :----------: | :------------: | :----------: | :----------: |
+| 广播攻击  |  Wiener攻击  |   公因子攻击   |   因数分解   | factordb在线 |
+
+### JWT
+
+| JWT解码 |
+| :-----: |
+
+### IMAGE
+
+| EXIF读取 |
+| :------: |
+
+## 新增功能示例
+
+### 时间戳 ↔ 日期转换
+
+```python
+from qsnctf import *
+
+timestamp_to_date(1700000000)                   # '2023-11-15 06:13:20'
+timestamp_to_date(1700000000000)                # 毫秒自动识别
+timestamp_to_date(1700000000, timezone=0)       # UTC 时间
+date_to_timestamp('2024-06-01 08:30:00')        # 1717201800
+date_to_timestamp('2024-06-01', unit='ms')      # 1717171200000
+```
+
+### IP ↔ 整数转换
+
+```python
+from qsnctf import *
+
+ip_to_int('192.168.1.1')                         # 3232235777
+int_to_ip(3232235777)                            # '192.168.1.1'
+int_to_ip(ip_to_int('2001:db8::1'), version=6)   # '2001:db8::1'
+```
+
+### RSA 攻击套件
+
+```python
+from qsnctf import *
+
+# 已知 p、q 解密
+m = rsa_decrypt_with_factors(c, e, p, q)
+int_to_bytes(m).decode()                         # 还原明文
+
+rsa_small_e_attack(c, 3, n)                                  # 小公钥指数
+rsa_common_modulus_attack(c1, c2, e1, e2, n)                 # 共模攻击
+rsa_broadcast_attack([c1, c2, c3], 3, [n1, n2, n3])          # 广播攻击
+rsa_wiener_attack(e, n)                                      # Wiener（返回 d, p, q）
+rsa_shared_factor_attack(n1, n2)                             # 公因子
+rsa_decrypt_with_dp(c, e, n, dp)                             # dp 泄漏
+rsa_factor(n)                                                # 本地因数分解
+rsa_factordb(n)                                              # 在线因数分解（需联网）
+```
+
+### JWT 解码
+
+```python
+from qsnctf import *
+
+jwt_decode('eyJhbGciOiJIUzI1NiJ9.eyJhZG1pbiI6dHJ1ZX0.signature')
+# {'header': {'alg': 'HS256'}, 'payload': {'admin': True}, 'signature': '...', 'raw': [...]}
+```
+
+### EXIF 读取（需 `pip install Pillow`）
+
+```python
+from qsnctf import *
+
+exif_read('photo.jpg')
+# {'Make': 'Canon', 'Model': 'EOS 5D', 'DateTime': '2024:06:01 08:30:00',
+#  'GPS': {'Latitude': 39.90722222, 'Longitude': 116.39138889, ...}}
+```
+
+### 词频统计
+
+```python
+from qsnctf import *
+
+word_freq('The fox jumps over the fox', top=2)   # {'fox': 2, 'the': 2}
+```
+
+### SMTP 邮件发送
+
+```python
+from qsnctf import *
+
+mail = SMTPMail('smtp.qq.com', 465, 'xxxxx@qq.com', '授权码')   # 构造时不发送
+mail.send('to@example.com', '标题', '正文', sender='xxxxx@qq.com')
+```
 
 # 具体使用
 

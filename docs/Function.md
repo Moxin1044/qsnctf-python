@@ -2138,6 +2138,60 @@ print(word_freq(text, min_length=5))
 # {'jumps': 1}
 ```
 
+#### 时间戳 / IP 转换
+
+##### timestamp_to_date
+
+|     **函数名**      | **返回类型** | **位置** |         **说明**          |
+| :-----------------: | :----------: | :------: | :-----------------------: |
+| timestamp_to_date   |    string    | misc.py  | 时间戳转日期字符串（自动识别秒/毫秒/微秒/纳秒） |
+|     **参数名**      | **是否可空** | **传参类型** |         **说明**          |
+|      timestamp      |    False     | int/float/string |       时间戳        |
+|         fmt         |     True     |  string  | 输出格式，默认 `%Y-%m-%d %H:%M:%S` |
+|      timezone       |     True     |   int    | 时区偏移小时数，默认 8（北京时间），0 为 UTC |
+|        unit         |     True     |  string  | auto/s/ms/us/ns，默认 auto |
+
+##### date_to_timestamp
+
+|     **函数名**      | **返回类型** | **位置** |         **说明**          |
+| :-----------------: | :----------: | :------: | :-----------------------: |
+|  date_to_timestamp  |     int      | misc.py  | 日期字符串转时间戳（fmt 为空时自动尝试常见格式） |
+|     **参数名**      | **是否可空** | **传参类型** |         **说明**          |
+|        date         |    False     |  string  |        日期字符串         |
+|         fmt         |     True     |  string  | 日期格式，默认 None（自动识别） |
+|      timezone       |     True     |   int    | 时区偏移小时数，默认 8（北京时间） |
+|        unit         |     True     |  string  | 返回单位 s/ms/us，默认 s  |
+
+##### ip_to_int
+
+|  **函数名**  | **返回类型** | **位置** |      **说明**       |
+| :----------: | :----------: | :------: | :-----------------: |
+|  ip_to_int   |     int      | misc.py  | IP 转整数（支持 IPv4/IPv6） |
+|  **参数名**  | **是否可空** | **传参类型** |      **说明**       |
+|      ip      |    False     |  string  |       IP 地址       |
+
+##### int_to_ip
+
+|  **函数名**  | **返回类型** | **位置** |      **说明**       |
+| :----------: | :----------: | :------: | :-----------------: |
+|  int_to_ip   |    string    | misc.py  | 整数转 IP（默认按数值自动判断版本） |
+|  **参数名**  | **是否可空** | **传参类型** |      **说明**       |
+|    number    |    False     |   int    |       IP 整数       |
+|   version    |     True     |   int    | 指定 4 或 6，默认 None 自动判断 |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+print(timestamp_to_date(1700000000))          # 2023-11-15 06:13:20
+print(timestamp_to_date(1700000000000))       # 毫秒自动识别
+print(date_to_timestamp('2024-06-01 08:30:00'))   # 1717201800
+
+print(ip_to_int('192.168.1.1'))               # 3232235777
+print(int_to_ip(3232235777))                  # 192.168.1.1
+```
+
 ## Crypto.py
 
 ### 密码学
@@ -2650,6 +2704,121 @@ from qsnctf import *
 
 a = sha3_512('qsnctf2022')
 print(a) # 95e2d7d428f1b4d007be25dfd454131796f6fa2162662ec34fe8a9aa52f463f5021d5c32cfc422ea3055ed666afb1fc9edc86e65a3f57129ce2d7b2e7617e71e
+```
+
+## RSA.py
+
+### RSA 攻击套件
+
+所有攻击函数均返回整数形式的明文 m，可用 `int_to_bytes(m).decode()` 还原文本。
+
+#### rsa_encrypt / rsa_decrypt
+
+|   **函数名**   | **返回类型** | **位置** |       **说明**        |
+| :------------: | :----------: | :------: | :-------------------: |
+|  rsa_encrypt   |     int      |  rsa.py  | RSA 加密 c = m^e mod n |
+|  rsa_decrypt   |     int      |  rsa.py  | RSA 解密 m = c^d mod n |
+| **参数名** | **是否可空** | **传参类型** | **说明** |
+|  message/ciphertext  | False | int | 明文 / 密文 |
+|    e / d     |    False     |   int    | 公钥指数 / 私钥指数 |
+|      n       |    False     |   int    |        模数        |
+
+#### 解密类
+
+|        **函数名**         | **返回类型** | **位置** |            **说明**             |
+| :-----------------------: | :----------: | :------: | :----------------------------: |
+|   rsa_private_exponent    |     int      |  rsa.py  |   由 p、q、e 求私钥指数 d       |
+| rsa_decrypt_with_factors  |     int      |  rsa.py  |  已知 p、q 解密（已分解出因子）  |
+|  rsa_decrypt_with_phi     |     int      |  rsa.py  |       已知 φ(n) 解密            |
+|   rsa_decrypt_with_dp     |     int      |  rsa.py  | dp 泄漏攻击（已知 dp = d mod p-1）|
+
+#### 攻击类
+
+|         **函数名**          | **返回类型** | **位置** |          **说明**           |
+| :-------------------------: | :----------: | :------: | :-------------------------: |
+|    rsa_small_e_attack       |     int      |  rsa.py  | 小公钥指数攻击（m^e < n）   |
+| rsa_common_modulus_attack   |     int      |  rsa.py  | 共模攻击（同 n、同明文、两个互素 e）|
+|  rsa_broadcast_attack       |     int      |  rsa.py  | 广播攻击 / Håstad（同明文、同小指数、多组互素 n）|
+|    rsa_wiener_attack        |    tuple     |  rsa.py  | Wiener 攻击（d 过小），返回 (d, p, q) |
+|  rsa_shared_factor_attack   |    tuple     |  rsa.py  | 公因子攻击，返回 (p, q1, q2) |
+|       rsa_factor            |    tuple     |  rsa.py  |   本地因数分解（Pollard rho）|
+|      rsa_factordb           |    list      |  rsa.py  | 在线因数分解（factordb，需联网）|
+
+#### int_to_bytes / bytes_to_int
+
+|   **函数名**   | **返回类型** | **位置** |       **说明**        |
+| :------------: | :----------: | :------: | :-------------------: |
+|  int_to_bytes  |    bytes     |  rsa.py  | 整数转字节串（还原明文）|
+|  bytes_to_int  |     int      |  rsa.py  |      字节串转整数      |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+# 已知 p、q 解密
+m = rsa_decrypt_with_factors(c, e, p, q)
+print(int_to_bytes(m).decode())
+
+# 各类攻击（均返回明文 m）
+print(rsa_small_e_attack(c, 3, n))
+print(rsa_common_modulus_attack(c1, c2, e1, e2, n))
+print(rsa_broadcast_attack([c1, c2, c3], 3, [n1, n2, n3]))
+print(rsa_wiener_attack(e, n))            # (d, p, q)
+print(rsa_shared_factor_attack(n1, n2))   # (p, q1, q2)
+print(rsa_decrypt_with_dp(c, e, n, dp))
+
+# 因数分解
+print(rsa_factor(n))       # 本地 Pollard rho
+print(rsa_factordb(n))     # 在线 factordb
+```
+
+## JWT.py
+
+### JWT 解码
+
+#### jwt_decode
+
+|  **函数名**  | **返回类型** | **位置** |        **说明**         |
+| :----------: | :----------: | :------: | :---------------------: |
+|  jwt_decode  |     dict     |  jwt.py  | JWT 解码（不校验签名）  |
+|  **参数名**  | **是否可空** | **传参类型** |        **说明**         |
+|    token     |    False     |  string  | JWT 字符串（三段式）    |
+
+返回 `{'header': dict, 'payload': dict, 'signature': str, 'raw': [三段原文]}`。
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+result = jwt_decode('eyJhbGciOiJIUzI1NiJ9.eyJhZG1pbiI6dHJ1ZX0.signature')
+print(result['header'])    # {'alg': 'HS256'}
+print(result['payload'])   # {'admin': True}
+```
+
+## Image.py
+
+### 图片工具
+
+> 需要可选依赖 Pillow：`pip install Pillow`
+
+#### exif_read
+
+|  **函数名**  | **返回类型** | **位置** |          **说明**            |
+| :----------: | :----------: | :------: | :--------------------------: |
+|  exif_read   |     dict     | image.py | 读取图片 EXIF（含 GPS 十进制经纬度） |
+|  **参数名**  | **是否可空** | **传参类型** |          **说明**            |
+|     path     |    False     |  string  |          图片路径            |
+
+##### 使用示例
+
+```python
+from qsnctf import *
+
+info = exif_read('photo.jpg')
+print(info['Make'], info['Model'])
+print(info.get('GPS'))   # {'Latitude': 39.90722222, 'Longitude': 116.39138889, ...}
 ```
 
  

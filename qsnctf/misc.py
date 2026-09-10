@@ -17,6 +17,8 @@ import queue
 import time
 import threading
 import uuid
+import datetime
+import ipaddress
 from qsnctf.auxiliary import read_file_to_list, is_http_or_https_url, normalize_url
 from qsnctf import js_codecs as _js_codecs
 try:
@@ -518,3 +520,113 @@ class RarPasswordCracking:
             thread = threading.Thread(target=self.crack)
             thread.start()
         self.q.join()  # Wait for thread to finish
+
+
+# ---------------- 时间 / IP 转换工具 ----------------
+
+def timestamp_to_date(timestamp, fmt='%Y-%m-%d %H:%M:%S', timezone=8, unit='auto'):
+    """时间戳 → 日期字符串
+
+    :param timestamp: 时间戳（整数/浮点/字符串）
+    :param fmt: 输出格式，默认 '%Y-%m-%d %H:%M:%S'
+    :param timezone: 时区偏移小时数，默认 8（北京时间），传 0 为 UTC
+    :param unit: 单位，'auto' 按数值大小自动识别，或显式指定 's'/'ms'/'us'/'ns'
+    :return: 格式化后的日期字符串
+
+    示例::
+
+        >>> timestamp_to_date(1700000000)              # '2023-11-15 06:13:20'
+        >>> timestamp_to_date(1700000000000)           # 毫秒自动识别
+        >>> timestamp_to_date(1700000000, timezone=0)  # '2023-11-14 22:13:20'
+    """
+    value = float(timestamp)
+    if unit == 'auto':
+        magnitude = abs(value)
+        if magnitude >= 1e17:          # 纳秒
+            value /= 1e9
+        elif magnitude >= 1e14:        # 微秒
+            value /= 1e6
+        elif magnitude >= 1e11:        # 毫秒
+            value /= 1e3
+    else:
+        divisor = {'s': 1, 'ms': 1e3, 'us': 1e6, 'ns': 1e9}.get(str(unit).lower())
+        if divisor is None:
+            raise ValueError("unit 仅支持 auto/s/ms/us/ns")
+        value /= divisor
+    tz = datetime.timezone(datetime.timedelta(hours=timezone))
+    return datetime.datetime.fromtimestamp(value, tz).strftime(fmt)
+
+
+def date_to_timestamp(date, fmt=None, timezone=8, unit='s'):
+    """日期字符串 → 时间戳
+
+    :param date: 日期字符串
+    :param fmt: 日期格式，传 None 时自动尝试常见格式
+    :param timezone: 时区偏移小时数，默认 8（北京时间），传 0 为 UTC
+    :param unit: 返回单位，'s'/'ms'/'us'
+    :return: 整数时间戳
+
+    示例::
+
+        >>> date_to_timestamp('2023-11-15 06:13:20')          # 1700000000
+        >>> date_to_timestamp('2023-11-15', unit='ms')        # 1700000000000
+    """
+    text = str(date).strip()
+    if fmt is None:
+        common_formats = (
+            '%Y-%m-%d %H:%M:%S', '%Y-%m-%d %H:%M', '%Y-%m-%d',
+            '%Y/%m/%d %H:%M:%S', '%Y/%m/%d', '%Y.%m.%d %H:%M:%S', '%Y.%m.%d',
+            '%Y%m%d%H%M%S', '%Y%m%d',
+            '%d/%m/%Y %H:%M:%S', '%m/%d/%Y %H:%M:%S',
+        )
+        for candidate in common_formats:
+            try:
+                parsed = datetime.datetime.strptime(text, candidate)
+                break
+            except ValueError:
+                continue
+        else:
+            raise ValueError("无法解析日期：%s（可传入 fmt 指定格式）" % text)
+    else:
+        parsed = datetime.datetime.strptime(text, fmt)
+    tz = datetime.timezone(datetime.timedelta(hours=timezone))
+    seconds = parsed.replace(tzinfo=tz).timestamp()
+    multiplier = {'s': 1, 'ms': 1000, 'us': 1000000}.get(str(unit).lower())
+    if multiplier is None:
+        raise ValueError("unit 仅支持 s/ms/us")
+    return int(seconds * multiplier)
+
+
+def ip_to_int(ip):
+    """IP 地址 → 整数（支持 IPv4 / IPv6）
+
+    示例::
+
+        >>> ip_to_int('192.168.1.1')   # 3232235777
+    """
+    return int(ipaddress.ip_address(str(ip).strip()))
+
+
+def int_to_ip(number, version=None):
+    """整数 → IP 地址
+
+    :param number: IP 整数
+    :param version: 指定 IP 版本 4 或 6；传 None 时按数值自动判断
+                    （小于 2^32 视为 IPv4，否则 IPv6）
+    :return: IP 字符串
+
+    示例::
+
+        >>> int_to_ip(3232235777)             # '192.168.1.1'
+        >>> int_to_ip(1, version=6)           # '::1'
+    """
+    number = int(number)
+    if number < 0:
+        raise ValueError("IP 整数不能为负数")
+    if version is None:
+        version = 4 if number <= 0xFFFFFFFF else 6
+    if version not in (4, 6):
+        raise ValueError("version 仅支持 4 或 6")
+    if version == 4:
+        return str(ipaddress.IPv4Address(number))
+    return str(ipaddress.IPv6Address(number))
